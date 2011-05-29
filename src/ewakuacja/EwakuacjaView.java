@@ -4,6 +4,7 @@
 
 package ewakuacja;
 
+import Basic.Grid;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -80,6 +81,8 @@ public class EwakuacjaView extends FrameView {
             }
         });
         progressBar.setVisible(true);
+        grid = new Grid(0,0);
+        gridPanel.setGrid(grid);
 
         this.getFrame().setTitle("Symulacja ewakuacji");
         
@@ -379,6 +382,7 @@ public class EwakuacjaView extends FrameView {
     private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
+    Grid grid;
 
     private JDialog aboutBox;
 }

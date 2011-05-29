@@ -30,6 +30,13 @@ public class GridPanel extends javax.swing.JPanel {
         initComponents();
         grid = new Grid(0,0);
     }
+    /**
+     * @param gr Grid to show in panel.
+     */
+    public void setGrid(Grid gr) {
+        initComponents();
+        grid = gr;
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
