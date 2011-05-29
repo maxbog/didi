@@ -55,11 +55,11 @@ public class Grid {
      * @param y Column Index
      * @return cell
      */
-    public int getCell(int x, int y){
+    public int getMapCell(int x, int y){
         return mapGrid[x][y];
     }
 
-    public void setCell(int x, int y, int value){
+    public void setMapCell(int x, int y, int value){
         mapGrid[x][y] = value;
     }
 

@@ -347,6 +347,9 @@ public class EditPanel extends javax.swing.JPanel {
         return editingMode;
     }
 
+    /**
+     * Exit from editing mode.
+     */
     public void stopEditing(){
         editingButton.setSelected(false);
         editingButtonActionPerformed(null);

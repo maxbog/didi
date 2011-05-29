@@ -16,7 +16,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.HeadlessException;
+import java.awt.Rectangle;
 import javax.swing.JScrollPane;
 
 /**
@@ -45,6 +45,9 @@ public class GridPanel extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                formMouseReleased(evt);
+            }
         });
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -64,6 +67,10 @@ public class GridPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Method changing one cell of grid, which is clicked, if editingMoge is enabled
+     * @param evt
+     */
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         if( !editPanel.isEditingMode() )
             return;
@@ -86,14 +93,43 @@ public class GridPanel extends javax.swing.JPanel {
         if(column==-1 || row==-1)
             return;
 
-        grid.setCell(row, column, editPanel.getCellTypeSelected());
-
-        this.repaint();
+        grid.setMapCell(row, column, editPanel.getCellTypeSelected());
+        paintCell(row, column);
     }//GEN-LAST:event_formMouseClicked
 
+    /**
+     * Method changing cells of grid, which are pushed while moving mouse
+     * @param evt
+     */
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
         formMouseClicked(evt);
 }//GEN-LAST:event_formMouseDragged
+
+    /**
+     * Repaint grid after changing cells by clicking od draging.
+     * @param evt
+     */
+    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
+        this.repaint();
+    }//GEN-LAST:event_formMouseReleased
+
+    /**
+     * Method repaints one cell of grid. Use this if you do not have to repaint whole grid.
+     * @param row
+     * @param column
+     */
+    public void paintCell(int row, int column){
+        Graphics2D g2d = (Graphics2D) this.getGraphics();
+        g2d.setColor(CellColors.getColor(grid.getMapCell(row, column)));
+                g2d.fillRect(xMargin+cellSize*column, yMargin+cellSize*row, cellSize, cellSize);
+    }
+
+    /**
+     * Method repaints all visible grid.
+     */
+    public void repaintGrid(){
+        this.repaint();
+    }
 
     @Override
     public void paint(Graphics g)
@@ -101,6 +137,8 @@ public class GridPanel extends javax.swing.JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setBackground(Color.LIGHT_GRAY);
         g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
+
+        Rectangle rect = scrollPane.getViewport().getViewRect(); //widoczny prostokat
 
         g2d.setColor(Color.BLACK);
         g2d.drawRect(xMargin-1, yMargin-1, grid.getColumnsNumber()*cellSize+1,
@@ -110,25 +148,32 @@ public class GridPanel extends javax.swing.JPanel {
 
         for(int i=0;i<grid.getRowsNumber();i++){
             for(int j=0;j<grid.getColumnsNumber();j++){
-                g2d.setColor(CellColors.getColor(grid.getCell(i, j)));
-                g2d.fillRect(xMargin+cellSize*j, yMargin+cellSize*i, cellSize, cellSize);
+                int xView = xMargin+cellSize*j;
+                int yView = yMargin+cellSize*i;
+                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
+                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+                    continue;
+                g2d.setColor(CellColors.getColor(grid.getMapCell(i, j)));
+                g2d.fillRect( xView, yView, cellSize, cellSize);
             }
         }
 
         if(drawLines){
             g2d.setColor(Color.GRAY);
             for(int i=1;i<grid.getRowsNumber();i++){
+                if(yMargin+i*cellSize < rect.y || yMargin+i*cellSize > rect.y + rect.height)
+                    continue; // rysuje tylko widoczne
                 g2d.drawLine(xMargin, yMargin+i*cellSize,
                         xMargin+grid.getColumnsNumber()*cellSize-1, yMargin+i*cellSize);
             }
             for(int i=1;i<grid.getColumnsNumber();i++){
+                if(xMargin+i*cellSize < rect.x || xMargin+i*cellSize > rect.x + rect.width)
+                    continue; // rysuje tylko widoczne
                 g2d.drawLine(xMargin+i*cellSize, yMargin,
                         xMargin+i*cellSize, yMargin+grid.getRowsNumber()*cellSize-1);
             }
         }
 
-        this.setSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
-                grid.getRowsNumber()*cellSize+2*yMargin));
         this.setPreferredSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
                 grid.getRowsNumber()*cellSize+2*yMargin));
     }
@@ -145,6 +190,8 @@ public class GridPanel extends javax.swing.JPanel {
     public void zoomPlus(){
         if(cellSize<30)
             cellSize+=2;
+        this.setSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
+                grid.getRowsNumber()*cellSize+2*yMargin));
         this.repaint();
     }
 
@@ -154,6 +201,8 @@ public class GridPanel extends javax.swing.JPanel {
     public void zoomMinus(){
         if(cellSize>4)
             cellSize-=2;
+        this.setSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
+                grid.getRowsNumber()*cellSize+2*yMargin));
         this.repaint();
     }
 
@@ -174,6 +223,8 @@ public class GridPanel extends javax.swing.JPanel {
      */
     public void setGridSize(int rows, int columns){
         grid.setSize(rows, columns);
+        this.setSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
+                grid.getRowsNumber()*cellSize+2*yMargin));
         this.revalidate();
         this.repaint();
     }
