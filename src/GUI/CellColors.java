@@ -33,7 +33,7 @@ public class CellColors {
         return Color.WHITE;
     }
 
-    public static Color getDensityColor(int number, int mavValue){
+    public static Color getDensityColor(double number, int mavValue){
         return Color.WHITE;
     }
 }

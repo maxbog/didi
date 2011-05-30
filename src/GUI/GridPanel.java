@@ -203,7 +203,9 @@ public class GridPanel extends javax.swing.JPanel {
                 g2d.fillRect( xView, yView, cellSize, cellSize);
                 if(/*TODO sidor wyswietlanie liczb? && */ grid.getMapCell(i, j) != Grid.WALL){
                     g2d.setColor(Color.BLACK);
-                    g2d.drawString("a", xView+2, yView+15);
+                    String density = Double.toString(grid.getDensity(i, j));
+                    density = density.substring(2, density.length()>4 ? 4 : density.length());
+                    g2d.drawString(density, xView+2, yView+15);
                 }
             }
         }
