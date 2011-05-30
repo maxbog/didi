@@ -33,7 +33,7 @@ public class CellColors {
         return Color.WHITE;
     }
 
-    public static Color getDensityColor(double number, int mavValue){
-        return Color.WHITE;
+    public static Color getDensityColor(double number){
+        return Color.getHSBColor((1-(float)number)*2f/3f, 0.7f, 1f);
     }
 }

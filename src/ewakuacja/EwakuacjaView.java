@@ -124,7 +124,6 @@ public class EwakuacjaView extends FrameView {
         optionsTabs = new javax.swing.JTabbedPane();
         optionsPanel1 = new GUI.OptionsPanel();
         editPanel = new GUI.EditPanel();
-        jButton1 = new javax.swing.JButton();
         gridScrollPane = new javax.swing.JScrollPane();
         gridPanel = new GUI.GridPanel();
         mapRadioButton = new javax.swing.JRadioButton();
@@ -141,6 +140,7 @@ public class EwakuacjaView extends FrameView {
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
         ShowGridLines = new javax.swing.JCheckBoxMenuItem();
+        showGridNumbersMenuButton = new javax.swing.JCheckBoxMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         zoomMinus = new javax.swing.JMenuItem();
         zoomPlus = new javax.swing.JMenuItem();
@@ -169,15 +169,6 @@ public class EwakuacjaView extends FrameView {
 
         editPanel.setName("editPanel"); // NOI18N
         optionsTabs.addTab(resourceMap.getString("editPanel.TabConstraints.tabTitle"), editPanel); // NOI18N
-
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        optionsTabs.addTab(resourceMap.getString("jButton1.TabConstraints.tabTitle"), jButton1); // NOI18N
 
         gridScrollPane.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         gridScrollPane.setName("gridScrollPane"); // NOI18N
@@ -311,6 +302,16 @@ public class EwakuacjaView extends FrameView {
         });
         viewMenu.add(ShowGridLines);
 
+        showGridNumbersMenuButton.setSelected(true);
+        showGridNumbersMenuButton.setText(resourceMap.getString("showGridNumbersMenuButton.text")); // NOI18N
+        showGridNumbersMenuButton.setName("showGridNumbersMenuButton"); // NOI18N
+        showGridNumbersMenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showGridNumbersMenuButtonActionPerformed(evt);
+            }
+        });
+        viewMenu.add(showGridNumbersMenuButton);
+
         jSeparator1.setName("jSeparator1"); // NOI18N
         viewMenu.add(jSeparator1);
 
@@ -409,12 +410,6 @@ public class EwakuacjaView extends FrameView {
         gridPanel.setDrawingLines(ShowGridLines.isSelected());
     }//GEN-LAST:event_ShowGridLinesActionPerformed
 
-    private void optionsTabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_optionsTabsStateChanged
-        if(optionsTabs.getSelectedComponent() != editPanel){
-            editPanel.stopEditing();
-        }
-    }//GEN-LAST:event_optionsTabsStateChanged
-
     private void mapRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mapRadioButtonStateChanged
         if(mapRadioButton.isSelected())
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_MAP);
@@ -434,9 +429,15 @@ public class EwakuacjaView extends FrameView {
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_DENSITY);
     }//GEN-LAST:event_densityRadioButtonStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int a=1;
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void showGridNumbersMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showGridNumbersMenuButtonActionPerformed
+        gridPanel.setDrawingNumbers(showGridNumbersMenuButton.isSelected());
+    }//GEN-LAST:event_showGridNumbersMenuButtonActionPerformed
+
+    private void optionsTabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_optionsTabsStateChanged
+        if(optionsTabs.getSelectedComponent() != editPanel){
+            editPanel.stopEditing();
+        }
+}//GEN-LAST:event_optionsTabsStateChanged
 
     /**
      * 
@@ -444,9 +445,6 @@ public class EwakuacjaView extends FrameView {
      */
     public void setEditMode(boolean aFlag){
         mapRadioButton.setSelected(aFlag);
-
-        potentialRadioButton.setEnabled(!aFlag);
-        densityRadioButton.setEnabled(!aFlag);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -456,7 +454,6 @@ public class EwakuacjaView extends FrameView {
     private GUI.EditPanel editPanel;
     private GUI.GridPanel gridPanel;
     private javax.swing.JScrollPane gridScrollPane;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -471,6 +468,7 @@ public class EwakuacjaView extends FrameView {
     private javax.swing.JComboBox potentialComboBox;
     private javax.swing.JRadioButton potentialRadioButton;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JCheckBoxMenuItem showGridNumbersMenuButton;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;

@@ -200,9 +200,9 @@ public class GridPanel extends javax.swing.JPanel {
                 if(grid.getMapCell(i, j) == Grid.WALL)
                     g2d.setColor(CellColors.getMapColor(Grid.WALL));
                 else
-                    g2d.setColor(CellColors.getDensityColor(grid.getDensity(i, j),100));//zmienic 100
+                    g2d.setColor(CellColors.getDensityColor(grid.getDensity(i, j)));
                 g2d.fillRect( xView, yView, cellSize, cellSize);
-                if(/*TODO sidor wyswietlanie liczb? && */ grid.getMapCell(i, j) != Grid.WALL){
+                if(drawNumbers && grid.getMapCell(i, j) != Grid.WALL){
                     g2d.setColor(Color.BLACK);
                     String density = Double.toString(grid.getDensity(i, j)*100);
                     density = density.substring(0, density.indexOf('.'));
@@ -294,6 +294,11 @@ public class GridPanel extends javax.swing.JPanel {
         this.repaint();
     }
 
+    public void setDrawingNumbers(boolean aFlag){
+        drawNumbers = aFlag;
+        this.repaint();
+    }
+
     /** Method changes size of grid.
      * Never changes cells which are in smaller grid.
      * Adds empty cells, if new grid is bigger.
@@ -366,6 +371,7 @@ public class GridPanel extends javax.swing.JPanel {
     private final int yMargin = 8;
     private int cellSize = 21;
     private boolean drawLines = true;
+    private boolean drawNumbers = true;
     private Grid grid = null;
     private int visibleGrid = this.VISIBLE_MAP;
 
