@@ -133,7 +133,19 @@ public class GridPanel extends javax.swing.JPanel {
     public void paintCell(int row, int column){
         Graphics2D g2d = (Graphics2D) this.getGraphics();
         g2d.setColor(CellColors.getMapColor(grid.getMapCell(row, column)));
-                g2d.fillRect(xMargin+cellSize*column, yMargin+cellSize*row, cellSize, cellSize);
+        g2d.fillRect(xMargin+cellSize*column, yMargin+cellSize*row, cellSize, cellSize);
+        
+//        if(drawLines){
+//            g2d.setColor(Color.GRAY);
+//            for(int i=1;i<grid.getRowsNumber();i++){
+//                g2d.drawLine(xMargin, yMargin+i*cellSize,
+//                        xMargin+grid.getColumnsNumber()*cellSize-1, yMargin+i*cellSize);
+//            }
+//            for(int i=1;i<grid.getColumnsNumber();i++){
+//                g2d.drawLine(xMargin+i*cellSize, yMargin,
+//                        xMargin+i*cellSize, yMargin+grid.getRowsNumber()*cellSize-1);
+//            }
+//        }
     }
 
     /**

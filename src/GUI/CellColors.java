@@ -34,6 +34,6 @@ public class CellColors {
     }
 
     public static Color getDensityColor(double number){
-        return Color.getHSBColor((1-(float)number)*2f/3f, 0.7f, 1f);
+        return Color.getHSBColor((1-(float)number)*2f/3f, 0.9f, 1f);
     }
 }
