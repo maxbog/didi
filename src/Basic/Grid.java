@@ -2,15 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Basic;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  *
  * @author DSidor
  */
 public class Grid {
-    
+
     public static final int EMPTY = 0;
     public static final int WALL = -1;
     public static final int EXIT = -2;
@@ -19,18 +23,18 @@ public class Grid {
     public static final int PERSON2 = 2;
     public static final int PERSON3 = 3;
     public static final int PERSON4 = 4;
-
+    public static final int FLOOD_RADIUS = 3;
     private int columnsNumber;
     private int rowsNumber;
-
     private int[][] mapGrid;
     private int[][][] potentialGrid;
-    private int[][] densityGrid;
-/***************AllGridsFunctions***************/
+    private double[][] densityGrid;
+
+    /***************AllGridsFunctions***************/
     /**
      * New empty grid, size=(0,0)
      */
-    public Grid(){
+    public Grid() {
         columnsNumber = 0;
         rowsNumber = 0;
     }
@@ -40,15 +44,26 @@ public class Grid {
      * @param rows rows number
      * @param columns columns number
      */
-    public Grid(int rows, int columns){
-        this.setSize(rows, columns);
+    public Grid(int rows, int columns) {
+        columnsNumber = columns;
+        rowsNumber = rows;
+        mapGrid = new int[rows][columns];
+        potentialGrid = new int[rows][columns][1];
+        densityGrid = new double[rows][columns];
+        for (int i = 0; i < rowsNumber; i++) {
+            for (int j = 0; j < columnsNumber; j++) {
+                mapGrid[i][j] = this.EMPTY;
+                potentialGrid[i][j][0] = 0;
+                densityGrid[i][j] = 0;
+            }
+        }
     }
 
     /**
      *
      * @return number of columns
      */
-    public int getColumnsNumber(){
+    public int getColumnsNumber() {
         return columnsNumber;
     }
 
@@ -56,7 +71,7 @@ public class Grid {
      *
      * @return number of rows
      */
-    public int getRowsNumber(){
+    public int getRowsNumber() {
         return rowsNumber;
     }
 
@@ -65,18 +80,15 @@ public class Grid {
      * @param rows
      * @param columns
      */
-    public void setSize(int rows, int columns){
+    public void setSize(int rows, int columns) {
         int[][] temp = new int[rows][columns];
-        potentialGrid = new int[rows][columns][1];
-        densityGrid = new int[rows][columns];
-        for(int i=0;i<rows;i++){
-            for(int j=0;j<columns;j++){
-                if(i < rowsNumber && j < columnsNumber)
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (i < rowsNumber && j < columnsNumber) {
                     temp[i][j] = mapGrid[i][j];
-                else
+                } else {
                     temp[i][j] = this.EMPTY;
-                potentialGrid[i][j][0]=0;
-                densityGrid[i][j]=0;
+                }
             }
         }
 
@@ -85,15 +97,14 @@ public class Grid {
         rowsNumber = rows;
     }
 
-/***************MapGridFunctions***************/
-
+    /***************MapGridFunctions***************/
     /**
      *
      * @param x Row Index
      * @param y Column Index
      * @return Type of cell: Grid.EMPTY, GRID.WALL etc.
      */
-    public int getMapCell(int x, int y){
+    public int getMapCell(int x, int y) {
         return mapGrid[x][y];
     }
 
@@ -103,7 +114,7 @@ public class Grid {
      * @param y Column index.
      * @param value Type of cell: Grid.EMPTY, GRID.WALL etc.
      */
-    public void setMapCell(int x, int y, int value){
+    public void setMapCell(int x, int y, int value) {
         mapGrid[x][y] = value;
     }
 
@@ -111,7 +122,7 @@ public class Grid {
     /**
      * Calculates potentials of cells (distaces to exits).
      */
-    public void calculatePotentials(){
+    public void calculatePotentials() {
         //TODO liczenie potencjalow - odleglosci od wszystkich wejsc.
         //proponuje:
         //potentialGrid[i][j]=new int[a+1]; - a = ilosc wyjsc
@@ -125,7 +136,7 @@ public class Grid {
      * @param column
      * @return Array of potential of cell.
      */
-    public int[] getPotential(int row, int column){
+    public int[] getPotential(int row, int column) {
         return potentialGrid[row][column];
     }
 
@@ -133,11 +144,72 @@ public class Grid {
     /**
      * Calculates density of each cell.
      */
-    public void calculateDensities(){
-        //TODO liczenie gestosci na siatce.
-        //Wielkosc obszaru to parametr z ustawien, moze byc jako parametr funkcji.
+    public void calculateDensities() {
+        for (int row = 0; row < getRowsNumber(); ++row) {
+            for (int column = 0; column < getColumnsNumber(); ++column) {
+                if (mapGrid[row][column] > 0) {
+                    calculateDensity(row, column);
+                }
+            }
+        }
+    }
 
-        //np. densityGrid[1][2] = 7;
+    /**
+     * Liczy gestosc dla jednej komorki
+     * @param row wiersz komorki
+     * @param column kolumna komorki
+     */
+    private void calculateDensity(int row, int column) {
+        for (int i = 0; i < getRowsNumber(); i++) {
+            for (int j = 0; j < getColumnsNumber(); j++) {
+                densityGrid[i][j] = 0;
+            }
+        }
+        Queue<Position> toProcess = new LinkedList<Position>();
+        Set<Position> processed = new HashSet<Position>();
+        int all = 0, people = 0;
+        toProcess.add(new Position(row, column));
+        while (!toProcess.isEmpty()) {
+            Position current = toProcess.poll();
+            processed.add(current);
+            // upewniamy sie zeby nie wyjsc poza tablice
+            if (current.row < 0 || current.row >= getRowsNumber() || current.column < 0 || current.column >= getColumnsNumber()) {
+                continue;
+            }
+            // opuszczamy sciany i wyjscia
+            if (mapGrid[current.row][current.column] == WALL || mapGrid[current.row][current.column] == EXIT) {
+                continue;
+            }
+            // sprawdzamy, czy komorka miesci sie w metryce
+            if (Math.max(Math.abs(current.row - row), Math.abs(current.column - column)) > FLOOD_RADIUS) {
+                continue;
+            }
+
+            ++all;
+            if (mapGrid[current.row][current.column] > 0) {
+                ++people;
+            }
+
+            Position left = new Position(row, column - 1);
+            Position right = new Position(row, column + 1);
+            Position up = new Position(row - 1, column);
+            Position down = new Position(row + 1, column);
+            if (!processed.contains(left)) {
+                toProcess.add(left);
+            }
+            if (!processed.contains(right)) {
+                toProcess.add(right);
+            }
+            if (!processed.contains(up)) {
+                toProcess.add(up);
+            }
+            if (!processed.contains(down)) {
+                toProcess.add(down);
+            }
+        }
+        if(all != 0) {
+            densityGrid[row][column] = (double) people / (double) all;
+        }
     }
 
     /**
@@ -146,7 +218,38 @@ public class Grid {
      * @param column
      * @return Density of selected cell.
      */
-    public int getDensity(int row, int column){
+    public double getDensity(int row, int column) {
         return densityGrid[row][column];
+    }
+
+    /**
+     * Klasa pomocnicza dla liczenia gestosci, moze sie tez przydac gdzie indziej.
+     * Przechowuje dwa inty - wiersz i kolumne.
+     */
+    class Position {
+
+        public Position(int row, int column) {
+            this.row = row;
+            this.column = column;
+        }
+        public int row, column;
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof Position)) {
+                return false;
+            }
+
+            Position pos = (Position) obj;
+            return row == pos.row && column == pos.column;
+        }
+
+        @Override
+        public int hashCode() {
+            return row * 100000 + column;
+        }
     }
 }
