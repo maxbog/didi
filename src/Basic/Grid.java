@@ -45,7 +45,7 @@ public class Grid {
      * @param columns columns number
      */
     public Grid(int rows, int columns) {
-        setSize(0,0);
+        setSize(0, 0);
     }
 
     /**
@@ -138,9 +138,14 @@ public class Grid {
      * Calculates density of each cell.
      */
     public void calculateDensities() {
+        for (int i = 0; i < getRowsNumber(); i++) {
+            for (int j = 0; j < getColumnsNumber(); j++) {
+                densityGrid[i][j] = 0;
+            }
+        }
         for (int row = 0; row < getRowsNumber(); ++row) {
             for (int column = 0; column < getColumnsNumber(); ++column) {
-                if (mapGrid[row][column] > 0) {
+                if (mapGrid[row][column] != WALL && mapGrid[row][column] != EXIT) {
                     calculateDensity(row, column);
                 }
             }
@@ -153,17 +158,15 @@ public class Grid {
      * @param column kolumna komorki
      */
     private void calculateDensity(int row, int column) {
-        for (int i = 0; i < getRowsNumber(); i++) {
-            for (int j = 0; j < getColumnsNumber(); j++) {
-                densityGrid[i][j] = 0;
-            }
-        }
         Queue<Position> toProcess = new LinkedList<Position>();
         Set<Position> processed = new HashSet<Position>();
         int all = 0, people = 0;
         toProcess.add(new Position(row, column));
         while (!toProcess.isEmpty()) {
             Position current = toProcess.poll();
+            if (processed.contains(current)) {
+                continue;
+            }
             processed.add(current);
             // upewniamy sie zeby nie wyjsc poza tablice
             if (current.row < 0 || current.row >= getRowsNumber() || current.column < 0 || current.column >= getColumnsNumber()) {
@@ -183,24 +186,12 @@ public class Grid {
                 ++people;
             }
 
-            Position left = new Position(row, column - 1);
-            Position right = new Position(row, column + 1);
-            Position up = new Position(row - 1, column);
-            Position down = new Position(row + 1, column);
-            if (!processed.contains(left)) {
-                toProcess.add(left);
-            }
-            if (!processed.contains(right)) {
-                toProcess.add(right);
-            }
-            if (!processed.contains(up)) {
-                toProcess.add(up);
-            }
-            if (!processed.contains(down)) {
-                toProcess.add(down);
-            }
+            toProcess.add(new Position(current.row, current.column - 1));
+            toProcess.add(new Position(current.row, current.column + 1));
+            toProcess.add(new Position(current.row - 1, current.column));
+            toProcess.add(new Position(current.row + 1, current.column));
         }
-        if(all != 0) {
+        if (all != 0) {
             densityGrid[row][column] = (double) people / (double) all;
         }
     }
@@ -243,6 +234,11 @@ public class Grid {
         @Override
         public int hashCode() {
             return row * 100000 + column;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("(%d,%d)", row, column);
         }
     }
 }
