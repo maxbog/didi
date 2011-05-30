@@ -145,7 +145,7 @@ public class Grid {
         }
         for (int row = 0; row < getRowsNumber(); ++row) {
             for (int column = 0; column < getColumnsNumber(); ++column) {
-                if (mapGrid[row][column] != WALL && mapGrid[row][column] != EXIT) {
+                if (mapGrid[row][column] != WALL) {
                     calculateDensity(row, column);
                 }
             }
@@ -173,7 +173,7 @@ public class Grid {
                 continue;
             }
             // opuszczamy sciany i wyjscia
-            if (mapGrid[current.row][current.column] == WALL || mapGrid[current.row][current.column] == EXIT) {
+            if (mapGrid[current.row][current.column] == WALL) {
                 continue;
             }
             // sprawdzamy, czy komorka miesci sie w metryce
