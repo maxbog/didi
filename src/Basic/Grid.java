@@ -154,6 +154,11 @@ public class Grid {
         }
     }
 
+    /**
+     * Liczy gestosc dla jednej komorki
+     * @param row wiersz komorki
+     * @param column kolumna komorki
+     */
     private void calculateDensity(int row, int column) {
         for (int i = 0; i < getRowsNumber(); i++) {
             for (int j = 0; j < getColumnsNumber(); j++) {
@@ -166,6 +171,7 @@ public class Grid {
         toProcess.add(new Position(row, column));
         while (!toProcess.isEmpty()) {
             Position current = toProcess.poll();
+            processed.add(current);
             // upewniamy sie zeby nie wyjsc poza tablice
             if (current.row < 0 || current.row >= getRowsNumber() || current.column < 0 || current.column >= getColumnsNumber()) {
                 continue;
@@ -179,7 +185,6 @@ public class Grid {
                 continue;
             }
 
-            processed.add(current);
             ++all;
             if (mapGrid[current.row][current.column] > 0) {
                 ++people;
@@ -217,6 +222,10 @@ public class Grid {
         return densityGrid[row][column];
     }
 
+    /**
+     * Klasa pomocnicza dla liczenia gestosci, moze sie tez przydac gdzie indziej.
+     * Przechowuje dwa inty - wiersz i kolumne.
+     */
     class Position {
 
         public Position(int row, int column) {
