@@ -116,12 +116,15 @@ public class EwakuacjaView extends FrameView {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        mapsTabs = new javax.swing.JTabbedPane();
-        gridScrollPane = new javax.swing.JScrollPane();
-        gridPanel = new GUI.GridPanel();
         optionsTabs = new javax.swing.JTabbedPane();
         optionsPanel1 = new GUI.OptionsPanel();
         editPanel = new GUI.EditPanel();
+        gridScrollPane = new javax.swing.JScrollPane();
+        gridPanel = new GUI.GridPanel();
+        mapRadioButton = new javax.swing.JRadioButton();
+        potentialRadioButton = new javax.swing.JRadioButton();
+        potentialComboBox = new javax.swing.JComboBox();
+        densityRadioButton = new javax.swing.JRadioButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -143,30 +146,9 @@ public class EwakuacjaView extends FrameView {
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
         StatusLabel = new javax.swing.JLabel();
+        viewRadioButtons = new javax.swing.ButtonGroup();
 
         mainPanel.setName("mainPanel"); // NOI18N
-
-        mapsTabs.setName("mapsTabs"); // NOI18N
-
-        gridScrollPane.setName("gridScrollPane"); // NOI18N
-
-        gridPanel.setName("gridPanel"); // NOI18N
-
-        javax.swing.GroupLayout gridPanelLayout = new javax.swing.GroupLayout(gridPanel);
-        gridPanel.setLayout(gridPanelLayout);
-        gridPanelLayout.setHorizontalGroup(
-            gridPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 315, Short.MAX_VALUE)
-        );
-        gridPanelLayout.setVerticalGroup(
-            gridPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 266, Short.MAX_VALUE)
-        );
-
-        gridScrollPane.setViewportView(gridPanel);
-
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(ewakuacja.EwakuacjaApp.class).getContext().getResourceMap(EwakuacjaView.class);
-        mapsTabs.addTab(resourceMap.getString("gridScrollPane.TabConstraints.tabTitle"), gridScrollPane); // NOI18N
 
         optionsTabs.setName("optionsTabs"); // NOI18N
         optionsTabs.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -176,10 +158,46 @@ public class EwakuacjaView extends FrameView {
         });
 
         optionsPanel1.setName("optionsPanel1"); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(ewakuacja.EwakuacjaApp.class).getContext().getResourceMap(EwakuacjaView.class);
         optionsTabs.addTab(resourceMap.getString("optionsPanel1.TabConstraints.tabTitle"), optionsPanel1); // NOI18N
 
         editPanel.setName("editPanel"); // NOI18N
         optionsTabs.addTab(resourceMap.getString("editPanel.TabConstraints.tabTitle"), editPanel); // NOI18N
+
+        gridScrollPane.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        gridScrollPane.setName("gridScrollPane"); // NOI18N
+
+        gridPanel.setName("gridPanel"); // NOI18N
+
+        javax.swing.GroupLayout gridPanelLayout = new javax.swing.GroupLayout(gridPanel);
+        gridPanel.setLayout(gridPanelLayout);
+        gridPanelLayout.setHorizontalGroup(
+            gridPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 320, Short.MAX_VALUE)
+        );
+        gridPanelLayout.setVerticalGroup(
+            gridPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 283, Short.MAX_VALUE)
+        );
+
+        gridScrollPane.setViewportView(gridPanel);
+
+        viewRadioButtons.add(mapRadioButton);
+        mapRadioButton.setSelected(true);
+        mapRadioButton.setText(resourceMap.getString("mapRadioButton.text")); // NOI18N
+        mapRadioButton.setName("mapRadioButton"); // NOI18N
+
+        viewRadioButtons.add(potentialRadioButton);
+        potentialRadioButton.setText(resourceMap.getString("potentialRadioButton.text")); // NOI18N
+        potentialRadioButton.setName("potentialRadioButton"); // NOI18N
+
+        potentialComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Najlepsze", "1", "2", "3" }));
+        potentialComboBox.setEnabled(false);
+        potentialComboBox.setName("potentialComboBox"); // NOI18N
+
+        viewRadioButtons.add(densityRadioButton);
+        densityRadioButton.setText(resourceMap.getString("densityRadioButton.text")); // NOI18N
+        densityRadioButton.setName("densityRadioButton"); // NOI18N
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -187,18 +205,34 @@ public class EwakuacjaView extends FrameView {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mapsTabs, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(mapRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(potentialRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(potentialComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(densityRadioButton))
+                    .addComponent(gridScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(optionsTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mapsTabs, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-                    .addComponent(optionsTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 296, Short.MAX_VALUE))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mapRadioButton)
+                            .addComponent(potentialRadioButton)
+                            .addComponent(potentialComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(densityRadioButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(gridScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
+                    .addComponent(optionsTabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 296, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -354,6 +388,7 @@ public class EwakuacjaView extends FrameView {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBoxMenuItem ShowGridLines;
     private javax.swing.JLabel StatusLabel;
+    private javax.swing.JRadioButton densityRadioButton;
     private GUI.EditPanel editPanel;
     private GUI.GridPanel gridPanel;
     private javax.swing.JScrollPane gridScrollPane;
@@ -364,15 +399,18 @@ public class EwakuacjaView extends FrameView {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JTabbedPane mapsTabs;
+    private javax.swing.JRadioButton mapRadioButton;
     private javax.swing.JMenuBar menuBar;
     private GUI.OptionsPanel optionsPanel1;
     private javax.swing.JTabbedPane optionsTabs;
+    private javax.swing.JComboBox potentialComboBox;
+    private javax.swing.JRadioButton potentialRadioButton;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JMenu viewMenu;
+    private javax.swing.ButtonGroup viewRadioButtons;
     private javax.swing.JMenuItem zoomMinus;
     private javax.swing.JMenuItem zoomPlus;
     // End of variables declaration//GEN-END:variables

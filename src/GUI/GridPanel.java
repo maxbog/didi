@@ -145,6 +145,9 @@ public class GridPanel extends javax.swing.JPanel {
         g2d.setBackground(Color.LIGHT_GRAY);
         g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
 
+        if(grid == null || grid.getColumnsNumber()==0 || grid.getRowsNumber() == 0)
+            return;
+
         Rectangle rect = scrollPane.getViewport().getViewRect(); //widoczny prostokat
 
         g2d.setColor(Color.BLACK);
@@ -275,7 +278,7 @@ public class GridPanel extends javax.swing.JPanel {
     private final int yMargin = 8;
     private int cellSize = 21;
     private boolean drawLines = true;
-    private Grid grid;
+    private Grid grid = null;
 
     EditPanel editPanel;
     JScrollPane scrollPane;

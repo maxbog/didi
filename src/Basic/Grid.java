@@ -22,9 +22,11 @@ public class Grid {
 
     private int columnsNumber;
     private int rowsNumber;
+
     private int[][] mapGrid;
-
-
+    private int[][][] potentialGrid;
+    private int[][] densityGrid;
+/***************AllGridsFunctions***************/
     /**
      * New empty grid, size=(0,0)
      */
@@ -42,25 +44,15 @@ public class Grid {
         columnsNumber = columns;
         rowsNumber = rows;
         mapGrid = new int[rows][columns];
+        potentialGrid = new int[rows][columns][1];
+        densityGrid = new int[rows][columns];
         for(int i=0;i<rowsNumber;i++){
             for(int j=0;j<columnsNumber;j++){
                 mapGrid[i][j]=this.EMPTY;
+                potentialGrid[i][j][0]=0;
+                densityGrid[i][j]=0;
             }
         }
-    }
-
-    /**
-     *
-     * @param x Row Index
-     * @param y Column Index
-     * @return cell
-     */
-    public int getMapCell(int x, int y){
-        return mapGrid[x][y];
-    }
-
-    public void setMapCell(int x, int y, int value){
-        mapGrid[x][y] = value;
     }
 
     /**
@@ -79,6 +71,11 @@ public class Grid {
         return rowsNumber;
     }
 
+    /**
+     * Method sets new size of grid. It does not forgot values of old grid.
+     * @param rows
+     * @param columns
+     */
     public void setSize(int rows, int columns){
         int[][] temp = new int[rows][columns];
         for(int i=0;i<rows;i++){
@@ -93,5 +90,70 @@ public class Grid {
         mapGrid = temp;
         columnsNumber = columns;
         rowsNumber = rows;
+    }
+
+/***************MapGridFunctions***************/
+
+    /**
+     *
+     * @param x Row Index
+     * @param y Column Index
+     * @return Type of cell: Grid.EMPTY, GRID.WALL etc.
+     */
+    public int getMapCell(int x, int y){
+        return mapGrid[x][y];
+    }
+
+    /**
+     *
+     * @param x Row index.
+     * @param y Column index.
+     * @param value Type of cell: Grid.EMPTY, GRID.WALL etc.
+     */
+    public void setMapCell(int x, int y, int value){
+        mapGrid[x][y] = value;
+    }
+
+    /***************PotentialGridFunctions***************/
+    /**
+     * Calculates potentials of cells (distaces to exits).
+     */
+    public void calculatePotentials(){
+        //TODO liczenie potencjalow - odleglosci od wszystkich wejsc.
+        //proponuje:
+        //potentialGrid[i][j]=new int[a+1]; - a = ilosc wyjsc
+        //potentialGrid[i][j][0]=min; - min = odleglosc do najblizszego wyjscia
+    }
+
+    /**
+     * Method returns array of potentials in selected cell.
+     * Array[0] is a distance to the nearest exit.
+     * @param row
+     * @param column
+     * @return Array of potential of cell.
+     */
+    public int[] getPotential(int row, int column){
+        return potentialGrid[row][column];
+    }
+
+    /***************DensityGridFunctions***************/
+    /**
+     * Calculates density of each cell.
+     */
+    public void calculateDensities(){
+        //TODO liczenie gestosci na siatce.
+        //Wielkosc obszaru to parametr z ustawien, moze byc jako parametr funkcji.
+
+        //np. densityGrid[1][2] = 7;
+    }
+
+    /**
+     *
+     * @param row
+     * @param column
+     * @return Density of selected cell.
+     */
+    public int getDensity(int row, int column){
+        return densityGrid[row][column];
     }
 }
