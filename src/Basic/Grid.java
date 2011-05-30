@@ -177,7 +177,8 @@ public class Grid {
                 continue;
             }
             // sprawdzamy, czy komorka miesci sie w metryce
-            if (Math.max(Math.abs(current.row - row), Math.abs(current.column - column)) > FLOOD_RADIUS) {
+            int dRow = current.row - row, dColumn = current.column - column;
+            if (dRow*dRow + dColumn*dColumn > FLOOD_RADIUS*FLOOD_RADIUS) {
                 continue;
             }
 
