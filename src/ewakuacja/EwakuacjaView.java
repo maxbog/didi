@@ -413,6 +413,8 @@ public class EwakuacjaView extends FrameView {
     private void mapRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mapRadioButtonStateChanged
         if(mapRadioButton.isSelected())
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_MAP);
+        else
+            editPanel.stopEditing();
     }//GEN-LAST:event_mapRadioButtonStateChanged
 
     private void potentialRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_potentialRadioButtonStateChanged
