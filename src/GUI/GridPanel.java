@@ -105,6 +105,7 @@ public class GridPanel extends javax.swing.JPanel {
             return;
 
         grid.setMapCell(row, column, editPanel.getCellTypeSelected());
+        grid.calculateDensities();
         paintCell(row, column);
     }//GEN-LAST:event_formMouseClicked
 
@@ -203,8 +204,8 @@ public class GridPanel extends javax.swing.JPanel {
                 g2d.fillRect( xView, yView, cellSize, cellSize);
                 if(/*TODO sidor wyswietlanie liczb? && */ grid.getMapCell(i, j) != Grid.WALL){
                     g2d.setColor(Color.BLACK);
-                    String density = Double.toString(grid.getDensity(i, j));
-                    density = density.substring(2, density.length()>4 ? 4 : density.length());
+                    String density = Double.toString(grid.getDensity(i, j)*100);
+                    density = density.substring(0, density.indexOf('.'));
                     g2d.drawString(density, xView+2, yView+15);
                 }
             }
