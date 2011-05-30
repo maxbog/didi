@@ -25,6 +25,10 @@ import javax.swing.JScrollPane;
  */
 public class GridPanel extends javax.swing.JPanel {
 
+    public static final int VISIBLE_MAP = 0;
+    public static final int VISIBLE_POTENTIAL = 1;
+    public static final int VISIBLE_DENSITY = 2;
+
     /** Creates new form NewJPanel */
     public GridPanel() {
         initComponents();
@@ -127,7 +131,7 @@ public class GridPanel extends javax.swing.JPanel {
      */
     public void paintCell(int row, int column){
         Graphics2D g2d = (Graphics2D) this.getGraphics();
-        g2d.setColor(CellColors.getColor(grid.getMapCell(row, column)));
+        g2d.setColor(CellColors.getMapColor(grid.getMapCell(row, column)));
                 g2d.fillRect(xMargin+cellSize*column, yMargin+cellSize*row, cellSize, cellSize);
     }
 
@@ -136,6 +140,73 @@ public class GridPanel extends javax.swing.JPanel {
      */
     public void repaintGrid(){
         this.repaint();
+    }
+
+    /**
+     * Paints map cells.
+     * @param g2d
+     * @param rect
+     */
+    private void paintMap(Graphics2D g2d, Rectangle rect){
+        for(int i=0;i<grid.getRowsNumber();i++){
+            for(int j=0;j<grid.getColumnsNumber();j++){
+                int xView = xMargin+cellSize*j;
+                int yView = yMargin+cellSize*i;
+                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
+                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+                    continue;
+                g2d.setColor(CellColors.getMapColor(grid.getMapCell(i, j)));
+                g2d.fillRect( xView, yView, cellSize, cellSize);
+            }
+        }
+    }
+
+    /**
+     * Paints potential cells.
+     * @param g2d
+     * @param rect
+     */
+    public void paintPotential(Graphics2D g2d, Rectangle rect){
+        for(int i=0;i<grid.getRowsNumber();i++){
+            for(int j=0;j<grid.getColumnsNumber();j++){
+                int xView = xMargin+cellSize*j;
+                int yView = yMargin+cellSize*i;
+                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
+                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+                    continue;
+                if(grid.getMapCell(i, j) == Grid.WALL)
+                    g2d.setColor(CellColors.getMapColor(Grid.WALL));
+                else
+                    g2d.setColor(CellColors.getPotentialColor(grid.getPotential(i, j)[0],100)); //TODO sidor: zmienic 100 i 0.
+                g2d.fillRect( xView, yView, cellSize, cellSize);
+            }
+        }
+    }
+
+    /**
+     * Paints density cells.
+     * @param g2d
+     * @param rect
+     */
+    public void paintDensity(Graphics2D g2d, Rectangle rect){
+        for(int i=0;i<grid.getRowsNumber();i++){
+            for(int j=0;j<grid.getColumnsNumber();j++){
+                int xView = xMargin+cellSize*j;
+                int yView = yMargin+cellSize*i;
+                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
+                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+                    continue;
+                if(grid.getMapCell(i, j) == Grid.WALL)
+                    g2d.setColor(CellColors.getMapColor(Grid.WALL));
+                else
+                    g2d.setColor(CellColors.getDensityColor(grid.getDensity(i, j),100));//zmienic 100
+                g2d.fillRect( xView, yView, cellSize, cellSize);
+                if(/*TODO sidor wyswietlanie liczb? && */ grid.getMapCell(i, j) != Grid.WALL){
+                    g2d.setColor(Color.BLACK);
+                    g2d.drawString("a", xView+2, yView+15);
+                }
+            }
+        }
     }
 
     @Override
@@ -156,16 +227,10 @@ public class GridPanel extends javax.swing.JPanel {
         g2d.drawRect(xMargin-2, yMargin-2, grid.getColumnsNumber()*cellSize+3,
                 grid.getRowsNumber()*cellSize+3);
 
-        for(int i=0;i<grid.getRowsNumber();i++){
-            for(int j=0;j<grid.getColumnsNumber();j++){
-                int xView = xMargin+cellSize*j;
-                int yView = yMargin+cellSize*i;
-                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
-                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
-                    continue;
-                g2d.setColor(CellColors.getColor(grid.getMapCell(i, j)));
-                g2d.fillRect( xView, yView, cellSize, cellSize);
-            }
+        switch(visibleGrid){
+            case GridPanel.VISIBLE_MAP: paintMap(g2d, rect); break;
+            case GridPanel.VISIBLE_POTENTIAL: paintPotential(g2d, rect); break;
+            case GridPanel.VISIBLE_DENSITY: paintDensity(g2d, rect); break;
         }
 
         if(drawLines){
@@ -186,6 +251,7 @@ public class GridPanel extends javax.swing.JPanel {
 
         this.setPreferredSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
                 grid.getRowsNumber()*cellSize+2*yMargin));
+        
     }
 
     @Override
@@ -271,6 +337,25 @@ public class GridPanel extends javax.swing.JPanel {
         return grid.getRowsNumber();
     }
 
+    /**
+     * Method sets which grid will be visible.
+     * @param aFlag VISIBLE_MAP, VISIBLE_POTENTIAL or VISIBLE_DESTINY
+     */
+    public void setVisibleGrid(int aFlag){
+        switch(aFlag){
+            case GridPanel.VISIBLE_MAP:
+            case GridPanel.VISIBLE_POTENTIAL:
+            case GridPanel.VISIBLE_DENSITY:{
+                visibleGrid = aFlag;
+                break;
+            }
+            default: {
+                visibleGrid = GridPanel.VISIBLE_MAP;
+            }
+        }
+        this.repaintGrid();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
@@ -279,6 +364,7 @@ public class GridPanel extends javax.swing.JPanel {
     private int cellSize = 21;
     private boolean drawLines = true;
     private Grid grid = null;
+    private int visibleGrid = this.VISIBLE_MAP;
 
     EditPanel editPanel;
     JScrollPane scrollPane;

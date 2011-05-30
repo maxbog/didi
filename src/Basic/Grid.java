@@ -41,18 +41,7 @@ public class Grid {
      * @param columns columns number
      */
     public Grid(int rows, int columns){
-        columnsNumber = columns;
-        rowsNumber = rows;
-        mapGrid = new int[rows][columns];
-        potentialGrid = new int[rows][columns][1];
-        densityGrid = new int[rows][columns];
-        for(int i=0;i<rowsNumber;i++){
-            for(int j=0;j<columnsNumber;j++){
-                mapGrid[i][j]=this.EMPTY;
-                potentialGrid[i][j][0]=0;
-                densityGrid[i][j]=0;
-            }
-        }
+        this.setSize(rows, columns);
     }
 
     /**
@@ -78,12 +67,16 @@ public class Grid {
      */
     public void setSize(int rows, int columns){
         int[][] temp = new int[rows][columns];
+        potentialGrid = new int[rows][columns][1];
+        densityGrid = new int[rows][columns];
         for(int i=0;i<rows;i++){
             for(int j=0;j<columns;j++){
                 if(i < rowsNumber && j < columnsNumber)
                     temp[i][j] = mapGrid[i][j];
                 else
                     temp[i][j] = this.EMPTY;
+                potentialGrid[i][j][0]=0;
+                densityGrid[i][j]=0;
             }
         }
 

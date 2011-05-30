@@ -5,6 +5,7 @@
 package ewakuacja;
 
 import Basic.Grid;
+import GUI.GridPanel;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -90,8 +91,12 @@ public class EwakuacjaView extends FrameView {
 
     }
 
+    /**
+     * Method sets connections between panels
+     */
     private void setConnections(){
         editPanel.setGridPanel(gridPanel);
+        editPanel.setMainWindow(this);
         gridPanel.setEditPanel(editPanel);
         gridPanel.setScrollPane(gridScrollPane);
     }
@@ -186,18 +191,33 @@ public class EwakuacjaView extends FrameView {
         mapRadioButton.setSelected(true);
         mapRadioButton.setText(resourceMap.getString("mapRadioButton.text")); // NOI18N
         mapRadioButton.setName("mapRadioButton"); // NOI18N
+        mapRadioButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mapRadioButtonStateChanged(evt);
+            }
+        });
 
         viewRadioButtons.add(potentialRadioButton);
         potentialRadioButton.setText(resourceMap.getString("potentialRadioButton.text")); // NOI18N
         potentialRadioButton.setName("potentialRadioButton"); // NOI18N
+        potentialRadioButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                potentialRadioButtonStateChanged(evt);
+            }
+        });
 
-        potentialComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Najlepsze", "1", "2", "3" }));
+        potentialComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Najlepsze", "Wyjście 1", "Wyjście 2", "Wyjście 3" }));
         potentialComboBox.setEnabled(false);
         potentialComboBox.setName("potentialComboBox"); // NOI18N
 
         viewRadioButtons.add(densityRadioButton);
         densityRadioButton.setText(resourceMap.getString("densityRadioButton.text")); // NOI18N
         densityRadioButton.setName("densityRadioButton"); // NOI18N
+        densityRadioButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                densityRadioButtonStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -384,6 +404,36 @@ public class EwakuacjaView extends FrameView {
             editPanel.stopEditing();
         }
     }//GEN-LAST:event_optionsTabsStateChanged
+
+    private void mapRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mapRadioButtonStateChanged
+        if(mapRadioButton.isSelected())
+            gridPanel.setVisibleGrid(GridPanel.VISIBLE_MAP);
+    }//GEN-LAST:event_mapRadioButtonStateChanged
+
+    private void potentialRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_potentialRadioButtonStateChanged
+        if(potentialRadioButton.isSelected()){
+            gridPanel.setVisibleGrid(GridPanel.VISIBLE_POTENTIAL);
+            potentialComboBox.setEnabled(true);
+        }
+        else
+            potentialComboBox.setEnabled(false);
+    }//GEN-LAST:event_potentialRadioButtonStateChanged
+
+    private void densityRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_densityRadioButtonStateChanged
+        if(densityRadioButton.isSelected())
+            gridPanel.setVisibleGrid(GridPanel.VISIBLE_DENSITY);
+    }//GEN-LAST:event_densityRadioButtonStateChanged
+
+    /**
+     * 
+     * @param aFlag Turn mode into(true) or out of{false) edit mode
+     */
+    public void setEditMode(boolean aFlag){
+        mapRadioButton.setSelected(aFlag);
+
+        potentialRadioButton.setEnabled(!aFlag);
+        densityRadioButton.setEnabled(!aFlag);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBoxMenuItem ShowGridLines;

@@ -12,6 +12,7 @@
 package GUI;
 
 import Basic.Grid;
+import ewakuacja.EwakuacjaView;
 
 /**
  *
@@ -26,10 +27,10 @@ public class EditPanel extends javax.swing.JPanel {
     }
 
     private void initFields(){
-        emptyColorPanel.setBackground(CellColors.getColor(Grid.EMPTY));
-        wallColorPanel.setBackground(CellColors.getColor(Grid.WALL));
-        exitColorPanel.setBackground(CellColors.getColor(Grid.EXIT));
-        personColorPanel.setBackground(CellColors.getColor(Grid.PERSON1));
+        emptyColorPanel.setBackground(CellColors.getMapColor(Grid.EMPTY));
+        wallColorPanel.setBackground(CellColors.getMapColor(Grid.WALL));
+        exitColorPanel.setBackground(CellColors.getMapColor(Grid.EXIT));
+        personColorPanel.setBackground(CellColors.getMapColor(Grid.PERSON1));
     }
 
     /** This method is called from within the constructor to
@@ -325,6 +326,9 @@ public class EditPanel extends javax.swing.JPanel {
         exitCellButton.setEnabled(enable);
         personCellButton.setEnabled(enable);
 
+        if(mainWindow != null)
+            mainWindow.setEditMode(enable);
+
         if(evt != null){
             rowsSpinner.setValue(gridPanel.getGridRowsNumber());
             columnsSpinner.setValue(gridPanel.getGridColumnsNumber());
@@ -337,6 +341,14 @@ public class EditPanel extends javax.swing.JPanel {
      */
     public void setGridPanel(GridPanel panel){
         gridPanel = panel;
+    }
+
+    /**
+     * Setting mainWindow, will not work without this.
+     * @param window
+     */
+    public void setMainWindow(EwakuacjaView window){
+        mainWindow = window;
     }
 
     /**
@@ -385,5 +397,6 @@ public class EditPanel extends javax.swing.JPanel {
 
     int cellTypeSelected = Grid.EMPTY;
     GridPanel gridPanel;
+    EwakuacjaView mainWindow=null;
     private boolean editingMode = false;
 }
