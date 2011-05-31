@@ -16,6 +16,7 @@ import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
@@ -214,6 +215,11 @@ public class EwakuacjaView extends FrameView {
         potentialComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Najlepsze", "Wyjście 1", "Wyjście 2", "Wyjście 3" }));
         potentialComboBox.setEnabled(false);
         potentialComboBox.setName("potentialComboBox"); // NOI18N
+        potentialComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                potentialComboBoxActionPerformed(evt);
+            }
+        });
 
         viewRadioButtons.add(densityRadioButton);
         densityRadioButton.setText(resourceMap.getString("densityRadioButton.text")); // NOI18N
@@ -439,6 +445,15 @@ public class EwakuacjaView extends FrameView {
     private void potentialRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_potentialRadioButtonStateChanged
         if(potentialRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_POTENTIAL);
+
+            if(1==1){//TODO warunek - jezeli inna liczba opcji niz rozmiar tablicy potencjalow(wyjsc+1)
+                javax.swing.DefaultComboBoxModel model = new DefaultComboBoxModel();
+                model.addElement("Najlepsze");
+                for(int i = 1; i < 3; i++) // TODO zmienic na ilosc wyjsc w gridzie
+                    model.addElement("Wyjście " + Integer.toString(i));
+                potentialComboBox.setModel(model);
+                gridPanel.setVisiblePotential(potentialComboBox.getSelectedIndex());
+            }
             potentialComboBox.setEnabled(true);
         }
         else
@@ -521,6 +536,10 @@ public class EwakuacjaView extends FrameView {
         grid=new Grid(0,0);
         gridPanel.setGrid(grid);
     }//GEN-LAST:event_newMenuButtonActionPerformed
+
+    private void potentialComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_potentialComboBoxActionPerformed
+        gridPanel.setVisiblePotential(potentialComboBox.getSelectedIndex());
+    }//GEN-LAST:event_potentialComboBoxActionPerformed
 
     /**
      * 

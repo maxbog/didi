@@ -29,8 +29,8 @@ public class CellColors {
     }
 
     public static Color getPotentialColor(int number, int maxValue){
-        int colorIndex = number*360/maxValue;
-        return Color.WHITE;
+        float index = ((float)number)/((float)maxValue);
+        return Color.getHSBColor((1-(float)index)*2f/3f, 0.9f, 1f);
     }
 
     public static Color getDensityColor(double number){
