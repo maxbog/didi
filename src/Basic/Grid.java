@@ -77,7 +77,7 @@ public class Grid {
                 if (i < rowsNumber && j < columnsNumber) {
                     temp[i][j] = mapGrid[i][j];
                 } else {
-                    temp[i][j] = this.EMPTY;
+                    temp[i][j] = Grid.EMPTY;
                     potentialGrid[i][j][0] = 0;
                     densityGrid[i][j] = 0;
                 }
@@ -108,6 +108,7 @@ public class Grid {
      */
     public void setMapCell(int x, int y, int value) {
         mapGrid[x][y] = value;
+        calculateNeighbourDensities(x, y);
     }
 
     /***************PotentialGridFunctions***************/
@@ -151,6 +152,40 @@ public class Grid {
         }
     }
 
+    private void calculateNeighbourDensities(int row, int column) {
+        Queue<Position> toProcess = new LinkedList<Position>();
+        Set<Position> processed = new HashSet<Position>();
+        int all = 0, people = 0;
+        toProcess.add(new Position(row, column));
+        while (!toProcess.isEmpty()) {
+            Position current = toProcess.poll();
+            if (processed.contains(current)) {
+                continue;
+            }
+            processed.add(current);
+
+            calculateDensity(current.row, current.column);
+
+            final Position left = new Position(current.row, current.column - 1);
+            final Position right = new Position(current.row, current.column + 1);
+            final Position up = new Position(current.row - 1, current.column);
+            final Position down = new Position(current.row + 1, current.column);
+
+            if(shouldBeProcessed(left,row,column)) {
+                toProcess.add(left);
+            }
+            if(shouldBeProcessed(right,row,column)) {
+                toProcess.add(right);
+            }
+            if(shouldBeProcessed(up,row,column)) {
+                toProcess.add(up);
+            }
+            if(shouldBeProcessed(down,row,column)) {
+                toProcess.add(down);
+            }
+        }
+    }
+
     /**
      * Liczy gestosc dla jednej komorki
      * @param row wiersz komorki
@@ -167,33 +202,51 @@ public class Grid {
                 continue;
             }
             processed.add(current);
-            // upewniamy sie zeby nie wyjsc poza tablice
-            if (current.row < 0 || current.row >= getRowsNumber() || current.column < 0 || current.column >= getColumnsNumber()) {
-                continue;
-            }
-            // opuszczamy sciany i wyjscia
-            if (mapGrid[current.row][current.column] == WALL) {
-                continue;
-            }
-            // sprawdzamy, czy komorka miesci sie w metryce
-            int dRow = current.row - row, dColumn = current.column - column;
-            if (dRow*dRow + dColumn*dColumn > FLOOD_RADIUS*FLOOD_RADIUS) {
-                continue;
-            }
 
             ++all;
             if (mapGrid[current.row][current.column] > 0) {
                 ++people;
             }
 
-            toProcess.add(new Position(current.row, current.column - 1));
-            toProcess.add(new Position(current.row, current.column + 1));
-            toProcess.add(new Position(current.row - 1, current.column));
-            toProcess.add(new Position(current.row + 1, current.column));
+            final Position left = new Position(current.row, current.column - 1);
+            final Position right = new Position(current.row, current.column + 1);
+            final Position up = new Position(current.row - 1, current.column);
+            final Position down = new Position(current.row + 1, current.column);
+
+            if(shouldBeProcessed(left,row,column)) {
+                toProcess.add(left);
+            }
+            if(shouldBeProcessed(right,row,column)) {
+                toProcess.add(right);
+            }
+            if(shouldBeProcessed(up,row,column)) {
+                toProcess.add(up);
+            }
+            if(shouldBeProcessed(down,row,column)) {
+                toProcess.add(down);
+            }
         }
         if (all != 0) {
             densityGrid[row][column] = (double) people / (double) all;
         }
+    }
+
+    private boolean shouldBeProcessed(Position current, int row, int column) {
+        // upewniamy sie zeby nie wyjsc poza tablice
+        if (current.row < 0 || current.row >= getRowsNumber() || current.column < 0 || current.column >= getColumnsNumber()) {
+            return false;
+        }
+        // omijamy sciany
+        if (mapGrid[current.row][current.column] == WALL) {
+            return false;
+        }
+        // czy miescimy sie w metryce
+        int dRow = current.row - row;
+        int dColumn = current.column - column;
+        if (dRow * dRow + dColumn * dColumn > FLOOD_RADIUS * FLOOD_RADIUS) {
+            return false;
+        }
+        return true;
     }
 
     /**
