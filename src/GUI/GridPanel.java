@@ -397,6 +397,7 @@ public class GridPanel extends javax.swing.JPanel {
         if(grid.getColumnsNumber() != 0 && grid.getRowsNumber() != 0 &&
                 exit < grid.getPotential(0, 0).length)
             visiblePotential = exit;
+        this.repaintGrid();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
