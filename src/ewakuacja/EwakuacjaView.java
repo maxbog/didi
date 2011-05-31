@@ -446,11 +446,11 @@ public class EwakuacjaView extends FrameView {
         if(potentialRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_POTENTIAL);
 
-            if(1==1){//TODO warunek - jezeli inna liczba opcji niz rozmiar tablicy potencjalow(wyjsc+1)
+            if(grid.getExitsCount() != potentialComboBox.getItemCount()){
                 javax.swing.DefaultComboBoxModel model = new DefaultComboBoxModel();
                 model.addElement("Najlepsze");
-                for(int i = 1; i < 3; i++) // TODO zmienic na ilosc wyjsc w gridzie
-                    model.addElement("Wyjście " + Integer.toString(i));
+                for(int i = 0; i < grid.getExitsCount(); i++)
+                    model.addElement("Wyjście " + Integer.toString(i+1));
                 potentialComboBox.setModel(model);
                 gridPanel.setVisiblePotential(potentialComboBox.getSelectedIndex());
             }
