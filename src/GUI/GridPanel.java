@@ -43,6 +43,10 @@ public class GridPanel extends javax.swing.JPanel {
         grid = gr;
     }
 
+    public Grid getGrid() {
+        return grid;
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
