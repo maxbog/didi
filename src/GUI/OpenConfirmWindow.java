@@ -26,6 +26,7 @@ public class OpenConfirmWindow extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setTitle(parent.getTitle());
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -129,6 +130,10 @@ public class OpenConfirmWindow extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    /**
+     * Posible values: RET_SAVE, RET_DECLINE, RET_CANCEL.
+     * @return Status, what was clicked recently.
+     */
     public int getReturnStatus(){
         return returnStatus;
     }
