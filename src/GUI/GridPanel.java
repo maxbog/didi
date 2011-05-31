@@ -86,7 +86,6 @@ public class GridPanel extends javax.swing.JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         cellEditedByMouse();
         this.repaint();
-        grid.calculateDensities();
     }//GEN-LAST:event_formMouseClicked
 
     /**
@@ -103,7 +102,6 @@ public class GridPanel extends javax.swing.JPanel {
      */
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
         this.repaint();
-        grid.calculateDensities();
     }//GEN-LAST:event_formMouseReleased
 
     private void cellEditedByMouse(){
