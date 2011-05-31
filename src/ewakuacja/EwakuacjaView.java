@@ -6,6 +6,8 @@ package ewakuacja;
 
 import Basic.Grid;
 import GUI.GridPanel;
+import GUI.OpenConfirmWindow;
+import Others.FilesStuff;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -13,9 +15,11 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 /**
@@ -131,11 +135,11 @@ public class EwakuacjaView extends FrameView {
         potentialComboBox = new javax.swing.JComboBox();
         densityRadioButton = new javax.swing.JRadioButton();
         menuBar = new javax.swing.JMenuBar();
-        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        javax.swing.JMenu OpenFileMenuButton = new javax.swing.JMenu();
+        newMenuButton = new javax.swing.JMenuItem();
+        openMenuButton = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        saveMenuButton = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
@@ -259,34 +263,44 @@ public class EwakuacjaView extends FrameView {
 
         menuBar.setName("menuBar"); // NOI18N
 
-        fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
-        fileMenu.setMinimumSize(new java.awt.Dimension(27, 19));
-        fileMenu.setName("fileMenu"); // NOI18N
+        OpenFileMenuButton.setText(resourceMap.getString("OpenFileMenuButton.text")); // NOI18N
+        OpenFileMenuButton.setMinimumSize(new java.awt.Dimension(27, 19));
+        OpenFileMenuButton.setName("OpenFileMenuButton"); // NOI18N
 
-        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        fileMenu.add(jMenuItem1);
+        newMenuButton.setText(resourceMap.getString("newMenuButton.text")); // NOI18N
+        newMenuButton.setName("newMenuButton"); // NOI18N
+        OpenFileMenuButton.add(newMenuButton);
 
-        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
-        jMenuItem2.setName("jMenuItem2"); // NOI18N
-        fileMenu.add(jMenuItem2);
+        openMenuButton.setText(resourceMap.getString("openMenuButton.text")); // NOI18N
+        openMenuButton.setName("openMenuButton"); // NOI18N
+        openMenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openMenuButtonActionPerformed(evt);
+            }
+        });
+        OpenFileMenuButton.add(openMenuButton);
 
         jSeparator2.setName("jSeparator2"); // NOI18N
-        fileMenu.add(jSeparator2);
+        OpenFileMenuButton.add(jSeparator2);
 
-        jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
-        jMenuItem3.setName("jMenuItem3"); // NOI18N
-        fileMenu.add(jMenuItem3);
+        saveMenuButton.setText(resourceMap.getString("saveMenuButton.text")); // NOI18N
+        saveMenuButton.setName("saveMenuButton"); // NOI18N
+        saveMenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveMenuButtonActionPerformed(evt);
+            }
+        });
+        OpenFileMenuButton.add(saveMenuButton);
 
         jSeparator3.setName("jSeparator3"); // NOI18N
-        fileMenu.add(jSeparator3);
+        OpenFileMenuButton.add(jSeparator3);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(ewakuacja.EwakuacjaApp.class).getContext().getActionMap(EwakuacjaView.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
-        fileMenu.add(exitMenuItem);
+        OpenFileMenuButton.add(exitMenuItem);
 
-        menuBar.add(fileMenu);
+        menuBar.add(OpenFileMenuButton);
 
         viewMenu.setText(resourceMap.getString("viewMenu.text")); // NOI18N
         viewMenu.setMinimumSize(new java.awt.Dimension(43, 19));
@@ -441,6 +455,46 @@ public class EwakuacjaView extends FrameView {
         }
 }//GEN-LAST:event_optionsTabsStateChanged
 
+    private void openMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuButtonActionPerformed
+        if(editPanel.getMapGridChanged()){
+            if(openConfirmWindow == null){
+                openConfirmWindow = new OpenConfirmWindow(this.getFrame(), true);
+            }
+            else
+                openConfirmWindow.setVisible(true);
+
+            switch(openConfirmWindow.getReturnStatus()){
+                case OpenConfirmWindow.RET_CANCEL: return;
+                case OpenConfirmWindow.RET_SAVE: saveMenuButtonActionPerformed(evt); return;
+                case OpenConfirmWindow.RET_DECLINE: break;
+                default: return;
+            }
+        }
+
+        if(fileChooser == null){
+            fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(".\\"));
+        }
+        if(fileChooser.showOpenDialog(this.getFrame()) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            grid=FilesStuff.openGrid(file);
+            gridPanel.setGrid(grid);
+            editPanel.setMapGridChanged(false);
+        }
+    }//GEN-LAST:event_openMenuButtonActionPerformed
+
+    private void saveMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuButtonActionPerformed
+        if(fileChooser == null){
+            fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(".\\"));
+        }
+        if(fileChooser.showSaveDialog(this.getFrame()) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            FilesStuff.saveGrid(grid, file);
+            editPanel.setMapGridChanged(false);
+        }
+    }//GEN-LAST:event_saveMenuButtonActionPerformed
+
     /**
      * 
      * @param aFlag Turn mode into(true) or out of{false) edit mode
@@ -456,20 +510,20 @@ public class EwakuacjaView extends FrameView {
     private GUI.EditPanel editPanel;
     private GUI.GridPanel gridPanel;
     private javax.swing.JScrollPane gridScrollPane;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JRadioButton mapRadioButton;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem newMenuButton;
+    private javax.swing.JMenuItem openMenuButton;
     private GUI.OptionsPanel optionsPanel1;
     private javax.swing.JTabbedPane optionsTabs;
     private javax.swing.JComboBox potentialComboBox;
     private javax.swing.JRadioButton potentialRadioButton;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JMenuItem saveMenuButton;
     private javax.swing.JCheckBoxMenuItem showGridNumbersMenuButton;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
@@ -488,4 +542,6 @@ public class EwakuacjaView extends FrameView {
     Grid grid;
 
     private JDialog aboutBox;
+    private JFileChooser fileChooser;
+    private OpenConfirmWindow openConfirmWindow;
 }

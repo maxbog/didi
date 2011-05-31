@@ -48,7 +48,6 @@ public class EditPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         rowsSpinner = new javax.swing.JSpinner();
         columnsSpinner = new javax.swing.JSpinner();
-        changeGridSizeButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         emptyCellButton = new javax.swing.JRadioButton();
         wallCellButton = new javax.swing.JRadioButton();
@@ -72,20 +71,21 @@ public class EditPanel extends javax.swing.JPanel {
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
 
-        rowsSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        rowsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
         rowsSpinner.setEnabled(false);
         rowsSpinner.setName("rowsSpinner"); // NOI18N
+        rowsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rowsSpinnerStateChanged(evt);
+            }
+        });
 
-        columnsSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        columnsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
         columnsSpinner.setEnabled(false);
         columnsSpinner.setName("columnsSpinner"); // NOI18N
-
-        changeGridSizeButton.setText(resourceMap.getString("changeGridSizeButton.text")); // NOI18N
-        changeGridSizeButton.setEnabled(false);
-        changeGridSizeButton.setName("changeGridSizeButton"); // NOI18N
-        changeGridSizeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeGridSizeButtonActionPerformed(evt);
+        columnsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                columnsSpinnerStateChanged(evt);
             }
         });
 
@@ -96,18 +96,13 @@ public class EditPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rowsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                            .addComponent(columnsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(changeGridSizeButton)
-                        .addGap(27, 27, 27))))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rowsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                    .addComponent(columnsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,9 +113,7 @@ public class EditPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(columnsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(changeGridSizeButton))
+                    .addComponent(columnsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel2.border.title"))); // NOI18N
@@ -235,7 +228,8 @@ public class EditPanel extends javax.swing.JPanel {
                     .addComponent(emptyCellButton)
                     .addComponent(wallCellButton)
                     .addComponent(exitCellButton)
-                    .addComponent(personCellButton)))
+                    .addComponent(personCellButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,13 +265,11 @@ public class EditPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(editingButton))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(editingButton)
+                .addContainerGap(69, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,7 +280,7 @@ public class EditPanel extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -308,18 +300,14 @@ public class EditPanel extends javax.swing.JPanel {
         cellTypeSelected = Grid.PERSON1;
     }//GEN-LAST:event_personCellButtonActionPerformed
 
-    private void changeGridSizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeGridSizeButtonActionPerformed
-        gridPanel.setGridSize(Integer.parseInt(rowsSpinner.getValue().toString()),
-                Integer.parseInt(columnsSpinner.getValue().toString()));
-    }//GEN-LAST:event_changeGridSizeButtonActionPerformed
-
     private void editingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editingButtonActionPerformed
         boolean enable = editingButton.isSelected();
+        if(enable)
+            mapGridChanged = true;
         editingMode = enable;
 
         rowsSpinner.setEnabled(enable);
         columnsSpinner.setEnabled(enable);
-        changeGridSizeButton.setEnabled(enable);
 
         emptyCellButton.setEnabled(enable);
         wallCellButton.setEnabled(enable);
@@ -329,11 +317,21 @@ public class EditPanel extends javax.swing.JPanel {
         if(mainWindow != null)
             mainWindow.setEditMode(enable);
 
-        if(evt != null){
+        if(enable){
             rowsSpinner.setValue(gridPanel.getGridRowsNumber());
             columnsSpinner.setValue(gridPanel.getGridColumnsNumber());
         }
     }//GEN-LAST:event_editingButtonActionPerformed
+
+    private void rowsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rowsSpinnerStateChanged
+        gridPanel.setGridSize(Integer.parseInt(rowsSpinner.getValue().toString()),
+                Integer.parseInt(columnsSpinner.getValue().toString()));
+    }//GEN-LAST:event_rowsSpinnerStateChanged
+
+    private void columnsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_columnsSpinnerStateChanged
+        gridPanel.setGridSize(Integer.parseInt(rowsSpinner.getValue().toString()),
+                Integer.parseInt(columnsSpinner.getValue().toString()));
+    }//GEN-LAST:event_columnsSpinnerStateChanged
 
     /**
      * Setting gridPanel, will not work without this.
@@ -375,9 +373,25 @@ public class EditPanel extends javax.swing.JPanel {
          return cellTypeSelected;
     }
 
+    /**
+     * Method to get information if grid has been changed after last saving.
+     * Precisely it checks if editMode has been enabled.
+     * @return
+     */
+    public boolean getMapGridChanged(){
+        return mapGridChanged;
+    }
+
+    /**
+     * Sents information about changing grid after saving.
+     * @param aFlag
+     */
+    public void setMapGridChanged(boolean aFlag){
+        mapGridChanged=aFlag;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup cellTypeButtons;
-    private javax.swing.JButton changeGridSizeButton;
     private javax.swing.JSpinner columnsSpinner;
     private javax.swing.JCheckBox editingButton;
     private javax.swing.JRadioButton emptyCellButton;
@@ -399,4 +413,5 @@ public class EditPanel extends javax.swing.JPanel {
     GridPanel gridPanel;
     EwakuacjaView mainWindow=null;
     private boolean editingMode = false;
+    private boolean mapGridChanged = false;
 }

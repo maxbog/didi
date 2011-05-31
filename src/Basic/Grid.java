@@ -35,8 +35,7 @@ public class Grid {
      * New empty grid, size=(0,0)
      */
     public Grid() {
-        columnsNumber = 0;
-        rowsNumber = 0;
+        setSize(0, 0);
     }
 
     /**
@@ -45,7 +44,7 @@ public class Grid {
      * @param columns columns number
      */
     public Grid(int rows, int columns) {
-        setSize(0, 0);
+        setSize(rows, columns);
     }
 
     /**
@@ -258,6 +257,14 @@ public class Grid {
      */
     public double getDensity(int row, int column) {
         return densityGrid[row][column];
+    }
+
+    /**
+     * calculates all grids, basing on mapGrid.
+     */
+    public void calculateAll(){
+        this.calculateDensities();
+        this.calculatePotentials();
     }
 
     /**
