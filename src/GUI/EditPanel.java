@@ -315,6 +315,8 @@ public class EditPanel extends javax.swing.JPanel {
 
     private void editingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editingButtonActionPerformed
         boolean enable = editingButton.isSelected();
+        if(enable)
+            mapGridChanged = true;
         editingMode = enable;
 
         rowsSpinner.setEnabled(enable);
@@ -329,7 +331,7 @@ public class EditPanel extends javax.swing.JPanel {
         if(mainWindow != null)
             mainWindow.setEditMode(enable);
 
-        if(evt != null){
+        if(enable){
             rowsSpinner.setValue(gridPanel.getGridRowsNumber());
             columnsSpinner.setValue(gridPanel.getGridColumnsNumber());
         }
@@ -375,6 +377,14 @@ public class EditPanel extends javax.swing.JPanel {
          return cellTypeSelected;
     }
 
+    public boolean getMapGridChanged(){
+        return mapGridChanged;
+    }
+
+    public void setMapGridChanged(boolean aFlag){
+        mapGridChanged=aFlag;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup cellTypeButtons;
     private javax.swing.JButton changeGridSizeButton;
@@ -399,4 +409,5 @@ public class EditPanel extends javax.swing.JPanel {
     GridPanel gridPanel;
     EwakuacjaView mainWindow=null;
     private boolean editingMode = false;
+    private boolean mapGridChanged = false;
 }
