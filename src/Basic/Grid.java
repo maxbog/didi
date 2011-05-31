@@ -366,39 +366,40 @@ public class Grid {
             final Potential downleft = new Potential(new Position(current.pos.row + 1, current.pos.column - 1), current.dist+1);
             final Potential downright = new Potential(new Position(current.pos.row + 1, current.pos.column + 1), current.dist+1);
 
-            if (shouldProcessPotential(left, processed)) {
+            if (shouldProcessPotential(left, exit, processed)) {
                 toProcess.add(left);
             }
-            if (shouldProcessPotential(right, processed)) {
+            if (shouldProcessPotential(right, exit, processed)) {
                 toProcess.add(right);
             }
-            if (shouldProcessPotential(up, processed)) {
+            if (shouldProcessPotential(up, exit, processed)) {
                 toProcess.add(up);
             }
-            if (shouldProcessPotential(down, processed)) {
+            if (shouldProcessPotential(down, exit, processed)) {
                 toProcess.add(down);
             }
             
-            if (!isWall(up.pos) && !isWall(left.pos) && shouldProcessPotential(upleft, processed)) {
+            if (!isWall(up.pos) && !isWall(left.pos) && shouldProcessPotential(upleft, exit, processed)) {
                 toProcess.add(upleft);
             }
-            if (!isWall(up.pos) && !isWall(right.pos) && shouldProcessPotential(upright, processed)) {
+            if (!isWall(up.pos) && !isWall(right.pos) && shouldProcessPotential(upright, exit, processed)) {
                 toProcess.add(upright);
             }
-            if (!isWall(down.pos) && !isWall(left.pos) && shouldProcessPotential(downleft, processed)) {
+            if (!isWall(down.pos) && !isWall(left.pos) && shouldProcessPotential(downleft, exit, processed)) {
                 toProcess.add(downleft);
             }
-            if (!isWall(down.pos) && !isWall(right.pos) && shouldProcessPotential(downright, processed)) {
+            if (!isWall(down.pos) && !isWall(right.pos) && shouldProcessPotential(downright, exit, processed)) {
                 toProcess.add(downright);
             }
         }
     }
 
-    private boolean shouldProcessPotential(final Potential pot, Set<Potential> processed) {
+    private boolean shouldProcessPotential(final Potential pot, int exit, Set<Potential> processed) {
         return pot.pos.row >= 0 && pot.pos.row < getRowsNumber()
                 && pot.pos.column >= 0 && pot.pos.column < getColumnsNumber()
                 && mapGrid[pot.pos.row][pot.pos.column] != Grid.EXIT
                 && mapGrid[pot.pos.row][pot.pos.column] != Grid.WALL
+                && pot.dist < potentialGrid[pot.pos.row][pot.pos.column][exit+1]
                 && !processed.contains(pot);
     }
 
