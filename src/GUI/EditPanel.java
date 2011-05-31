@@ -319,6 +319,9 @@ public class EditPanel extends javax.swing.JPanel {
 
         if (mainWindow != null) {
             mainWindow.setEditMode(enable);
+            if(!enable) {
+                gridPanel.getGrid().identifyExits();
+            }
         }
 
     }//GEN-LAST:event_editingButtonActionPerformed

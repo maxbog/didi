@@ -5,6 +5,7 @@
 package Basic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -119,10 +120,18 @@ public class Grid {
      * Calculates potentials of cells (distaces to exits).
      */
     public void calculatePotentials() {
-        //TODO liczenie potencjalow - odleglosci od wszystkich wejsc.
-        //proponuje:
-        //potentialGrid[i][j]=new int[a+1]; - a = ilosc wyjsc
-        //potentialGrid[i][j][0]=min; - min = odleglosc do najblizszego wyjscia
+        for (int i = 0; i < getExitsCount(); ++i) {
+            calculatePotential(i);
+        }
+        for(int row = 0; row < getRowsNumber(); ++row) {
+            for(int column = 0; column < getColumnsNumber(); ++column) {
+                for (int exit = 1; exit < exits.size() + 1; ++exit) {
+                    if(potentialGrid[row][column][0] > potentialGrid[row][column][exit]) {
+                        potentialGrid[row][column][0] = potentialGrid[row][column][exit];
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -272,6 +281,14 @@ public class Grid {
                 }
             }
         }
+        potentialGrid = new int[getRowsNumber()][getColumnsNumber()][exits.size() + 1];
+        for (int row = 0; row < getRowsNumber(); ++row) {
+            for (int column = 0; column < getColumnsNumber(); ++column) {
+                for (int exit = 0; exit < exits.size() + 1; ++exit) {
+                    potentialGrid[row][column][exit] = Integer.MAX_VALUE;
+                }
+            }
+        }
     }
 
     public int getExitsCount() {
@@ -296,6 +313,7 @@ public class Grid {
         toProcess.add(position);
         while (!toProcess.isEmpty()) {
             Position current = toProcess.poll();
+            processed.add(current);
 
             inExit.add(current);
 
@@ -326,6 +344,70 @@ public class Grid {
                 && mapGrid[pos.row][pos.column] == Grid.EXIT
                 && !processed.contains(pos);
     }
+
+    private void calculatePotential(int exit) {
+        Queue<Potential> toProcess = new LinkedList<Potential>();
+        HashSet<Potential> processed = new HashSet<Potential>();
+        for(Position exitPos : exits.get(exit)) {
+            toProcess.add(new Potential(exitPos,0));
+        }
+        while (!toProcess.isEmpty()) {
+            Potential current = toProcess.poll();
+            processed.add(current);
+
+            potentialGrid[current.pos.row][current.pos.column][exit+1] = current.dist;
+
+            final Potential left = new Potential(new Position(current.pos.row, current.pos.column - 1), current.dist+1);
+            final Potential right = new Potential(new Position(current.pos.row, current.pos.column + 1), current.dist+1);
+            final Potential up = new Potential(new Position(current.pos.row - 1, current.pos.column), current.dist+1);
+            final Potential down = new Potential(new Position(current.pos.row + 1, current.pos.column), current.dist+1);
+            final Potential upleft = new Potential(new Position(current.pos.row - 1, current.pos.column - 1), current.dist+1);
+            final Potential upright = new Potential(new Position(current.pos.row - 1, current.pos.column + 1), current.dist+1);
+            final Potential downleft = new Potential(new Position(current.pos.row + 1, current.pos.column - 1), current.dist+1);
+            final Potential downright = new Potential(new Position(current.pos.row + 1, current.pos.column + 1), current.dist+1);
+
+            if (shouldProcessPotential(left, processed)) {
+                toProcess.add(left);
+            }
+            if (shouldProcessPotential(right, processed)) {
+                toProcess.add(right);
+            }
+            if (shouldProcessPotential(up, processed)) {
+                toProcess.add(up);
+            }
+            if (shouldProcessPotential(down, processed)) {
+                toProcess.add(down);
+            }
+            
+            if (!isWall(up.pos) && !isWall(left.pos) && shouldProcessPotential(upleft, processed)) {
+                toProcess.add(upleft);
+            }
+            if (!isWall(up.pos) && !isWall(right.pos) && shouldProcessPotential(upright, processed)) {
+                toProcess.add(upright);
+            }
+            if (!isWall(down.pos) && !isWall(left.pos) && shouldProcessPotential(downleft, processed)) {
+                toProcess.add(downleft);
+            }
+            if (!isWall(down.pos) && !isWall(right.pos) && shouldProcessPotential(downright, processed)) {
+                toProcess.add(downright);
+            }
+        }
+    }
+
+    private boolean shouldProcessPotential(final Potential pot, Set<Potential> processed) {
+        return pot.pos.row >= 0 && pot.pos.row < getRowsNumber()
+                && pot.pos.column >= 0 && pot.pos.column < getColumnsNumber()
+                && mapGrid[pot.pos.row][pot.pos.column] != Grid.EXIT
+                && mapGrid[pot.pos.row][pot.pos.column] != Grid.WALL
+                && !processed.contains(pot);
+    }
+
+    private boolean isWall(final Position pos) {
+        return pos.row >= 0 && pos.row < getRowsNumber()
+                && pos.column >= 0 && pos.column < getColumnsNumber()
+                && mapGrid[pos.row][pos.column] == Grid.WALL;
+    }
+
 
     /**
      * Klasa pomocnicza reprezentujaca pozycje na mapie.
@@ -372,6 +454,34 @@ public class Grid {
         @Override
         public String toString() {
             return String.format("(%d,%d)", row, column);
+        }
+    }
+
+    private class Potential {
+        public Potential(Position pos, int dist) {
+            this.pos = pos;
+            this.dist = dist;
+        }
+        
+        public Position pos;
+        public int dist;
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof Potential)) {
+                return false;
+            }
+
+            Potential pot = (Potential) obj;
+            return dist == pot.dist && pos == pot.pos;
+        }
+
+        @Override
+        public int hashCode() {
+            return pos.hashCode() ^ dist;
         }
     }
 }
