@@ -257,7 +257,7 @@ public class EwakuacjaView extends FrameView {
                             .addComponent(densityRadioButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(gridScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
-                    .addComponent(optionsTabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 296, Short.MAX_VALUE))
+                    .addComponent(optionsTabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -269,6 +269,11 @@ public class EwakuacjaView extends FrameView {
 
         newMenuButton.setText(resourceMap.getString("newMenuButton.text")); // NOI18N
         newMenuButton.setName("newMenuButton"); // NOI18N
+        newMenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newMenuButtonActionPerformed(evt);
+            }
+        });
         OpenFileMenuButton.add(newMenuButton);
 
         openMenuButton.setText(resourceMap.getString("openMenuButton.text")); // NOI18N
@@ -456,6 +461,7 @@ public class EwakuacjaView extends FrameView {
 }//GEN-LAST:event_optionsTabsStateChanged
 
     private void openMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuButtonActionPerformed
+        editPanel.stopEditing();
         if(editPanel.getMapGridChanged()){
             if(openConfirmWindow == null){
                 openConfirmWindow = new OpenConfirmWindow(this.getFrame(), true);
@@ -484,6 +490,7 @@ public class EwakuacjaView extends FrameView {
     }//GEN-LAST:event_openMenuButtonActionPerformed
 
     private void saveMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuButtonActionPerformed
+        editPanel.stopEditing();
         if(fileChooser == null){
             fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File(".\\"));
@@ -494,6 +501,26 @@ public class EwakuacjaView extends FrameView {
             editPanel.setMapGridChanged(false);
         }
     }//GEN-LAST:event_saveMenuButtonActionPerformed
+
+    private void newMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuButtonActionPerformed
+        editPanel.stopEditing();
+        if(editPanel.getMapGridChanged()){
+            if(openConfirmWindow == null){
+                openConfirmWindow = new OpenConfirmWindow(this.getFrame(), true);
+            }
+            else
+                openConfirmWindow.setVisible(true);
+
+            switch(openConfirmWindow.getReturnStatus()){
+                case OpenConfirmWindow.RET_CANCEL: return;
+                case OpenConfirmWindow.RET_SAVE: saveMenuButtonActionPerformed(evt); break;
+                case OpenConfirmWindow.RET_DECLINE: break;
+                default: return;
+            }
+        }
+        grid=new Grid(0,0);
+        gridPanel.setGrid(grid);
+    }//GEN-LAST:event_newMenuButtonActionPerformed
 
     /**
      * 

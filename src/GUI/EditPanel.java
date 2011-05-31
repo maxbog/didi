@@ -302,8 +302,11 @@ public class EditPanel extends javax.swing.JPanel {
     private void editingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editingButtonActionPerformed
         boolean enable = editingButton.isSelected();
         if (enable) {
+            rowsSpinner.setValue(gridPanel.getGridRowsNumber());
+            columnsSpinner.setValue(gridPanel.getGridColumnsNumber());
             mapGridChanged = true;
         }
+
         editingMode = enable;
 
         rowsSpinner.setEnabled(enable);
@@ -318,20 +321,20 @@ public class EditPanel extends javax.swing.JPanel {
             mainWindow.setEditMode(enable);
         }
 
-        if (enable) {
-            rowsSpinner.setValue(gridPanel.getGridRowsNumber());
-            columnsSpinner.setValue(gridPanel.getGridColumnsNumber());
-        }
     }//GEN-LAST:event_editingButtonActionPerformed
 
     private void rowsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rowsSpinnerStateChanged
-        gridPanel.setGridSize(Integer.parseInt(rowsSpinner.getValue().toString()),
-                Integer.parseInt(columnsSpinner.getValue().toString()));
+        if (editingMode) {
+            gridPanel.setGridSize(Integer.parseInt(rowsSpinner.getValue().toString()),
+                    Integer.parseInt(columnsSpinner.getValue().toString()));
+        }
     }//GEN-LAST:event_rowsSpinnerStateChanged
 
     private void columnsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_columnsSpinnerStateChanged
-        gridPanel.setGridSize(Integer.parseInt(rowsSpinner.getValue().toString()),
-                Integer.parseInt(columnsSpinner.getValue().toString()));
+        if (editingMode) {
+            gridPanel.setGridSize(Integer.parseInt(rowsSpinner.getValue().toString()),
+                    Integer.parseInt(columnsSpinner.getValue().toString()));
+        }
     }//GEN-LAST:event_columnsSpinnerStateChanged
 
     /**
