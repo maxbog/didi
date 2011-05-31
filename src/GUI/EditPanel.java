@@ -8,7 +8,6 @@
  *
  * Created on 2011-05-28, 19:38:45
  */
-
 package GUI;
 
 import Basic.Grid;
@@ -26,7 +25,7 @@ public class EditPanel extends javax.swing.JPanel {
         initFields();
     }
 
-    private void initFields(){
+    private void initFields() {
         emptyColorPanel.setBackground(CellColors.getMapColor(Grid.EMPTY));
         wallColorPanel.setBackground(CellColors.getMapColor(Grid.WALL));
         exitColorPanel.setBackground(CellColors.getMapColor(Grid.EXIT));
@@ -302,8 +301,9 @@ public class EditPanel extends javax.swing.JPanel {
 
     private void editingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editingButtonActionPerformed
         boolean enable = editingButton.isSelected();
-        if(enable)
+        if (enable) {
             mapGridChanged = true;
+        }
         editingMode = enable;
 
         rowsSpinner.setEnabled(enable);
@@ -314,10 +314,11 @@ public class EditPanel extends javax.swing.JPanel {
         exitCellButton.setEnabled(enable);
         personCellButton.setEnabled(enable);
 
-        if(mainWindow != null)
+        if (mainWindow != null) {
             mainWindow.setEditMode(enable);
+        }
 
-        if(enable){
+        if (enable) {
             rowsSpinner.setValue(gridPanel.getGridRowsNumber());
             columnsSpinner.setValue(gridPanel.getGridColumnsNumber());
         }
@@ -337,7 +338,7 @@ public class EditPanel extends javax.swing.JPanel {
      * Setting gridPanel, will not work without this.
      * @param panel
      */
-    public void setGridPanel(GridPanel panel){
+    public void setGridPanel(GridPanel panel) {
         gridPanel = panel;
     }
 
@@ -345,7 +346,7 @@ public class EditPanel extends javax.swing.JPanel {
      * Setting mainWindow, will not work without this.
      * @param window
      */
-    public void setMainWindow(EwakuacjaView window){
+    public void setMainWindow(EwakuacjaView window) {
         mainWindow = window;
     }
 
@@ -353,14 +354,14 @@ public class EditPanel extends javax.swing.JPanel {
      * Lets to check if editing mode is enabled.
      * @return true, if editing mode is enabled.
      */
-    public boolean isEditingMode(){
+    public boolean isEditingMode() {
         return editingMode;
     }
 
     /**
      * Exit from editing mode.
      */
-    public void stopEditing(){
+    public void stopEditing() {
         editingButton.setSelected(false);
         editingButtonActionPerformed(null);
     }
@@ -369,8 +370,8 @@ public class EditPanel extends javax.swing.JPanel {
      * Use this method to get type of cell selected.
      * @return selected cell type, according to values in Grid class.
      */
-    public int getCellTypeSelected(){
-         return cellTypeSelected;
+    public int getCellTypeSelected() {
+        return cellTypeSelected;
     }
 
     /**
@@ -378,7 +379,7 @@ public class EditPanel extends javax.swing.JPanel {
      * Precisely it checks if editMode has been enabled.
      * @return
      */
-    public boolean getMapGridChanged(){
+    public boolean getMapGridChanged() {
         return mapGridChanged;
     }
 
@@ -386,10 +387,9 @@ public class EditPanel extends javax.swing.JPanel {
      * Sents information about changing grid after saving.
      * @param aFlag
      */
-    public void setMapGridChanged(boolean aFlag){
-        mapGridChanged=aFlag;
+    public void setMapGridChanged(boolean aFlag) {
+        mapGridChanged = aFlag;
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup cellTypeButtons;
     private javax.swing.JSpinner columnsSpinner;
@@ -408,10 +408,9 @@ public class EditPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton wallCellButton;
     private javax.swing.JPanel wallColorPanel;
     // End of variables declaration//GEN-END:variables
-
     int cellTypeSelected = Grid.EMPTY;
     GridPanel gridPanel;
-    EwakuacjaView mainWindow=null;
+    EwakuacjaView mainWindow = null;
     private boolean editingMode = false;
     private boolean mapGridChanged = false;
 }

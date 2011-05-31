@@ -4,8 +4,10 @@
  */
 package Basic;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
@@ -29,6 +31,7 @@ public class Grid {
     private int[][] mapGrid;
     private int[][][] potentialGrid;
     private double[][] densityGrid;
+    private List<Set<Position>> exits;
 
     /***************AllGridsFunctions***************/
     /**
@@ -68,7 +71,7 @@ public class Grid {
      * @param rows
      * @param columns
      */
-    public void setSize(int rows, int columns) {
+    public final void setSize(int rows, int columns) {
         int[][] temp = new int[rows][columns];
         potentialGrid = new int[rows][columns][1];
         densityGrid = new double[rows][columns];
@@ -145,7 +148,7 @@ public class Grid {
         }
         for (int row = 0; row < getRowsNumber(); ++row) {
             for (int column = 0; column < getColumnsNumber(); ++column) {
-                if (mapGrid[row][column] != WALL) {
+                if (mapGrid[row][column] != Grid.WALL) {
                     calculateDensity(row, column);
                 }
             }
@@ -171,16 +174,16 @@ public class Grid {
             final Position up = new Position(current.row - 1, current.column);
             final Position down = new Position(current.row + 1, current.column);
 
-            if(shouldBeProcessed(left,row,column)) {
+            if (shouldBeProcessed(left, row, column)) {
                 toProcess.add(left);
             }
-            if(shouldBeProcessed(right,row,column)) {
+            if (shouldBeProcessed(right, row, column)) {
                 toProcess.add(right);
             }
-            if(shouldBeProcessed(up,row,column)) {
+            if (shouldBeProcessed(up, row, column)) {
                 toProcess.add(up);
             }
-            if(shouldBeProcessed(down,row,column)) {
+            if (shouldBeProcessed(down, row, column)) {
                 toProcess.add(down);
             }
         }
@@ -213,16 +216,16 @@ public class Grid {
             final Position up = new Position(current.row - 1, current.column);
             final Position down = new Position(current.row + 1, current.column);
 
-            if(shouldBeProcessed(left,row,column)) {
+            if (shouldBeProcessed(left, row, column)) {
                 toProcess.add(left);
             }
-            if(shouldBeProcessed(right,row,column)) {
+            if (shouldBeProcessed(right, row, column)) {
                 toProcess.add(right);
             }
-            if(shouldBeProcessed(up,row,column)) {
+            if (shouldBeProcessed(up, row, column)) {
                 toProcess.add(up);
             }
-            if(shouldBeProcessed(down,row,column)) {
+            if (shouldBeProcessed(down, row, column)) {
                 toProcess.add(down);
             }
         }
@@ -237,13 +240,13 @@ public class Grid {
             return false;
         }
         // omijamy sciany
-        if (mapGrid[current.row][current.column] == WALL) {
+        if (mapGrid[current.row][current.column] == Grid.WALL) {
             return false;
         }
         // czy miescimy sie w metryce
         int dRow = current.row - row;
         int dColumn = current.column - column;
-        if (dRow * dRow + dColumn * dColumn > FLOOD_RADIUS * FLOOD_RADIUS) {
+        if (dRow * dRow + dColumn * dColumn > Grid.FLOOD_RADIUS * Grid.FLOOD_RADIUS) {
             return false;
         }
         return true;
@@ -259,25 +262,94 @@ public class Grid {
         return densityGrid[row][column];
     }
 
+    public void identifyExits() {
+        exits = new ArrayList<Set<Position>>();
+        Set<Position> processed = new HashSet<Position>();
+        for (int row = 0; row < getRowsNumber(); ++row) {
+            for (int column = 0; column < getColumnsNumber(); ++column) {
+                if (mapGrid[row][column] == Grid.EXIT && !processed.contains(new Position(row, column))) {
+                    exits.add(identifyExit(new Position(row, column), processed));
+                }
+            }
+        }
+    }
+
+    public int getExitsCount() {
+        return exits.size();
+    }
+
+    public Set<Position> getExit(int exit) {
+        return exits.get(exit);
+    }
+
     /**
      * calculates all grids, basing on mapGrid.
      */
-    public void calculateAll(){
+    public void calculateAll() {
         this.calculateDensities();
         this.calculatePotentials();
     }
 
+    private Set<Position> identifyExit(Position position, Set<Position> processed) {
+        Queue<Position> toProcess = new LinkedList<Position>();
+        HashSet<Position> inExit = new HashSet<Position>();
+        toProcess.add(position);
+        while (!toProcess.isEmpty()) {
+            Position current = toProcess.poll();
+
+            inExit.add(current);
+
+            final Position left = new Position(current.row, current.column - 1);
+            final Position right = new Position(current.row, current.column + 1);
+            final Position up = new Position(current.row - 1, current.column);
+            final Position down = new Position(current.row + 1, current.column);
+
+            if (shouldProcessExit(left, processed)) {
+                toProcess.add(left);
+            }
+            if (shouldProcessExit(right, processed)) {
+                toProcess.add(right);
+            }
+            if (shouldProcessExit(up, processed)) {
+                toProcess.add(up);
+            }
+            if (shouldProcessExit(down, processed)) {
+                toProcess.add(down);
+            }
+        }
+        return inExit;
+    }
+
+    private boolean shouldProcessExit(final Position pos, Set<Position> processed) {
+        return pos.row >= 0 && pos.row < getRowsNumber()
+                && pos.column >= 0 && pos.column < getColumnsNumber()
+                && mapGrid[pos.row][pos.column] == Grid.EXIT
+                && !processed.contains(pos);
+    }
+
     /**
-     * Klasa pomocnicza dla liczenia gestosci, moze sie tez przydac gdzie indziej.
+     * Klasa pomocnicza reprezentujaca pozycje na mapie.
      * Przechowuje dwa inty - wiersz i kolumne.
      */
-    class Position {
+    public class Position {
 
+        /**
+         * Tworzy nowa pozycje
+         * @param row wiersz
+         * @param column kolumna
+         */
         public Position(int row, int column) {
             this.row = row;
             this.column = column;
         }
-        public int row, column;
+        /**
+         * Wiersz
+         */
+        public int row;
+        /**
+         * kolumna
+         */
+        public int column;
 
         @Override
         public boolean equals(Object obj) {
