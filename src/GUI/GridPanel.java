@@ -251,6 +251,38 @@ public class GridPanel extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Paints potential cells.
+     * @param g2d
+     * @param rect
+     */
+    public void paintBottleneck(Graphics2D g2d, Rectangle rect){
+        g2d.setFont(new Font("serif",Font.PLAIN,cellSize*3/5));
+        for(int i=0;i<grid.getRowsNumber();i++){
+            for(int j=0;j<grid.getColumnsNumber();j++){
+                int xView = xMargin+cellSize*j;
+                int yView = yMargin+cellSize*i;
+                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
+                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+                    continue;
+                if(grid.getMapCell(i, j) == Grid.WALL
+                        || grid.getMapCell(i, j) == Grid.OBSTACLE)
+                    g2d.setColor(CellColors.getMapColor(grid.getMapCell(i, j)));
+                else
+                    g2d.setColor(CellColors.getDensityColor(
+                            grid.getBottleNeck(i, j)[visibleExit]));
+                g2d.fillRect( xView, yView, cellSize, cellSize);
+                if(drawNumbers && grid.getMapCell(i, j) != Grid.WALL
+                        && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize>12){
+                    g2d.setColor(Color.BLACK);
+                    String bottleNeck = Double.toString(grid.getBottleNeck(i, j)[visibleExit]*100);
+                    bottleNeck = bottleNeck.substring(0, bottleNeck.indexOf('.'));
+                    g2d.drawString(bottleNeck, xView+2, yView+cellSize-3);
+                }
+            }
+        }
+    }
+
     @Override
     public void paint(Graphics g)
     {
@@ -273,6 +305,7 @@ public class GridPanel extends javax.swing.JPanel {
             case GridPanel.VISIBLE_MAP: paintMap(g2d, rect); break;
             case GridPanel.VISIBLE_POTENTIAL: paintPotential(g2d, rect); break;
             case GridPanel.VISIBLE_DENSITY: paintDensity(g2d, rect); break;
+            case GridPanel.VISIBLE_BOTTLENECK: paintBottleneck(g2d, rect); break;
         }
 
         if(drawLines){

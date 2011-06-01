@@ -357,6 +357,7 @@ public class EditPanel extends javax.swing.JPanel {
             if(!enable) {
                 gridPanel.getGrid().identifyExits();
                 gridPanel.getGrid().calculatePotentials();
+                //gridPanel.getGrid().calculateBottleNecks();
             }
         }
 
