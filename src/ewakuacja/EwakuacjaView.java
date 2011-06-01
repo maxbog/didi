@@ -446,7 +446,7 @@ public class EwakuacjaView extends FrameView {
         if(potentialRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_POTENTIAL);
 
-            if(grid.getExitsCount() != potentialComboBox.getItemCount()){
+            if(grid.getExitsCount() + 1 != potentialComboBox.getItemCount()){
                 javax.swing.DefaultComboBoxModel model = new DefaultComboBoxModel();
                 model.addElement("Najlepsze");
                 for(int i = 0; i < grid.getExitsCount(); i++)

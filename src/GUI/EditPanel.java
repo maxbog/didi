@@ -321,6 +321,7 @@ public class EditPanel extends javax.swing.JPanel {
             mainWindow.setEditMode(enable);
             if(!enable) {
                 gridPanel.getGrid().identifyExits();
+                gridPanel.getGrid().calculatePotentials();
             }
         }
 
