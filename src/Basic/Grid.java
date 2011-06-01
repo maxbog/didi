@@ -454,7 +454,8 @@ public class Grid {
         {
             for( int j = 0; j < this.getColumnsNumber(); j++)
             {
-                bottleneckGrid[i][j] = this.calculateBottleNeck(i,j);
+                if(!this.isWall(new Position(i, j)))
+                    bottleneckGrid[i][j] = this.calculateBottleNeck(i,j);
             }
         }
     }
@@ -489,6 +490,11 @@ public class Grid {
             coefs[i] = M/N;
         }
         return coefs;
+    }
+
+    public double[] getBottleNeck(int row, int column)
+    {
+        return bottleneckGrid[row][column];
     }
 
     /* ###  ###*/
