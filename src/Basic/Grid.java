@@ -32,6 +32,7 @@ public class Grid {
     private int[][] mapGrid;
     private int[][][] potentialGrid;
     private double[][] densityGrid;
+    private double[][][] bottleneckGrid;
     private List<Set<Position>> exits;
     private int maxPotential;
 
@@ -444,6 +445,53 @@ public class Grid {
         this.identifyExits();
         this.calculatePotentials();
     }
+
+    /* Bottleneck functions */
+
+    public void calculateBottleNecks()
+    {
+        for( int i = 0; i < this.getRowsNumber(); i++)
+        {
+            for( int j = 0; j < this.getColumnsNumber(); j++)
+            {
+                bottleneckGrid[i][j] = this.calculateBottleNeck(i,j);
+            }
+        }
+    }
+
+    public double[] calculateBottleNeck(int row, int column)
+    {
+        final Position[] Positions = new Position[8];
+        Positions[0] = new Position(row+1,column-1); // leftTop =
+        Positions[1] = new Position(row+1,column); // middleTop
+        Positions[2] = new Position(row+1,column+1); // rightTop
+        Positions[3] = new Position(row,column-1); //leftMiddle
+        Positions[4] = new Position(row,column+1); //rightMiddle
+        Positions[5] = new Position(row-1,column-1); //leftBottom
+        Positions[6] = new Position(row-1,column); //middleBottom
+        Positions[7] = new Position(row-1,column+1); //rightBottom
+
+        int[] treshold = this.getPotential(row, column);
+        double[] coefs = new double[this.getExitsCount()];
+
+        for(int i = 0; i < this.getExitsCount(); i++)
+        {
+            int M = 0;
+            int N = 0;
+            for(int j = 0; j < Positions.length; j++)
+            {
+                if(!this.isWall(Positions[j]))
+                    if(this.getPotential(row,column)[i]>=treshold[i])
+                        N++;
+                    else
+                        M++;
+            }
+            coefs[i] = M/N;
+        }
+        return coefs;
+    }
+
+    /* ###  ###*/
 
     /**
      * Klasa pomocnicza reprezentujaca pozycje na mapie.
