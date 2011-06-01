@@ -171,8 +171,9 @@ public class EwakuacjaView extends FrameView {
         gridPanel = new GUI.GridPanel();
         mapRadioButton = new javax.swing.JRadioButton();
         potentialRadioButton = new javax.swing.JRadioButton();
-        potentialComboBox = new javax.swing.JComboBox();
+        exitComboBox = new javax.swing.JComboBox();
         densityRadioButton = new javax.swing.JRadioButton();
+        bottleneckRadioButton = new javax.swing.JRadioButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu OpenFileMenuButton = new javax.swing.JMenu();
         newMenuButton = new javax.swing.JMenuItem();
@@ -222,7 +223,7 @@ public class EwakuacjaView extends FrameView {
         gridPanel.setLayout(gridPanelLayout);
         gridPanelLayout.setHorizontalGroup(
             gridPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 320, Short.MAX_VALUE)
+            .addGap(0, 429, Short.MAX_VALUE)
         );
         gridPanelLayout.setVerticalGroup(
             gridPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,12 +251,12 @@ public class EwakuacjaView extends FrameView {
             }
         });
 
-        potentialComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Najlepsze", "Wyjście 1", "Wyjście 2", "Wyjście 3" }));
-        potentialComboBox.setEnabled(false);
-        potentialComboBox.setName("potentialComboBox"); // NOI18N
-        potentialComboBox.addActionListener(new java.awt.event.ActionListener() {
+        exitComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Najlepsze", "Wyjście 1", "Wyjście 2", "Wyjście 3" }));
+        exitComboBox.setEnabled(false);
+        exitComboBox.setName("exitComboBox"); // NOI18N
+        exitComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                potentialComboBoxActionPerformed(evt);
+                exitComboBoxActionPerformed(evt);
             }
         });
 
@@ -268,6 +269,15 @@ public class EwakuacjaView extends FrameView {
             }
         });
 
+        viewRadioButtons.add(bottleneckRadioButton);
+        bottleneckRadioButton.setText(resourceMap.getString("bottleneckRadioButton.text")); // NOI18N
+        bottleneckRadioButton.setName("bottleneckRadioButton"); // NOI18N
+        bottleneckRadioButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                bottleneckRadioButtonStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -275,15 +285,17 @@ public class EwakuacjaView extends FrameView {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(gridScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(mapRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(densityRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(potentialRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(potentialComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bottleneckRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(densityRadioButton))
-                    .addComponent(gridScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
+                        .addComponent(exitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(optionsTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -296,12 +308,13 @@ public class EwakuacjaView extends FrameView {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(mapRadioButton)
+                            .addComponent(densityRadioButton)
                             .addComponent(potentialRadioButton)
-                            .addComponent(potentialComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(densityRadioButton))
+                            .addComponent(bottleneckRadioButton)
+                            .addComponent(exitComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(gridScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
-                    .addComponent(optionsTabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 296, Short.MAX_VALUE))
+                        .addComponent(gridScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
+                    .addComponent(optionsTabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -429,13 +442,13 @@ public class EwakuacjaView extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(statusMessageLabel)
                     .addComponent(StatusLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 441, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -474,8 +487,10 @@ public class EwakuacjaView extends FrameView {
     }//GEN-LAST:event_ShowGridLinesActionPerformed
 
     private void mapRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mapRadioButtonStateChanged
-        if(mapRadioButton.isSelected())
+        if(mapRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_MAP);
+            exitComboBox.setEditable(false);
+        }
         else
             editPanel.stopEditing();
     }//GEN-LAST:event_mapRadioButtonStateChanged
@@ -484,23 +499,23 @@ public class EwakuacjaView extends FrameView {
         if(potentialRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_POTENTIAL);
 
-            if(grid.getExitsCount() + 1 != potentialComboBox.getItemCount()){
+            if(grid.getExitsCount() + 1 != exitComboBox.getItemCount()){
                 javax.swing.DefaultComboBoxModel model = new DefaultComboBoxModel();
                 model.addElement("Najlepsze");
                 for(int i = 0; i < grid.getExitsCount(); i++)
                     model.addElement("Wyjście " + Integer.toString(i+1));
-                potentialComboBox.setModel(model);
-                gridPanel.setVisiblePotential(potentialComboBox.getSelectedIndex());
+                exitComboBox.setModel(model);
+                gridPanel.setVisibleExit(exitComboBox.getSelectedIndex());
             }
-            potentialComboBox.setEnabled(true);
+            exitComboBox.setEnabled(true);
         }
-        else
-            potentialComboBox.setEnabled(false);
     }//GEN-LAST:event_potentialRadioButtonStateChanged
 
     private void densityRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_densityRadioButtonStateChanged
-        if(densityRadioButton.isSelected())
+        if(densityRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_DENSITY);
+            exitComboBox.setEnabled(false);
+        }
     }//GEN-LAST:event_densityRadioButtonStateChanged
 
     private void showGridNumbersMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showGridNumbersMenuButtonActionPerformed
@@ -575,9 +590,25 @@ public class EwakuacjaView extends FrameView {
         gridPanel.setGrid(grid);
     }//GEN-LAST:event_newMenuButtonActionPerformed
 
-    private void potentialComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_potentialComboBoxActionPerformed
-        gridPanel.setVisiblePotential(potentialComboBox.getSelectedIndex());
-    }//GEN-LAST:event_potentialComboBoxActionPerformed
+    private void exitComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitComboBoxActionPerformed
+        gridPanel.setVisibleExit(exitComboBox.getSelectedIndex());
+    }//GEN-LAST:event_exitComboBoxActionPerformed
+
+    private void bottleneckRadioButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_bottleneckRadioButtonStateChanged
+        if(bottleneckRadioButton.isSelected()){
+            gridPanel.setVisibleGrid(GridPanel.VISIBLE_BOTTLENECK);
+
+            if(grid.getExitsCount() + 1 != exitComboBox.getItemCount()){
+                javax.swing.DefaultComboBoxModel model = new DefaultComboBoxModel();
+                model.addElement("Najlepsze");
+                for(int i = 0; i < grid.getExitsCount(); i++)
+                    model.addElement("Wyjście " + Integer.toString(i+1));
+                exitComboBox.setModel(model);
+                gridPanel.setVisibleExit(exitComboBox.getSelectedIndex());
+            }
+            exitComboBox.setEnabled(true);
+        }
+    }//GEN-LAST:event_bottleneckRadioButtonStateChanged
 
     /**
      * 
@@ -590,8 +621,10 @@ public class EwakuacjaView extends FrameView {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBoxMenuItem ShowGridLines;
     private javax.swing.JLabel StatusLabel;
+    private javax.swing.JRadioButton bottleneckRadioButton;
     private javax.swing.JRadioButton densityRadioButton;
     private GUI.EditPanel editPanel;
+    private javax.swing.JComboBox exitComboBox;
     private GUI.GridPanel gridPanel;
     private javax.swing.JScrollPane gridScrollPane;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -604,7 +637,6 @@ public class EwakuacjaView extends FrameView {
     private javax.swing.JMenuItem openMenuButton;
     private GUI.OptionsPanel optionsPanel1;
     private javax.swing.JTabbedPane optionsTabs;
-    private javax.swing.JComboBox potentialComboBox;
     private javax.swing.JRadioButton potentialRadioButton;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem saveMenuButton;

@@ -29,6 +29,7 @@ public class GridPanel extends javax.swing.JPanel {
     public static final int VISIBLE_MAP = 0;
     public static final int VISIBLE_POTENTIAL = 1;
     public static final int VISIBLE_DENSITY = 2;
+    public static final int VISIBLE_BOTTLENECK = 3;
 
     /** Creates new form NewJPanel */
     public GridPanel() {
@@ -202,12 +203,12 @@ public class GridPanel extends javax.swing.JPanel {
                     g2d.setColor(CellColors.getMapColor(grid.getMapCell(i, j)));
                 else
                     g2d.setColor(CellColors.getPotentialColor(
-                            grid.getPotential(i, j)[visiblePotential],grid.getMaxPotential()));
+                            grid.getPotential(i, j)[visibleExit],grid.getMaxPotential()));
                 g2d.fillRect( xView, yView, cellSize, cellSize);
                 if(drawNumbers && grid.getMapCell(i, j) != Grid.WALL
                         && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize>12){
                     g2d.setColor(Color.BLACK);
-                    int potNumber = grid.getPotential(i, j)[visiblePotential];
+                    int potNumber = grid.getPotential(i, j)[visibleExit];
                     String potential;
                     if(potNumber == Integer.MAX_VALUE)
                         potential = "∞";
@@ -394,7 +395,8 @@ public class GridPanel extends javax.swing.JPanel {
         switch(aFlag){
             case GridPanel.VISIBLE_POTENTIAL:
             case GridPanel.VISIBLE_MAP:
-            case GridPanel.VISIBLE_DENSITY:{
+            case GridPanel.VISIBLE_DENSITY:
+            case GridPanel.VISIBLE_BOTTLENECK:{
                 visibleGrid = aFlag;
                 break;
             }
@@ -406,10 +408,10 @@ public class GridPanel extends javax.swing.JPanel {
     }
 
 
-    public void setVisiblePotential(int exit){
+    public void setVisibleExit(int exit){
         if(grid.getColumnsNumber() != 0 && grid.getRowsNumber() != 0 &&
                 exit < grid.getPotential(0, 0).length)
-            visiblePotential = exit;
+            visibleExit = exit;
         this.repaintGrid();
     }
 
@@ -423,7 +425,7 @@ public class GridPanel extends javax.swing.JPanel {
     private boolean drawNumbers = true;
     private Grid grid = null;
     private int visibleGrid = this.VISIBLE_MAP;
-    private int visiblePotential = 0;
+    private int visibleExit = 0;
 
     EditPanel editPanel;
     JScrollPane scrollPane;
