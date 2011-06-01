@@ -497,7 +497,7 @@ public class Grid {
             if(N > M && N!=0)
                 coefs[i] = (double)M/((double)N);
             else if(N==0)
-                coefs[i] = 1;
+                coefs[i] = 0;
             else
                 coefs[i] = 0;
             //System.out.println(coefs[i]+" "+M+" "+N);
