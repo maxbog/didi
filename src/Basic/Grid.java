@@ -78,6 +78,7 @@ public class Grid {
         int[][] temp = new int[rows][columns];
         potentialGrid = new int[rows][columns][1];
         densityGrid = new double[rows][columns];
+        bottleneckGrid = new double[rows][columns][1];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (i < rowsNumber && j < columnsNumber) {
