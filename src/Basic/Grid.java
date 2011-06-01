@@ -488,10 +488,10 @@ public class Grid {
                     }
                 }
             }
-            if (N > M && N != 0) {
-                coefs[i] = (double) M / ((double) N);
-            } else if (N == 0) {
-                coefs[i] = 1;
+            if(N > M && N!=0)
+                coefs[i] = 1-(double)M/((double)N);
+            else if(N==0)
+                coefs[i] = 0;
             } else {
                 coefs[i] = 0;
             }
