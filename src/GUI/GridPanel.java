@@ -88,7 +88,7 @@ public class GridPanel extends javax.swing.JPanel {
      * @param evt
      */
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        cellEditedByMouse();
+        cellEditedByMouse(evt);
         this.repaint();
     }//GEN-LAST:event_formMouseClicked
 
@@ -97,7 +97,7 @@ public class GridPanel extends javax.swing.JPanel {
      * @param evt
      */
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-        cellEditedByMouse();
+        cellEditedByMouse(evt);
 }//GEN-LAST:event_formMouseDragged
 
     /**
@@ -108,7 +108,7 @@ public class GridPanel extends javax.swing.JPanel {
         this.repaint();
     }//GEN-LAST:event_formMouseReleased
 
-    private void cellEditedByMouse(){
+    private void cellEditedByMouse(java.awt.event.MouseEvent evt){
         if( !editPanel.isEditingMode() )
             return;
 
@@ -129,8 +129,12 @@ public class GridPanel extends javax.swing.JPanel {
 
         if(column==-1 || row==-1)
             return;
+        
+        if(evt.isMetaDown())
+            grid.setMapCell(row, column, Grid.EMPTY);
+        else
+            grid.setMapCell(row, column, editPanel.getCellTypeSelected());
 
-        grid.setMapCell(row, column, editPanel.getCellTypeSelected());
         paintMapCell(row, column);
     }
 
