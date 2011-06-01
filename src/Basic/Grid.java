@@ -479,13 +479,15 @@ public class Grid {
 
                 if (!this.isWall(Positions[j])) {
                     //System.out.println("Potential: "+this.getPotential(Positions[j].row,Positions[j].column)[i]);
-                    if (this.getPotential(Positions[j].row, Positions[j].column)[i] != treshold[i]) {
-                        if (this.getPotential(Positions[j].row, Positions[j].column)[i] > treshold[i]) {
-                            N++;
-                        } else {
-                            M++;
+                    if((Positions[j].row > 0) && (Positions[j].column > 0) &&
+                            (Positions[j].row < this.getRowsNumber()) && (Positions[j].column < this.getColumnsNumber()))
+                        if (this.getPotential(Positions[j].row, Positions[j].column)[i] != treshold[i]) {
+                            if (this.getPotential(Positions[j].row, Positions[j].column)[i] > treshold[i]) {
+                                N++;
+                            } else {
+                                M++;
+                            }
                         }
-                    }
                 }
             }
             if(N > M && N!=0) {
