@@ -292,6 +292,7 @@ public class Grid {
         return pot.pos.row >= 0 && pot.pos.row < getRowsNumber()
                 && pot.pos.column >= 0 && pot.pos.column < getColumnsNumber()
                 && mapGrid[pot.pos.row][pot.pos.column] != Grid.EXIT
+                && mapGrid[pot.pos.row][pot.pos.column] != Grid.OBSTACLE
                 && mapGrid[pot.pos.row][pot.pos.column] != Grid.WALL
                 && pot.dist < potentialGrid[pot.pos.row][pot.pos.column][exit + 1];
     }
@@ -299,7 +300,8 @@ public class Grid {
     private boolean isWall(final Position pos) {
         return pos.row < 0 || pos.row >= getRowsNumber()
                 || pos.column < 0 || pos.column >= getColumnsNumber()
-                || mapGrid[pos.row][pos.column] == Grid.WALL;
+                || mapGrid[pos.row][pos.column] == Grid.WALL
+                || mapGrid[pos.row][pos.column] == Grid.OBSTACLE;
     }
 
 
@@ -315,7 +317,7 @@ public class Grid {
         }
         for (int row = 0; row < getRowsNumber(); ++row) {
             for (int column = 0; column < getColumnsNumber(); ++column) {
-                if (mapGrid[row][column] != Grid.WALL) {
+                if (mapGrid[row][column] != Grid.WALL && mapGrid[row][column] != Grid.OBSTACLE) {
                     calculateDensity(row, column);
                 }
             }
@@ -412,7 +414,7 @@ public class Grid {
             return false;
         }
         // omijamy sciany
-        if (mapGrid[current.row][current.column] == Grid.WALL) {
+        if (mapGrid[current.row][current.column] == Grid.WALL || mapGrid[current.row][current.column] == Grid.OBSTACLE) {
             return false;
         }
         // czy miescimy sie w metryce
