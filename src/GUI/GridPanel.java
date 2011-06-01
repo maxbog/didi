@@ -197,7 +197,7 @@ public class GridPanel extends javax.swing.JPanel {
                     g2d.setColor(CellColors.getMapColor(Grid.WALL));
                 else
                     g2d.setColor(CellColors.getPotentialColor(
-                            grid.getPotential(i, j)[visiblePotential],100)); //TODO sidor: zmienic 100
+                            grid.getPotential(i, j)[visiblePotential],grid.getMaxPotential()));
                 g2d.fillRect( xView, yView, cellSize, cellSize);
                 if(drawNumbers && grid.getMapCell(i, j) != Grid.WALL && cellSize>12){
                     g2d.setColor(Color.BLACK);
