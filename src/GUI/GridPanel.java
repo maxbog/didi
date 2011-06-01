@@ -193,15 +193,22 @@ public class GridPanel extends javax.swing.JPanel {
                 if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
                         xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
                     continue;
-                if(grid.getMapCell(i, j) == Grid.WALL)
-                    g2d.setColor(CellColors.getMapColor(Grid.WALL));
+                if(grid.getMapCell(i, j) == Grid.WALL
+                        || grid.getMapCell(i, j) == Grid.OBSTACLE)
+                    g2d.setColor(CellColors.getMapColor(grid.getMapCell(i, j)));
                 else
                     g2d.setColor(CellColors.getPotentialColor(
                             grid.getPotential(i, j)[visiblePotential],grid.getMaxPotential()));
                 g2d.fillRect( xView, yView, cellSize, cellSize);
-                if(drawNumbers && grid.getMapCell(i, j) != Grid.WALL && cellSize>12){
+                if(drawNumbers && grid.getMapCell(i, j) != Grid.WALL
+                        && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize>12){
                     g2d.setColor(Color.BLACK);
-                    String potential = Integer.toString(grid.getPotential(i, j)[visiblePotential]);
+                    int potNumber = grid.getPotential(i, j)[visiblePotential];
+                    String potential;
+                    if(potNumber == Integer.MAX_VALUE)
+                        potential = "∞";
+                    else
+                        potential =  Integer.toString(potNumber);
                     g2d.drawString(potential, xView+2, yView+cellSize-3);
                 }
             }
