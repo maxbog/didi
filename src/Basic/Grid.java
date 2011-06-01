@@ -249,7 +249,7 @@ public class Grid {
             processed.add(current.pos);
 
             potentialGrid[current.pos.row][current.pos.column][exit + 1] = current.dist;
-            if(current.dist > maxPotential) {
+            if (current.dist > maxPotential) {
                 maxPotential = current.dist;
             }
 
@@ -275,16 +275,16 @@ public class Grid {
                 toProcess.add(down);
             }
 
-            if (!isWall(up.pos) && !isWall(left.pos) && shouldProcessPotential(upleft, exit)) {
+            if (!(isWall(up.pos) && isWall(left.pos)) && shouldProcessPotential(upleft, exit)) {
                 toProcess.add(upleft);
             }
-            if (!isWall(up.pos) && !isWall(right.pos) && shouldProcessPotential(upright, exit)) {
+            if (!(isWall(up.pos) && isWall(right.pos)) && shouldProcessPotential(upright, exit)) {
                 toProcess.add(upright);
             }
-            if (!isWall(down.pos) && !isWall(left.pos) && shouldProcessPotential(downleft, exit)) {
+            if (!(isWall(down.pos) && isWall(left.pos)) && shouldProcessPotential(downleft, exit)) {
                 toProcess.add(downleft);
             }
-            if (!isWall(down.pos) && !isWall(right.pos) && shouldProcessPotential(downright, exit)) {
+            if (!(isWall(down.pos) && isWall(right.pos)) && shouldProcessPotential(downright, exit)) {
                 toProcess.add(downright);
             }
         }
@@ -300,12 +300,11 @@ public class Grid {
     }
 
     private boolean isWall(final Position pos) {
-        return pos.row < 0 || pos.row >= getRowsNumber()
-                || pos.column < 0 || pos.column >= getColumnsNumber()
-                || mapGrid[pos.row][pos.column] == Grid.WALL
-                || mapGrid[pos.row][pos.column] == Grid.OBSTACLE;
+        return pos.row >= 0 && pos.row < getRowsNumber()
+                && pos.column >= 0 && pos.column < getColumnsNumber()
+                && (mapGrid[pos.row][pos.column] == Grid.WALL
+                || mapGrid[pos.row][pos.column] == Grid.OBSTACLE);
     }
-
 
     /***************DensityGridFunctions***************/
     /**
@@ -448,70 +447,64 @@ public class Grid {
     }
 
     /* Bottleneck functions */
-
-    public void calculateBottleNecks()
-    {
-        for( int i = 0; i < this.getRowsNumber(); i++)
-        {
-            for( int j = 0; j < this.getColumnsNumber(); j++)
-            {
-                if(!this.isWall(new Position(i, j)))
-                    bottleneckGrid[i][j] = this.calculateBottleNeck(i,j);
+    public void calculateBottleNecks() {
+        for (int i = 0; i < this.getRowsNumber(); i++) {
+            for (int j = 0; j < this.getColumnsNumber(); j++) {
+                if (!this.isWall(new Position(i, j))) {
+                    bottleneckGrid[i][j] = this.calculateBottleNeck(i, j);
+                }
             }
         }
     }
 
-    public double[] calculateBottleNeck(int row, int column)
-    {
+    public double[] calculateBottleNeck(int row, int column) {
         final Position[] Positions = new Position[8];
-        Positions[0] = new Position(row+1,column-1); // leftTop =
-        Positions[1] = new Position(row+1,column); // middleTop
-        Positions[2] = new Position(row+1,column+1); // rightTop
-        Positions[3] = new Position(row,column-1); //leftMiddle
-        Positions[4] = new Position(row,column+1); //rightMiddle
-        Positions[5] = new Position(row-1,column-1); //leftBottom
-        Positions[6] = new Position(row-1,column); //middleBottom
-        Positions[7] = new Position(row-1,column+1); //rightBottom
+        Positions[0] = new Position(row + 1, column - 1); // leftTop =
+        Positions[1] = new Position(row + 1, column); // middleTop
+        Positions[2] = new Position(row + 1, column + 1); // rightTop
+        Positions[3] = new Position(row, column - 1); //leftMiddle
+        Positions[4] = new Position(row, column + 1); //rightMiddle
+        Positions[5] = new Position(row - 1, column - 1); //leftBottom
+        Positions[6] = new Position(row - 1, column); //middleBottom
+        Positions[7] = new Position(row - 1, column + 1); //rightBottom
 
         int[] treshold = this.getPotential(row, column);
         double[] coefs = new double[this.getExitsCount()];
 
-        for(int i = 0; i < this.getExitsCount(); i++)
-        {
+        for (int i = 0; i < this.getExitsCount(); i++) {
             //System.out.println("Treshold: "+treshold[i]);
             int M = 0;
             int N = 0;
-            for(int j = 0; j < Positions.length; j++)
-            {
-                
-                if(!this.isWall(Positions[j]))
-                {
+            for (int j = 0; j < Positions.length; j++) {
+
+                if (!this.isWall(Positions[j])) {
                     //System.out.println("Potential: "+this.getPotential(Positions[j].row,Positions[j].column)[i]);
-                    if(this.getPotential(Positions[j].row,Positions[j].column)[i]!= treshold[i])
-                        if(this.getPotential(Positions[j].row,Positions[j].column)[i]> treshold[i])
+                    if (this.getPotential(Positions[j].row, Positions[j].column)[i] != treshold[i]) {
+                        if (this.getPotential(Positions[j].row, Positions[j].column)[i] > treshold[i]) {
                             N++;
-                        else
+                        } else {
                             M++;
+                        }
+                    }
                 }
             }
-            if(N > M && N!=0)
-                coefs[i] = (double)M/((double)N);
-            else if(N==0)
+            if (N > M && N != 0) {
+                coefs[i] = (double) M / ((double) N);
+            } else if (N == 0) {
                 coefs[i] = 1;
-            else
+            } else {
                 coefs[i] = 0;
+            }
             //System.out.println(coefs[i]+" "+M+" "+N);
         }
         return coefs;
     }
 
-    public double[] getBottleNeck(int row, int column)
-    {
+    public double[] getBottleNeck(int row, int column) {
         return bottleneckGrid[row][column];
     }
 
     /* ###  ###*/
-
     /**
      * Klasa pomocnicza reprezentujaca pozycje na mapie.
      * Przechowuje dwa inty - wiersz i kolumne.
