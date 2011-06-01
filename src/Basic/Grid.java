@@ -478,17 +478,29 @@ public class Grid {
 
         for(int i = 0; i < this.getExitsCount(); i++)
         {
+            //System.out.println("Treshold: "+treshold[i]);
             int M = 0;
             int N = 0;
             for(int j = 0; j < Positions.length; j++)
             {
+                
                 if(!this.isWall(Positions[j]))
-                    if(this.getPotential(row,column)[i]>=treshold[i])
-                        N++;
-                    else
-                        M++;
+                {
+                    //System.out.println("Potential: "+this.getPotential(Positions[j].row,Positions[j].column)[i]);
+                    if(this.getPotential(Positions[j].row,Positions[j].column)[i]!= treshold[i])
+                        if(this.getPotential(Positions[j].row,Positions[j].column)[i]> treshold[i])
+                            N++;
+                        else
+                            M++;
+                }
             }
-            coefs[i] = M/N;
+            if(N > M && N!=0)
+                coefs[i] = (double)M/((double)N);
+            else if(N==0)
+                coefs[i] = 1;
+            else
+                coefs[i] = 0;
+            //System.out.println(coefs[i]+" "+M+" "+N);
         }
         return coefs;
     }
