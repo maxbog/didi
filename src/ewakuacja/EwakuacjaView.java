@@ -8,6 +8,10 @@ import Basic.Grid;
 import GUI.GridPanel;
 import GUI.OpenConfirmWindow;
 import Others.FilesStuff;
+import java.awt.AWTEvent;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -15,6 +19,7 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Timer;
@@ -22,6 +27,7 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 /**
  * The application's main frame.
@@ -93,7 +99,39 @@ public class EwakuacjaView extends FrameView {
         this.getFrame().setTitle("Symulacja ewakuacji");
         
         setConnections();
-
+        scrollPane = gridScrollPane;
+        Toolkit.getDefaultToolkit().addAWTEventListener( new AWTEventListener()
+        {
+            public void eventDispatched(AWTEvent e)
+            {
+                if(e.getID() != 401)
+                    return;
+                KeyEvent evt = (KeyEvent)e;
+                if(evt.isControlDown()){
+                        Point point = scrollPane.getViewport().getViewPosition();
+                    switch (evt.getKeyCode()){
+                        case KeyEvent.VK_UP:
+                            point.y-=10;
+                            if(point.y < 0)
+                                point.y = 0;
+                            break;
+                        case KeyEvent.VK_DOWN:
+                            point.y += 10;
+                            break;
+                        case KeyEvent.VK_LEFT:
+                            point.x-=10;
+                            if(point.x < 0)
+                                point.x = 0;
+                            break;
+                        case KeyEvent.VK_RIGHT:
+                            point.x += 10;
+                            break;
+                    }
+                    scrollPane.getViewport().setViewPosition(point);
+                    scrollPane.getViewport().revalidate();
+                }
+            }
+        }, AWTEvent.KEY_EVENT_MASK);
     }
 
     /**
@@ -264,7 +302,12 @@ public class EwakuacjaView extends FrameView {
                             .addComponent(potentialComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(densityRadioButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< HEAD
                         .addComponent(gridScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)))
+=======
+                        .addComponent(gridScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
+                    .addComponent(optionsTabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 296, Short.MAX_VALUE))
+>>>>>>> origin/master
                 .addContainerGap())
         );
 
@@ -591,4 +634,5 @@ public class EwakuacjaView extends FrameView {
     private JDialog aboutBox;
     private JFileChooser fileChooser;
     private OpenConfirmWindow openConfirmWindow;
+    private static JScrollPane scrollPane;
 }
