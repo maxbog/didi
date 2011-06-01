@@ -28,8 +28,8 @@
               <Component id="editingButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="69" max="32767" attributes="0"/>
           </Group>
-          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
           <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -41,7 +41,7 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="128" max="32767" attributes="0"/>
+              <EmptySpace pref="115" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -150,15 +150,19 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="wallColorPanel" min="-2" max="-2" attributes="0"/>
-                      <Component id="exitColorPanel" min="-2" max="-2" attributes="0"/>
-                      <Component id="personColorPanel" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="emptyColorPanel" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="wallColorPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="exitColorPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="personColorPanel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="emptyColorPanel" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="obstacleColorPanel" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="emptyCellButton" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="wallCellButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="obstacleCellButton" min="-2" max="-2" attributes="0"/>
                       <Component id="exitCellButton" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="personCellButton" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -180,15 +184,22 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="exitCellButton" min="-2" max="-2" attributes="0"/>
-                      <Component id="exitColorPanel" min="-2" max="-2" attributes="0"/>
+                      <Component id="obstacleColorPanel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="obstacleCellButton" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="personColorPanel" max="32767" attributes="1"/>
-                      <Component id="personCellButton" alignment="0" min="-2" max="-2" attributes="1"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="exitColorPanel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          <Component id="personColorPanel" max="32767" attributes="1"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="exitCellButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="personCellButton" min="-2" max="-2" attributes="1"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -315,6 +326,37 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+        </Container>
+        <Component class="javax.swing.JRadioButton" name="obstacleCellButton">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="cellTypeButtons"/>
+            </Property>
+            <Property name="text" type="java.lang.String" resourceKey="obstacleCellButton.text"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="name" type="java.lang.String" value="obstacleCellButton" noResource="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="obstacleCellButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Container class="javax.swing.JPanel" name="obstacleColorPanel">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="obstacleColorPanel" noResource="true"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="19" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>

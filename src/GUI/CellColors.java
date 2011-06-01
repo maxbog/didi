@@ -23,6 +23,7 @@ public class CellColors {
             case 0: return Color.WHITE;
             case -1: return Color.BLACK;
             case -2: return Color.GREEN;
+            case -4: return Color.DARK_GRAY;
             case 1: return Color.RED;
             default: return Color.YELLOW;
         }

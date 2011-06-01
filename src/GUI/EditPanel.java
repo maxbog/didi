@@ -28,6 +28,7 @@ public class EditPanel extends javax.swing.JPanel {
     private void initFields() {
         emptyColorPanel.setBackground(CellColors.getMapColor(Grid.EMPTY));
         wallColorPanel.setBackground(CellColors.getMapColor(Grid.WALL));
+        obstacleColorPanel.setBackground(CellColors.getMapColor(Grid.OBSTACLE));
         exitColorPanel.setBackground(CellColors.getMapColor(Grid.EXIT));
         personColorPanel.setBackground(CellColors.getMapColor(Grid.PERSON1));
     }
@@ -56,6 +57,8 @@ public class EditPanel extends javax.swing.JPanel {
         wallColorPanel = new javax.swing.JPanel();
         exitColorPanel = new javax.swing.JPanel();
         personColorPanel = new javax.swing.JPanel();
+        obstacleCellButton = new javax.swing.JRadioButton();
+        obstacleColorPanel = new javax.swing.JPanel();
         editingButton = new javax.swing.JCheckBox();
 
         setName("Form"); // NOI18N
@@ -211,6 +214,29 @@ public class EditPanel extends javax.swing.JPanel {
             .addGap(0, 23, Short.MAX_VALUE)
         );
 
+        cellTypeButtons.add(obstacleCellButton);
+        obstacleCellButton.setText(resourceMap.getString("obstacleCellButton.text")); // NOI18N
+        obstacleCellButton.setEnabled(false);
+        obstacleCellButton.setName("obstacleCellButton"); // NOI18N
+        obstacleCellButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                obstacleCellButtonActionPerformed(evt);
+            }
+        });
+
+        obstacleColorPanel.setName("obstacleColorPanel"); // NOI18N
+
+        javax.swing.GroupLayout obstacleColorPanelLayout = new javax.swing.GroupLayout(obstacleColorPanel);
+        obstacleColorPanel.setLayout(obstacleColorPanelLayout);
+        obstacleColorPanelLayout.setHorizontalGroup(
+            obstacleColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+        obstacleColorPanelLayout.setVerticalGroup(
+            obstacleColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 19, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -218,14 +244,17 @@ public class EditPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(wallColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(personColorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emptyColorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(wallColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(personColorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(emptyColorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(obstacleColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(emptyCellButton)
                     .addComponent(wallCellButton)
+                    .addComponent(obstacleCellButton)
                     .addComponent(exitCellButton)
                     .addComponent(personCellButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -242,13 +271,18 @@ public class EditPanel extends javax.swing.JPanel {
                     .addComponent(wallColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(exitCellButton)
-                    .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(obstacleColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(obstacleCellButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(personColorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(personCellButton))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(personColorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(exitCellButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(personCellButton))))
         );
 
         editingButton.setText(resourceMap.getString("editingButton.text")); // NOI18N
@@ -267,8 +301,8 @@ public class EditPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(editingButton)
                 .addContainerGap(69, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,7 +313,7 @@ public class EditPanel extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -314,6 +348,7 @@ public class EditPanel extends javax.swing.JPanel {
 
         emptyCellButton.setEnabled(enable);
         wallCellButton.setEnabled(enable);
+        obstacleCellButton.setEnabled(enable);
         exitCellButton.setEnabled(enable);
         personCellButton.setEnabled(enable);
 
@@ -339,6 +374,10 @@ public class EditPanel extends javax.swing.JPanel {
                     Integer.parseInt(columnsSpinner.getValue().toString()));
         }
     }//GEN-LAST:event_columnsSpinnerStateChanged
+
+    private void obstacleCellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_obstacleCellButtonActionPerformed
+        cellTypeSelected = Grid.OBSTACLE;
+    }//GEN-LAST:event_obstacleCellButtonActionPerformed
 
     /**
      * Setting gridPanel, will not work without this.
@@ -408,6 +447,8 @@ public class EditPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton obstacleCellButton;
+    private javax.swing.JPanel obstacleColorPanel;
     private javax.swing.JRadioButton personCellButton;
     private javax.swing.JPanel personColorPanel;
     private javax.swing.JSpinner rowsSpinner;
