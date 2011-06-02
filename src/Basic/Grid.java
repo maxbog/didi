@@ -35,7 +35,6 @@ public class Grid {
     private double[][][] bottleneckGrid;
     private List<Set<Position>> exits;
     private int maxPotential;
-    private Set<Position> people;
 
     /***************AllGridsFunctions***************/
     /**
@@ -189,7 +188,7 @@ public class Grid {
     public Set<Position> getExit(int exit) {
         return exits.get(exit);
     }
-    
+
     /**
      * Usrednia zatloczenie wyjscia - potrzebne do reguly przejscia, chyba, ze wymyslimy jakos inaczej ;]
      * @param exit wyjscie, o ktore pytamy
@@ -197,9 +196,10 @@ public class Grid {
      */
     public double getAverageExitDens(int exit) {
         double avDens = 0;
-        for(Position pos : getExit(exit)) 
+        for (Position pos : getExit(exit)) {
             avDens = avDens + getDensity(pos.row, pos.column);
-        avDens = avDens/getExit(exit).size();
+        }
+        avDens = avDens / getExit(exit).size();
         return avDens;
     }
 
@@ -492,8 +492,8 @@ public class Grid {
 
                 if (!this.isWall(Positions[j])) {
                     //System.out.println("Potential: "+this.getPotential(Positions[j].row,Positions[j].column)[i]);
-                    if((Positions[j].row > 0) && (Positions[j].column > 0) &&
-                            (Positions[j].row < this.getRowsNumber()) && (Positions[j].column < this.getColumnsNumber()))
+                    if ((Positions[j].row > 0) && (Positions[j].column > 0)
+                            && (Positions[j].row < this.getRowsNumber()) && (Positions[j].column < this.getColumnsNumber())) {
                         if (this.getPotential(Positions[j].row, Positions[j].column)[i] != treshold[i]) {
                             if (this.getPotential(Positions[j].row, Positions[j].column)[i] > treshold[i]) {
                                 N++;
@@ -501,10 +501,11 @@ public class Grid {
                                 M++;
                             }
                         }
+                    }
                 }
             }
-            if(N > M && N!=0) {
-                coefs[i] = 1-(double)M/((double)N);
+            if (N > M && N != 0) {
+                coefs[i] = 1 - (double) M / ((double) N);
             } else if (N == 0) {
                 coefs[i] = 0;
             } else {
@@ -519,18 +520,15 @@ public class Grid {
         return bottleneckGrid[row][column];
     }
 
-    public void identifyPeople() {
-        people = new HashSet<Position>();
-        for(int row = 0; row < getRowsNumber(); ++row) {
-            for(int column = 0; column < getColumnsNumber(); ++column) {
-                if(mapGrid[row][column] > 0) {
-                    people.add(new Position(row,column));
+    public Set<Position> identifyPeople() {
+        Set<Position> people = new HashSet<Position>();
+        for (int row = 0; row < getRowsNumber(); ++row) {
+            for (int column = 0; column < getColumnsNumber(); ++column) {
+                if (mapGrid[row][column] > 0) {
+                    people.add(new Position(row, column));
                 }
             }
         }
-    }
-
-    public Set<Position> getPeople() {
         return people;
     }
 

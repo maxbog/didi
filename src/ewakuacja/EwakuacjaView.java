@@ -5,6 +5,7 @@
 package ewakuacja;
 
 import Basic.Grid;
+import Basic.Simulation;
 import GUI.GridPanel;
 import GUI.OpenConfirmWindow;
 import Others.FilesStuff;
@@ -93,8 +94,9 @@ public class EwakuacjaView extends FrameView {
             }
         });
         progressBar.setVisible(true);
-        grid = new Grid(0,0);
-        gridPanel.setGrid(grid);
+        simulation = new Simulation();
+        optionsPanel1.setSimulation(simulation);
+        gridPanel.setGrid(simulation.getGrid());
 
         this.getFrame().setTitle("Symulacja ewakuacji");
         
@@ -499,10 +501,10 @@ public class EwakuacjaView extends FrameView {
         if(potentialRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_POTENTIAL);
 
-            if(grid.getExitsCount() + 1 != exitComboBox.getItemCount()){
+            if(simulation.getGrid().getExitsCount() + 1 != exitComboBox.getItemCount()){
                 javax.swing.DefaultComboBoxModel model = new DefaultComboBoxModel();
                 model.addElement("Najlepsze");
-                for(int i = 0; i < grid.getExitsCount(); i++)
+                for(int i = 0; i < simulation.getGrid().getExitsCount(); i++)
                     model.addElement("Wyjście " + Integer.toString(i+1));
                 exitComboBox.setModel(model);
                 gridPanel.setVisibleExit(exitComboBox.getSelectedIndex());
@@ -551,8 +553,8 @@ public class EwakuacjaView extends FrameView {
         }
         if(fileChooser.showOpenDialog(this.getFrame()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            grid=FilesStuff.openGrid(file);
-            gridPanel.setGrid(grid);
+            simulation.setGrid(FilesStuff.openGrid(file));
+            gridPanel.setGrid(simulation.getGrid());
             editPanel.setMapGridChanged(false);
         }
     }//GEN-LAST:event_openMenuButtonActionPerformed
@@ -565,7 +567,7 @@ public class EwakuacjaView extends FrameView {
         }
         if(fileChooser.showSaveDialog(this.getFrame()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            FilesStuff.saveGrid(grid, file);
+            FilesStuff.saveGrid(simulation.getGrid(), file);
             editPanel.setMapGridChanged(false);
         }
     }//GEN-LAST:event_saveMenuButtonActionPerformed
@@ -586,8 +588,9 @@ public class EwakuacjaView extends FrameView {
                 default: return;
             }
         }
-        grid=new Grid(0,0);
-        gridPanel.setGrid(grid);
+        simulation = new Simulation();
+        optionsPanel1.setSimulation(simulation);
+        gridPanel.setGrid(simulation.getGrid());
     }//GEN-LAST:event_newMenuButtonActionPerformed
 
     private void exitComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitComboBoxActionPerformed
@@ -598,10 +601,10 @@ public class EwakuacjaView extends FrameView {
         if(bottleneckRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_BOTTLENECK);
 
-            if(grid.getExitsCount() + 1 != exitComboBox.getItemCount()){
+            if(simulation.getGrid().getExitsCount() + 1 != exitComboBox.getItemCount()){
                 javax.swing.DefaultComboBoxModel model = new DefaultComboBoxModel();
                 model.addElement("Najlepsze");
-                for(int i = 0; i < grid.getExitsCount(); i++)
+                for(int i = 0; i < simulation.getGrid().getExitsCount(); i++)
                     model.addElement("Wyjście " + Integer.toString(i+1));
                 exitComboBox.setModel(model);
                 gridPanel.setVisibleExit(exitComboBox.getSelectedIndex());
@@ -655,7 +658,7 @@ public class EwakuacjaView extends FrameView {
     private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
-    Grid grid;
+    Simulation simulation;
 
     private JDialog aboutBox;
     private JFileChooser fileChooser;
