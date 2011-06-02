@@ -165,6 +165,8 @@ public class OptionsPanel extends javax.swing.JPanel {
                 .addComponent(stepButton)
                 .addContainerGap(127, Short.MAX_VALUE))
         );
+
+        stepButton.getAccessibleContext().setAccessibleName(resourceMap.getString("stepButton.AccessibleContext.accessibleName")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
 
     private void populationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populationFieldActionPerformed

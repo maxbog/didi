@@ -20,7 +20,7 @@ public class Simulation {
     private int time;
 
     public Simulation() {
-        simGrid = new Grid(0,0);
+        simGrid = new Grid(0, 0);
     }
 
     /**
@@ -34,7 +34,7 @@ public class Simulation {
         double thisCellCost, tempCost;
         thisCellCost = transitionCoef * (simGrid.getPotential(row, column))[1] + (1 - transitionCoef) * simGrid.getAverageExitDens(0); // tu nie halo!
         for (int i = 2; i <= simGrid.getExitsCount(); ++i) {
-            tempCost = transitionCoef * (simGrid.getPotential(row, column))[i] + (1 - transitionCoef) * simGrid.getAverageExitDens(i-1);
+            tempCost = transitionCoef * (simGrid.getPotential(row, column))[i] + (1 - transitionCoef) * simGrid.getAverageExitDens(i - 1);
             if (tempCost < thisCellCost) {
                 thisCellCost = tempCost;
             }
@@ -61,7 +61,7 @@ public class Simulation {
 
                 minCost = transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[1] + (1 - transitionCoef) * simGrid.getAverageExitDens(0);
                 for (int j = 2; j <= simGrid.getExitsCount(); ++j) {
-                    tempCost = transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[j] + (1 - transitionCoef) * simGrid.getAverageExitDens(j-1);
+                    tempCost = transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[j] + (1 - transitionCoef) * simGrid.getAverageExitDens(j - 1);
                     if (tempCost < minCost) {
                         minCost = tempCost;
                     }
@@ -93,11 +93,11 @@ public class Simulation {
         for (Position pos : simGrid.identifyPeople()) {
             peopleToProcess.add(new PersonPosition(simGrid.getMapCell(pos.row, pos.column), pos, time));
         }
-        while(!peopleToProcess.isEmpty()) {
+        while (!peopleToProcess.isEmpty()) {
             PersonPosition current = peopleToProcess.poll();
             Position newPosition = transitionRule1(current.pos.row, current.pos.column);
-            if(newPosition != current.pos) {
-                if(simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EMPTY) {
+            if (!newPosition.equals(current.pos)) {
+                if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EMPTY) {
                     simGrid.setMapCell(newPosition.row, newPosition.column, simGrid.getMapCell(current.pos.row, current.pos.column));
                 }
                 simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
@@ -112,13 +112,12 @@ public class Simulation {
             this.potential = potential;
             this.pos = pos;
         }
-        
         public int potential;
         public Position pos;
         public int time;
 
         public int compareTo(PersonPosition o) {
-            if(potential != o.potential) {
+            if (potential != o.potential) {
                 return potential - o.potential;
             }
             return time - o.time;
