@@ -34,7 +34,7 @@ public class Simulation {
         double thisCellCost, tempCost;
         thisCellCost = transitionCoef * (simGrid.getPotential(row, column))[1] + (1 - transitionCoef) * simGrid.getAverageExitDens(0); // tu nie halo!
         for (int i = 2; i <= simGrid.getExitsCount(); ++i) {
-            tempCost = transitionCoef * (simGrid.getPotential(row, column))[i] + (1 - transitionCoef) * simGrid.getAverageExitDens(i);
+            tempCost = transitionCoef * (simGrid.getPotential(row, column))[i] + (1 - transitionCoef) * simGrid.getAverageExitDens(i-1);
             if (tempCost < thisCellCost) {
                 thisCellCost = tempCost;
             }
@@ -60,8 +60,8 @@ public class Simulation {
                     && simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
 
                 minCost = transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[1] + (1 - transitionCoef) * simGrid.getAverageExitDens(0);
-                for (int j = 1; j <= simGrid.getExitsCount(); ++j) {
-                    tempCost = transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[i] + (1 - transitionCoef) * simGrid.getAverageExitDens(i);
+                for (int j = 2; j <= simGrid.getExitsCount(); ++j) {
+                    tempCost = transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[j] + (1 - transitionCoef) * simGrid.getAverageExitDens(j-1);
                     if (tempCost < minCost) {
                         minCost = tempCost;
                     }
