@@ -96,12 +96,13 @@ public class EwakuacjaView extends FrameView {
         progressBar.setVisible(true);
         simulation = new Simulation();
         optionsPanel1.setSimulation(simulation);
-        gridPanel.setGrid(simulation.getGrid());
 
         this.getFrame().setTitle("Symulacja ewakuacji");
         
         setConnections();
         scrollPane = gridScrollPane;
+
+        // do obslugi przesowania strzalkami
         Toolkit.getDefaultToolkit().addAWTEventListener( new AWTEventListener()
         {
             public void eventDispatched(AWTEvent e)
@@ -144,6 +145,7 @@ public class EwakuacjaView extends FrameView {
         editPanel.setMainWindow(this);
         gridPanel.setEditPanel(editPanel);
         gridPanel.setScrollPane(gridScrollPane);
+        simulation.setGridPanel(gridPanel);
     }
 
     @Action
@@ -501,10 +503,10 @@ public class EwakuacjaView extends FrameView {
         if(potentialRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_POTENTIAL);
 
-            if(simulation.getGrid().getExitsCount() + 1 != exitComboBox.getItemCount()){
+            if(simulation.getStartGrid().getExitsCount() + 1 != exitComboBox.getItemCount()){
                 javax.swing.DefaultComboBoxModel model = new DefaultComboBoxModel();
                 model.addElement("Najlepsze");
-                for(int i = 0; i < simulation.getGrid().getExitsCount(); i++)
+                for(int i = 0; i < simulation.getStartGrid().getExitsCount(); i++)
                     model.addElement("Wyjście " + Integer.toString(i+1));
                 exitComboBox.setModel(model);
                 gridPanel.setVisibleExit(exitComboBox.getSelectedIndex());
@@ -554,7 +556,6 @@ public class EwakuacjaView extends FrameView {
         if(fileChooser.showOpenDialog(this.getFrame()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             simulation.setGrid(FilesStuff.openGrid(file));
-            gridPanel.setGrid(simulation.getGrid());
             editPanel.setMapGridChanged(false);
         }
     }//GEN-LAST:event_openMenuButtonActionPerformed
@@ -567,7 +568,7 @@ public class EwakuacjaView extends FrameView {
         }
         if(fileChooser.showSaveDialog(this.getFrame()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            FilesStuff.saveGrid(simulation.getGrid(), file);
+            FilesStuff.saveGrid(simulation.getStartGrid(), file);
             editPanel.setMapGridChanged(false);
         }
     }//GEN-LAST:event_saveMenuButtonActionPerformed
@@ -588,9 +589,7 @@ public class EwakuacjaView extends FrameView {
                 default: return;
             }
         }
-        simulation = new Simulation();
-        optionsPanel1.setSimulation(simulation);
-        gridPanel.setGrid(simulation.getGrid());
+        simulation.resetConfig();
     }//GEN-LAST:event_newMenuButtonActionPerformed
 
     private void exitComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitComboBoxActionPerformed
@@ -601,10 +600,10 @@ public class EwakuacjaView extends FrameView {
         if(bottleneckRadioButton.isSelected()){
             gridPanel.setVisibleGrid(GridPanel.VISIBLE_BOTTLENECK);
 
-            if(simulation.getGrid().getExitsCount() + 1 != exitComboBox.getItemCount()){
+            if(simulation.getStartGrid().getExitsCount() + 1 != exitComboBox.getItemCount()){
                 javax.swing.DefaultComboBoxModel model = new DefaultComboBoxModel();
                 model.addElement("Najlepsze");
-                for(int i = 0; i < simulation.getGrid().getExitsCount(); i++)
+                for(int i = 0; i < simulation.getStartGrid().getExitsCount(); i++)
                     model.addElement("Wyjście " + Integer.toString(i+1));
                 exitComboBox.setModel(model);
                 gridPanel.setVisibleExit(exitComboBox.getSelectedIndex());
