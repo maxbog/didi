@@ -35,6 +35,7 @@ public class Grid {
     private double[][][] bottleneckGrid;
     private List<Set<Position>> exits;
     private int maxPotential;
+    private Set<Position> people;
 
     /***************AllGridsFunctions***************/
     /**
@@ -324,9 +325,9 @@ public class Grid {
      * Calculates density of each cell.
      */
     public void calculateDensities() {
-        for (int i = 0; i < getRowsNumber(); i++) {
-            for (int j = 0; j < getColumnsNumber(); j++) {
-                densityGrid[i][j] = 0;
+        for (int row = 0; row < getRowsNumber(); row++) {
+            for (int column = 0; column < getColumnsNumber(); column++) {
+                densityGrid[row][column] = 0;
             }
         }
         for (int row = 0; row < getRowsNumber(); ++row) {
@@ -346,7 +347,6 @@ public class Grid {
     private void calculateNeighbourDensities(int row, int column) {
         Queue<Position> toProcess = new LinkedList<Position>();
         Set<Position> processed = new HashSet<Position>();
-        int all = 0, people = 0;
         toProcess.add(new Position(row, column));
         while (!toProcess.isEmpty()) {
             Position current = toProcess.poll();
@@ -385,7 +385,7 @@ public class Grid {
     private void calculateDensity(int row, int column) {
         Queue<Position> toProcess = new LinkedList<Position>();
         Set<Position> processed = new HashSet<Position>();
-        int all = 0, people = 0;
+        int all = 0, occupied = 0;
         toProcess.add(new Position(row, column));
         while (!toProcess.isEmpty()) {
             Position current = toProcess.poll();
@@ -396,7 +396,7 @@ public class Grid {
 
             ++all;
             if (mapGrid[current.row][current.column] > 0) {
-                ++people;
+                ++occupied;
             }
 
             final Position left = new Position(current.row, current.column - 1);
@@ -418,7 +418,7 @@ public class Grid {
             }
         }
         if (all != 0) {
-            densityGrid[row][column] = (double) people / (double) all;
+            densityGrid[row][column] = (double) occupied / (double) all;
         }
     }
 
@@ -517,6 +517,21 @@ public class Grid {
 
     public double[] getBottleNeck(int row, int column) {
         return bottleneckGrid[row][column];
+    }
+
+    public void identifyPeople() {
+        people = new HashSet<Position>();
+        for(int row = 0; row < getRowsNumber(); ++row) {
+            for(int column = 0; column < getColumnsNumber(); ++column) {
+                if(mapGrid[row][column] > 0) {
+                    people.add(new Position(row,column));
+                }
+            }
+        }
+    }
+
+    public Set<Position> getPeople() {
+        return people;
     }
 
     /* ###  ###*/
