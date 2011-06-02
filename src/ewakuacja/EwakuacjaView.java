@@ -589,7 +589,7 @@ public class EwakuacjaView extends FrameView {
                 default: return;
             }
         }
-        simulation.resetConfig();
+        simulation.setGrid(new Grid(0,0));
     }//GEN-LAST:event_newMenuButtonActionPerformed
 
     private void exitComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitComboBoxActionPerformed

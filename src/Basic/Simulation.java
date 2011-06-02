@@ -63,17 +63,22 @@ public class Simulation {
         for (int i = 0; i < 8; ++i) {
 
             if ((Positions[i].row >= 0 && Positions[i].row < simGrid.getRowsNumber())
-                    && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()
-                    && simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
-
-                minCost = Double.POSITIVE_INFINITY;//transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[1] + (1 - transitionCoef) * simGrid.getAverageExitDens(0);
-                for (int j = 1; j <= simGrid.getExitsCount(); ++j) {
-                    tempCost = transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[j] + (1 - transitionCoef) * simGrid.getAverageExitDens(j - 1);
-                    if (tempCost < minCost && tempCost <= thisCellCost) {
-                        minCost = tempCost;
-                    }
+                    && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()) {
+                if(simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EXIT) {
+                    return Positions[i];
                 }
-                minCellCost[i] = minCost;
+                 if(simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
+
+                    minCost = Double.POSITIVE_INFINITY;//transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[1] + (1 - transitionCoef) * simGrid.getAverageExitDens(0);
+                    for (int j = 1; j <= simGrid.getExitsCount(); ++j) {
+                        tempCost = transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[j] + (1 - transitionCoef) * simGrid.getAverageExitDens(j - 1);
+                        if (tempCost < minCost && tempCost <= thisCellCost) {
+                            minCost = tempCost;
+                        }
+                    }
+                    minCellCost[i] = minCost;
+                }else {
+                minCellCost[i] = java.lang.Double.POSITIVE_INFINITY;}
 
             } else {
                 minCellCost[i] = java.lang.Double.POSITIVE_INFINITY;
@@ -107,8 +112,8 @@ public class Simulation {
             PersonPosition current = peopleToProcess.poll();
             Position newPosition = transitionRule1(current.pos.row, current.pos.column);
             if (!newPosition.equals(current.pos)) {
-                //if(simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT)
-                  //  simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
+                if(simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT)
+                    simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
                 if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EMPTY) {
                     simGrid.setMapCell(newPosition.row, newPosition.column, simGrid.getMapCell(current.pos.row, current.pos.column));
                     simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
@@ -146,7 +151,7 @@ public class Simulation {
     }
 
     public void setGrid(Grid newGrid) {
-        startGrid = newGrid;
+        startGrid = newGrid.clone();
         simGrid = newGrid;
         gridPanel.setGrid(simGrid);
     }
@@ -155,7 +160,8 @@ public class Simulation {
         gridPanel = panel;
     }
 
-    public void resetConfig(){
-        
+    public void resetMap(){
+        simGrid = startGrid.clone();
+        gridPanel.setGrid(simGrid);
     }
 }
