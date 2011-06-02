@@ -188,6 +188,19 @@ public class Grid {
     public Set<Position> getExit(int exit) {
         return exits.get(exit);
     }
+    
+    /**
+     * Usrednia zatloczenie wyjscia - potrzebne do reguly przejscia, chyba, ze wymyslimy jakos inaczej ;]
+     * @param exit wyjscie, o ktore pytamy
+     * @return srednie zatloczenia
+     */
+    public double getAverageExitDens(int exit) {
+        double avDens = 0;
+        for(Position pos : getExit(exit)) 
+            avDens = avDens + getDensity(pos.row, pos.column);
+        avDens = avDens/getExit(exit).size();
+        return avDens;
+    }
 
     /**
      *
@@ -511,7 +524,7 @@ public class Grid {
      * Klasa pomocnicza reprezentujaca pozycje na mapie.
      * Przechowuje dwa inty - wiersz i kolumne.
      */
-    public class Position {
+    public static class Position {
 
         /**
          * Tworzy nowa pozycje
