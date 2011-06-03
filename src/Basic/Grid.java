@@ -79,18 +79,6 @@ public class Grid {
         return rowsNumber;
     }
 
-    @Override
-    public Grid clone() {
-        Grid newGrid = new Grid(this.rowsNumber, this.columnsNumber);
-        for (int i = 0; i < this.rowsNumber; i++) {
-            for (int j = 0; j < this.columnsNumber; j++) {
-                newGrid.setMapCell(i, j, this.mapGrid[i][j]);
-            }
-        }
-        newGrid.calculateAll();
-        return newGrid;
-    }
-
     /**
      * Method sets new size of grid. It does not forgot values of old grid.
      * @param rows
