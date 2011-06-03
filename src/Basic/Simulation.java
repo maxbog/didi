@@ -147,12 +147,17 @@ public class Simulation{
         
         for (int i = 0; i < 8; ++i) {
             if ((Positions[i].row >= 0 && Positions[i].row < simGrid.getRowsNumber())
-                    && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()
-                    && simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
-                tempPot = simGrid.getPotential(Positions[i].row, Positions[i].column)[id];
-                if (tempPot < minPot) {
-                    minPot = tempPot;
+                    && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()) {
+                if (simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EXIT) {
+                    return Positions[i];
                 }
+                if (simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
+                    tempPot = simGrid.getPotential(Positions[i].row, Positions[i].column)[id];
+                    if (tempPot < minPot) {
+                        minPot = tempPot;
+                    }
+                }
+
                 minCellPot[i] = minPot;
             } else {
                 minCellPot[i] = Integer.MAX_VALUE;
@@ -197,9 +202,13 @@ public class Simulation{
         LinkedList<Position> newPos = new LinkedList<Position>();
         for (int i = 0; i < 8; i++) {
             if ((Positions[i].row >= 0 && Positions[i].row < simGrid.getRowsNumber())
-                    && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()
-                    && simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
-                newPos.add(Positions[i]);
+                    && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()) {
+                if (simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EXIT) {
+                    return Positions[i];
+                }
+                if (simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
+                    newPos.add(Positions[i]);
+                }
             }
         }
         
