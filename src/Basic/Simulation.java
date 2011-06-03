@@ -126,7 +126,7 @@ public class Simulation {
             }
         }
 
-        if (simGrid.getAverageExitDens(exitId[0]) <= simGrid.getAverageExitDens(exitId[1])) {
+        if (simGrid.getAverageExitDens(exitId[0]-1) <= simGrid.getAverageExitDens(exitId[1]-1)) {
             id = exitId[0];
         } else {
             id = exitId[1];
@@ -174,6 +174,41 @@ public class Simulation {
         return newPosition;
 
     }
+    
+        /**
+     * Regula przejscia dla człowieka totalnie spanikowanego. Zwraca nowa pozycje lub taka sama, jesli nie ma mozliwosci wykonania ruchu
+     * @param row
+     * @param column
+     * @return nastepna pozycja, ktora zajmuje człowiek
+     */
+    
+    public Position transitionRule4(int row, int column) {
+
+        Position[] Positions = new Position[8];
+        Positions[0] = new Position(row + 1, column - 1); // leftTop
+        Positions[1] = new Position(row + 1, column); // middleTop
+        Positions[2] = new Position(row + 1, column + 1); // rightTop
+        Positions[3] = new Position(row, column - 1); //leftMiddle
+        Positions[4] = new Position(row, column + 1); //rightMiddle
+        Positions[5] = new Position(row - 1, column - 1); //leftBottom
+        Positions[6] = new Position(row - 1, column); //middleBottom
+        Positions[7] = new Position(row - 1, column + 1); //rightBottom
+
+        LinkedList<Position> newPos = new LinkedList<Position>();
+        for (int i = 0; i < 8; i++) {
+            if ((Positions[i].row >= 0 && Positions[i].row < simGrid.getRowsNumber())
+                    && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()
+                    && simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
+                newPos.add(Positions[i]);
+            }
+        }
+        
+        if (newPos.isEmpty())
+            return new Position(row, column);
+        Position newPosition = newPos.get(random.nextInt(newPos.size()));
+        return newPosition;
+
+    }
      
 
     public void step() {
@@ -183,7 +218,7 @@ public class Simulation {
         }
         while (!peopleToProcess.isEmpty()) {
             PersonPosition current = peopleToProcess.poll();
-            Position newPosition = transitionRule1(current.pos.row, current.pos.column);
+            Position newPosition = transitionRule3(current.pos.row, current.pos.column);
             if (!newPosition.equals(current.pos)) {
                 if(simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT)
                     simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
