@@ -15,7 +15,7 @@ import java.util.Random;
  *
  * @author JKW
  */
-public class Simulation {
+public class Simulation{
 
     private Grid startGrid;
     private Grid simGrid;
@@ -102,6 +102,114 @@ public class Simulation {
         newPosition = equalMinPos.get(random.nextInt(equalMinPos.size()));
         return newPosition;
     }
+    
+     /**
+     * Regula przejscia dla człowieka mocno spanikowanego. Zwraca nowa pozycje lub taka sama, jesli nie ma mozliwosci wykonania ruchu
+     * @param row
+     * @param column
+     * @return nastepna pozycja, ktora zajmuje człowiek
+     */
+ 
+    public Position transitionRule3(int row, int column) {
+
+        int pot, tempPot, id = -1;
+        int exitId[] = new int[2];
+        for (int i = 0; i < 2; ++i) {
+            pot = Integer.MAX_VALUE;
+            for (int j = 1; j <= simGrid.getExitsCount(); ++j) {
+                tempPot = simGrid.getPotential(row, column)[j];
+                if (tempPot < pot && j != id) {
+                    pot = tempPot;
+                    exitId[i] = j;
+                    id = j;
+                }
+            }
+        }
+
+        if (simGrid.getAverageExitDens(exitId[0]-1) <= simGrid.getAverageExitDens(exitId[1]-1)) {
+            id = exitId[0];
+        } else {
+            id = exitId[1];
+        }
+
+        Position[] Positions = new Position[8];
+        Positions[0] = new Position(row + 1, column - 1); // leftTop
+        Positions[1] = new Position(row + 1, column); // middleTop
+        Positions[2] = new Position(row + 1, column + 1); // rightTop
+        Positions[3] = new Position(row, column - 1); //leftMiddle
+        Positions[4] = new Position(row, column + 1); //rightMiddle
+        Positions[5] = new Position(row - 1, column - 1); //leftBottom
+        Positions[6] = new Position(row - 1, column); //middleBottom
+        Positions[7] = new Position(row - 1, column + 1); //rightBottom
+
+        int minPot = Integer.MAX_VALUE;
+        int minCellPot[] = new int[8];
+        
+        for (int i = 0; i < 8; ++i) {
+            if ((Positions[i].row >= 0 && Positions[i].row < simGrid.getRowsNumber())
+                    && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()
+                    && simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
+                tempPot = simGrid.getPotential(Positions[i].row, Positions[i].column)[id];
+                if (tempPot < minPot) {
+                    minPot = tempPot;
+                }
+                minCellPot[i] = minPot;
+            } else {
+                minCellPot[i] = Integer.MAX_VALUE;
+            }
+        }
+        
+        Position newPosition = new Position(row, column);
+        if (minPot == Integer.MAX_VALUE) {
+            return new Position(row, column);
+        }
+
+        LinkedList<Position> equalMinPos = new LinkedList<Position>();
+        for (int i = 0; i < 8; i++) {
+            if (minCellPot[i] == minPot) {
+                equalMinPos.add(Positions[i]);
+            }
+        }
+        newPosition = equalMinPos.get(random.nextInt(equalMinPos.size()));
+        return newPosition;
+
+    }
+    
+        /**
+     * Regula przejscia dla człowieka totalnie spanikowanego. Zwraca nowa pozycje lub taka sama, jesli nie ma mozliwosci wykonania ruchu
+     * @param row
+     * @param column
+     * @return nastepna pozycja, ktora zajmuje człowiek
+     */
+    
+    public Position transitionRule4(int row, int column) {
+
+        Position[] Positions = new Position[8];
+        Positions[0] = new Position(row + 1, column - 1); // leftTop
+        Positions[1] = new Position(row + 1, column); // middleTop
+        Positions[2] = new Position(row + 1, column + 1); // rightTop
+        Positions[3] = new Position(row, column - 1); //leftMiddle
+        Positions[4] = new Position(row, column + 1); //rightMiddle
+        Positions[5] = new Position(row - 1, column - 1); //leftBottom
+        Positions[6] = new Position(row - 1, column); //middleBottom
+        Positions[7] = new Position(row - 1, column + 1); //rightBottom
+
+        LinkedList<Position> newPos = new LinkedList<Position>();
+        for (int i = 0; i < 8; i++) {
+            if ((Positions[i].row >= 0 && Positions[i].row < simGrid.getRowsNumber())
+                    && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()
+                    && simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
+                newPos.add(Positions[i]);
+            }
+        }
+        
+        if (newPos.isEmpty())
+            return new Position(row, column);
+        Position newPosition = newPos.get(random.nextInt(newPos.size()));
+        return newPosition;
+
+    }
+     
 
     public void step() {
         peopleToProcess = new PriorityQueue<PersonPosition>();
@@ -110,7 +218,17 @@ public class Simulation {
         }
         while (!peopleToProcess.isEmpty()) {
             PersonPosition current = peopleToProcess.poll();
-            Position newPosition = transitionRule1(current.pos.row, current.pos.column);
+            Position newPosition = current.pos;
+            int panic = getSimGrid().getMapCell(current.pos.row, current.pos.column);
+            if(panic > 76) {
+                newPosition = transitionRule4(current.pos.row, current.pos.column);
+            } else if(panic > 50) {
+                newPosition = transitionRule3(current.pos.row, current.pos.column);
+            } else if (panic > 25) {
+                //newPosition = transitionRule2(current.pos.row, current.pos.column);
+            } else {
+                newPosition = transitionRule3(current.pos.row, current.pos.column);
+            }
             if (!newPosition.equals(current.pos)) {
                 if(simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT)
                     simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
@@ -151,9 +269,8 @@ public class Simulation {
     }
 
     public void setGrid(Grid newGrid) {
-        startGrid = newGrid;
-        startGrid.calculateAll();
-        simGrid = newGrid.clone();
+        startGrid = new Grid(newGrid);
+        simGrid = newGrid;
         gridPanel.setGrid(simGrid);
     }
 
@@ -162,7 +279,7 @@ public class Simulation {
     }
 
     public void resetMap(){
-        simGrid = startGrid.clone();
+        simGrid = new Grid(startGrid);
         gridPanel.setGrid(simGrid);
     }
 }
