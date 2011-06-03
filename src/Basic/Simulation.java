@@ -156,9 +156,12 @@ public class Simulation{
                     if (tempPot < minPot) {
                         minPot = tempPot;
                     }
+                    minCellPot[i] = tempPot;
+                } else {
+                    minCellPot[i] = Integer.MAX_VALUE;
                 }
 
-                minCellPot[i] = simGrid.getPotential(Positions[i].row, Positions[i].column)[id];
+
             } else {
                 minCellPot[i] = Integer.MAX_VALUE;
             }
