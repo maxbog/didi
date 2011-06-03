@@ -151,8 +151,9 @@ public class Simulation {
     }
 
     public void setGrid(Grid newGrid) {
-        startGrid = newGrid.clone();
-        simGrid = newGrid;
+        startGrid = newGrid;
+        startGrid.calculateAll();
+        simGrid = newGrid.clone();
         gridPanel.setGrid(simGrid);
     }
 

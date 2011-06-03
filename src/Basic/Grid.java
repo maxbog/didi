@@ -77,6 +77,7 @@ public class Grid {
                 newGrid.setMapCell(i, j, this.mapGrid[i][j]);
             }
         }
+        newGrid.calculateAll();
         return newGrid;
     }
 

@@ -135,6 +135,8 @@ public class EwakuacjaView extends FrameView {
                 }
             }
         }, AWTEvent.KEY_EVENT_MASK);
+
+        newMenuButtonActionPerformed(null);
     }
 
     /**
