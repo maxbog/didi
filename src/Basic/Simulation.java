@@ -183,7 +183,17 @@ public class Simulation {
         }
         while (!peopleToProcess.isEmpty()) {
             PersonPosition current = peopleToProcess.poll();
-            Position newPosition = transitionRule1(current.pos.row, current.pos.column);
+            Position newPosition = current.pos;
+            int panic = getSimGrid().getMapCell(current.pos.row, current.pos.column);
+            if(panic > 76) {
+                //newPosition = transitionRule4(current.pos.row, current.pos.column);
+            } else if(panic > 50) {
+                newPosition = transitionRule3(current.pos.row, current.pos.column);
+            } else if (panic > 25) {
+                //newPosition = transitionRule2(current.pos.row, current.pos.column);
+            } else {
+                newPosition = transitionRule1(current.pos.row, current.pos.column);
+            }
             if (!newPosition.equals(current.pos)) {
                 if(simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT)
                     simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);

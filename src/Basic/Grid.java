@@ -73,7 +73,7 @@ public class Grid {
     public Grid clone() {
         Grid newGrid = new Grid(this.rowsNumber, this.columnsNumber);
         for (int i = 0; i < this.rowsNumber; i++) {
-            for (int j = 0; j < this.columnsNumber; j++){
+            for (int j = 0; j < this.columnsNumber; j++) {
                 newGrid.setMapCell(i, j, this.mapGrid[i][j]);
             }
         }
@@ -541,6 +541,30 @@ public class Grid {
             }
         }
         return people;
+    }
+
+    public void updatePanicLevels() {
+        for (Position person : identifyPeople()) {
+            int count = 1, sum = getMapCell(person.row, person.column);
+            final Position[] positions = new Position[8];
+            positions[0] = new Position(person.row + 1, person.column - 1); // leftTop
+            positions[1] = new Position(person.row + 1, person.column); // middleTop
+            positions[2] = new Position(person.row + 1, person.column + 1); // rightTop
+            positions[3] = new Position(person.row, person.column - 1); //leftMiddle
+            positions[4] = new Position(person.row, person.column + 1); //rightMiddle
+            positions[5] = new Position(person.row - 1, person.column - 1); //leftBottom
+            positions[6] = new Position(person.row - 1, person.column); //middleBottom
+            positions[7] = new Position(person.row - 1, person.column + 1); //rightBottom
+            for (int i = 0; i < positions.length; ++i) {
+                if (positions[i].row >= 0 && positions[i].row < getRowsNumber()
+                        && positions[i].column >= 0 && positions[i].column < getColumnsNumber()
+                        && getMapCell(positions[i].row, positions[i].column) > 0) {
+                    ++count;
+                    sum += getMapCell(positions[i].row, positions[i].column);
+                }
+            }
+            setMapCell(person.row,person.column, sum / count);
+        }
     }
 
     /* ###  ###*/
