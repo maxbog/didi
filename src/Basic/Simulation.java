@@ -175,10 +175,6 @@ public class Simulation {
 
     }
      
-    
-    
-    
-    
 
     public void step() {
         peopleToProcess = new PriorityQueue<PersonPosition>();
