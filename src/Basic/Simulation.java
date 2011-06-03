@@ -236,7 +236,7 @@ public class Simulation{
             } else if (panic > 25) {
                 //newPosition = transitionRule2(current.pos.row, current.pos.column);
             } else {
-                newPosition = transitionRule3(current.pos.row, current.pos.column);
+                newPosition = transitionRule1(current.pos.row, current.pos.column);
             }
             if (!newPosition.equals(current.pos)) {
                 if(simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT)
