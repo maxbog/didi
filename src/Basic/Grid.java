@@ -53,6 +53,16 @@ public class Grid {
         setSize(rows, columns);
     }
 
+    public Grid(Grid other) {
+        setSize(other.rowsNumber, other.columnsNumber);
+        for (int row = 0; row < rowsNumber; ++row) {
+            for (int column = 0; column < columnsNumber; ++column) {
+                mapGrid[row][column] = other.mapGrid[row][column];
+            }
+        }
+        calculateAll();
+    }
+
     /**
      *
      * @return number of columns
@@ -563,7 +573,7 @@ public class Grid {
                     sum += getMapCell(positions[i].row, positions[i].column);
                 }
             }
-            setMapCell(person.row,person.column, sum / count);
+            setMapCell(person.row, person.column, sum / count);
         }
     }
 

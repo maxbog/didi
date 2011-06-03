@@ -15,7 +15,7 @@ import java.util.Random;
  *
  * @author JKW
  */
-public class Simulation {
+public class Simulation{
 
     private Grid startGrid;
     private Grid simGrid;
@@ -221,13 +221,13 @@ public class Simulation {
             Position newPosition = current.pos;
             int panic = getSimGrid().getMapCell(current.pos.row, current.pos.column);
             if(panic > 76) {
-                //newPosition = transitionRule4(current.pos.row, current.pos.column);
+                newPosition = transitionRule4(current.pos.row, current.pos.column);
             } else if(panic > 50) {
                 newPosition = transitionRule3(current.pos.row, current.pos.column);
             } else if (panic > 25) {
                 //newPosition = transitionRule2(current.pos.row, current.pos.column);
             } else {
-                newPosition = transitionRule1(current.pos.row, current.pos.column);
+                newPosition = transitionRule3(current.pos.row, current.pos.column);
             }
             if (!newPosition.equals(current.pos)) {
                 if(simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT)
@@ -269,7 +269,7 @@ public class Simulation {
     }
 
     public void setGrid(Grid newGrid) {
-        startGrid = newGrid.clone();
+        startGrid = new Grid(newGrid);
         simGrid = newGrid;
         gridPanel.setGrid(simGrid);
     }
@@ -279,7 +279,7 @@ public class Simulation {
     }
 
     public void resetMap(){
-        simGrid = startGrid.clone();
+        simGrid = new Grid(startGrid);
         gridPanel.setGrid(simGrid);
     }
 }
