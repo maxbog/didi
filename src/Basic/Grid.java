@@ -542,6 +542,18 @@ public class Grid {
         return people;
     }
 
+    public int getPeopleCount() {
+        int number=0;
+        for (int row = 0; row < getRowsNumber(); row++) {
+            for (int column = 0; column < getColumnsNumber(); column++) {
+                if (mapGrid[row][column] > 0) {
+                    number++;
+                }
+            }
+        }
+        return number;
+    }
+
     public void updatePanicLevels() {
         for (Position person : identifyPeople()) {
             int count = 1, sum = getMapCell(person.row, person.column);

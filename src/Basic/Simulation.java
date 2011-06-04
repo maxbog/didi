@@ -6,24 +6,29 @@ package Basic;
 
 import Basic.Grid.Position;
 import GUI.GridPanel;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author JKW
  */
-public class Simulation{
+public class Simulation extends Thread {
 
     private Grid startGrid;
     private Grid simGrid;
-    private double transitionCoef=1.0;  // wspolczynnik w z reguly1
+    private double transitionCoef = 1.0;  // wspolczynnik w z reguly1
     private Queue<PersonPosition> peopleToProcess;
     private int time;
     private GridPanel gridPanel;
     private Random random = new Random();
+    private boolean pause = true;
+    private int delayTime = 0;
 
     public Simulation() {
         simGrid = new Grid(0, 0);
@@ -64,10 +69,10 @@ public class Simulation{
 
             if ((Positions[i].row >= 0 && Positions[i].row < simGrid.getRowsNumber())
                     && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()) {
-                if(simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EXIT) {
+                if (simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EXIT) {
                     return Positions[i];
                 }
-                 if(simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
+                if (simGrid.getMapCell(Positions[i].row, Positions[i].column) == Grid.EMPTY) {
 
                     minCost = Double.POSITIVE_INFINITY;//transitionCoef * (simGrid.getPotential(Positions[i].row, Positions[i].column))[1] + (1 - transitionCoef) * simGrid.getAverageExitDens(0);
                     for (int j = 1; j <= simGrid.getExitsCount(); ++j) {
@@ -77,8 +82,9 @@ public class Simulation{
                         }
                     }
                     minCellCost[i] = minCost;
-                }else {
-                minCellCost[i] = java.lang.Double.POSITIVE_INFINITY;}
+                } else {
+                    minCellCost[i] = java.lang.Double.POSITIVE_INFINITY;
+                }
 
             } else {
                 minCellCost[i] = java.lang.Double.POSITIVE_INFINITY;
@@ -91,25 +97,25 @@ public class Simulation{
                 minCost = minCellCost[i];
             }
         }
-        if(minCost == Double.POSITIVE_INFINITY)
+        if (minCost == Double.POSITIVE_INFINITY) {
             return new Position(row, column);
+        }
         LinkedList<Position> equalMinPos = new LinkedList<Position>();
-        for (int i = 0; i < 8; i++){
-            if(minCellCost[i]==minCost){
+        for (int i = 0; i < 8; i++) {
+            if (minCellCost[i] == minCost) {
                 equalMinPos.add(Positions[i]);
             }
         }
         newPosition = equalMinPos.get(random.nextInt(equalMinPos.size()));
         return newPosition;
     }
-    
-     /**
+
+    /**
      * Regula przejscia dla człowieka mocno spanikowanego. Zwraca nowa pozycje lub taka sama, jesli nie ma mozliwosci wykonania ruchu
      * @param row
      * @param column
      * @return nastepna pozycja, ktora zajmuje człowiek
      */
- 
     public Position transitionRule3(int row, int column) {
 
         int pot, tempPot, id = -1;
@@ -126,7 +132,7 @@ public class Simulation{
             }
         }
 
-        if (simGrid.getAverageExitDens(exitId[0]-1) <= simGrid.getAverageExitDens(exitId[1]-1)) {
+        if (simGrid.getAverageExitDens(exitId[0] - 1) <= simGrid.getAverageExitDens(exitId[1] - 1)) {
             id = exitId[0];
         } else {
             id = exitId[1];
@@ -144,7 +150,7 @@ public class Simulation{
 
         int minPot = Integer.MAX_VALUE;
         int minCellPot[] = new int[8];
-        
+
         for (int i = 0; i < 8; ++i) {
             if ((Positions[i].row >= 0 && Positions[i].row < simGrid.getRowsNumber())
                     && (Positions[i].column >= 0) && Positions[i].column < simGrid.getColumnsNumber()) {
@@ -166,7 +172,7 @@ public class Simulation{
                 minCellPot[i] = Integer.MAX_VALUE;
             }
         }
-        
+
         Position newPosition = new Position(row, column);
         if (minPot == Integer.MAX_VALUE) {
             return new Position(row, column);
@@ -182,14 +188,13 @@ public class Simulation{
         return newPosition;
 
     }
-    
-        /**
+
+    /**
      * Regula przejscia dla człowieka totalnie spanikowanego. Zwraca nowa pozycje lub taka sama, jesli nie ma mozliwosci wykonania ruchu
      * @param row
      * @param column
      * @return nastepna pozycja, ktora zajmuje człowiek
      */
-    
     public Position transitionRule4(int row, int column) {
 
         Position[] Positions = new Position[8];
@@ -214,14 +219,14 @@ public class Simulation{
                 }
             }
         }
-        
-        if (newPos.isEmpty())
+
+        if (newPos.isEmpty()) {
             return new Position(row, column);
+        }
         Position newPosition = newPos.get(random.nextInt(newPos.size()));
         return newPosition;
 
     }
-     
 
     public void step() {
         peopleToProcess = new PriorityQueue<PersonPosition>();
@@ -232,9 +237,9 @@ public class Simulation{
             PersonPosition current = peopleToProcess.poll();
             Position newPosition = current.pos;
             int panic = getSimGrid().getMapCell(current.pos.row, current.pos.column);
-            if(panic > 76) {
+            if (panic > 76) {
                 newPosition = transitionRule4(current.pos.row, current.pos.column);
-            } else if(panic > 50) {
+            } else if (panic > 50) {
                 newPosition = transitionRule3(current.pos.row, current.pos.column);
             } else if (panic > 25) {
                 //newPosition = transitionRule2(current.pos.row, current.pos.column);
@@ -242,8 +247,9 @@ public class Simulation{
                 newPosition = transitionRule3(current.pos.row, current.pos.column);
             }
             if (!newPosition.equals(current.pos)) {
-                if(simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT)
+                if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT) {
                     simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
+                }
                 if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EMPTY) {
                     simGrid.setMapCell(newPosition.row, newPosition.column, simGrid.getMapCell(current.pos.row, current.pos.column));
                     simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
@@ -290,8 +296,47 @@ public class Simulation{
         gridPanel = panel;
     }
 
-    public void resetMap(){
+    public void resetMap() {
         simGrid = new Grid(startGrid);
         gridPanel.setGrid(simGrid);
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            if (pause) {
+                try {
+                    sleep(500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Simulation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                continue;
+            }
+            long timer = Calendar.getInstance().getTimeInMillis();
+            step();
+
+            if (simGrid.getPeopleCount() == 0) {
+                pause = true;
+            }
+            while (Calendar.getInstance().getTimeInMillis() < timer + delayTime) {
+                try {
+                    sleep(5);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Simulation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void startSimulation() {
+        pause = false;
+    }
+
+    public void pauseSimulation() {
+        pause = true;
+    }
+
+    public void setDelayTime(float time) {
+        delayTime = (int) (1000f * time);
     }
 }

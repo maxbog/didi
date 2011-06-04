@@ -25,56 +25,46 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel1" pref="143" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="radiusLabel" min="-2" max="-2" attributes="0"/>
-                                      <Component id="populationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="31" pref="31" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="populationField" pref="68" max="32767" attributes="0"/>
-                                      <Component id="radiusField" alignment="0" pref="68" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="pLabel" min="-2" max="-2" attributes="0"/>
-                                      <Component id="wLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="pField" pref="67" max="32767" attributes="0"/>
-                                      <Component id="wField" alignment="0" pref="67" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jSeparator2" alignment="1" pref="183" max="32767" attributes="0"/>
-                              <Component id="jSeparator1" alignment="1" pref="183" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="startButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="stepButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="pauseButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel1" pref="143" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="restartButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="jSeparator1" pref="183" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="radiusLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="31" pref="31" max="-2" attributes="0"/>
+                      <Component id="radiusField" pref="68" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jSeparator2" alignment="1" pref="183" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="startButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="stepButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="pauseButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="restartButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="pLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="wLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="delayTimerLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="delayTimerSpinner" alignment="0" pref="67" max="32767" attributes="0"/>
+                          <Component id="pField" pref="67" max="32767" attributes="0"/>
+                          <Component id="wField" alignment="0" pref="67" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -90,11 +80,6 @@
               <Component id="jSeparator1" min="-2" pref="8" max="-2" attributes="1"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="populationField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="populationLabel" alignment="3" min="-2" max="-2" attributes="1"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="radiusLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="radiusField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -108,7 +93,12 @@
                   <Component id="wField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="wLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="delayTimerSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="delayTimerLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -118,7 +108,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="restartButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="88" max="32767" attributes="0"/>
+              <EmptySpace pref="90" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -135,27 +125,6 @@
       <Properties>
         <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="populationLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="populationLabel.text"/>
-        <Property name="name" type="java.lang.String" value="populationLabel" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="populationField">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="populationField.text"/>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[20, 20]"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="populationField" noResource="true"/>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[60, 20]"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="populationFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="radiusLabel">
       <Properties>
@@ -219,12 +188,18 @@
         <Property name="text" type="java.lang.String" resourceKey="startButton.text"/>
         <Property name="name" type="java.lang.String" value="startButton" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="pauseButton">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="pauseButton.text"/>
         <Property name="name" type="java.lang.String" value="pauseButton" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pauseButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator2">
       <Properties>
@@ -239,6 +214,35 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="restartButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="delayTimerSpinner">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel type="list">
+            <ListItem value="0.0"/>
+            <ListItem value="0.1"/>
+            <ListItem value="0.2"/>
+            <ListItem value="0.3"/>
+            <ListItem value="0.4"/>
+            <ListItem value="0.5"/>
+            <ListItem value="0.6"/>
+            <ListItem value="0.7"/>
+            <ListItem value="0.8"/>
+            <ListItem value="0.9"/>
+            <ListItem value="1.0"/>
+          </SpinnerModel>
+        </Property>
+        <Property name="name" type="java.lang.String" value="delayTimerSpinner" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="delayTimerSpinnerStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="delayTimerLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="delayTimerLabel.text"/>
+        <Property name="name" type="java.lang.String" value="delayTimerLabel" noResource="true"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
