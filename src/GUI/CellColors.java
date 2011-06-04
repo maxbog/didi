@@ -27,10 +27,8 @@ public class CellColors {
                 return Color.GREEN;
             case -4:
                 return Color.DARK_GRAY;
-            case 1:
-                return Color.RED;
             default:
-                return Color.YELLOW;
+                return Color.RED;
         }
     }
 

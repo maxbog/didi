@@ -8,7 +8,6 @@
  *
  * Created on 2011-05-28, 13:52:49
  */
-
 package GUI;
 
 import Basic.Grid;
@@ -34,13 +33,13 @@ public class GridPanel extends javax.swing.JPanel {
     /** Creates new form NewJPanel */
     public GridPanel() {
         initComponents();
-        grid = new Grid(0,0);
+        grid = new Grid(0, 0);
     }
+
     /**
      * @param gr Grid to show in panel.
      */
     public void setGrid(Grid gr) {
-        initComponents();
         grid = gr;
     }
 
@@ -109,9 +108,10 @@ public class GridPanel extends javax.swing.JPanel {
         this.repaint();
     }//GEN-LAST:event_formMouseReleased
 
-    private void cellEditedByMouse(java.awt.event.MouseEvent evt){
-        if( !editPanel.isEditingMode() )
+    private void cellEditedByMouse(java.awt.event.MouseEvent evt) {
+        if (!editPanel.isEditingMode()) {
             return;
+        }
 
         int row = 0;
         int column = 0;
@@ -123,18 +123,22 @@ public class GridPanel extends javax.swing.JPanel {
             return;
         }
 
-        if(column >= grid.getColumnsNumber() || this.getMousePosition().x < xMargin)
+        if (column >= grid.getColumnsNumber() || this.getMousePosition().x < xMargin) {
             column = -1;
-        if(row >= grid.getRowsNumber() || this.getMousePosition().y < yMargin)
+        }
+        if (row >= grid.getRowsNumber() || this.getMousePosition().y < yMargin) {
             row = -1;
+        }
 
-        if(column==-1 || row==-1)
+        if (column == -1 || row == -1) {
             return;
-        
-        if(evt.isMetaDown())
+        }
+
+        if (evt.isMetaDown()) {
             grid.setMapCell(row, column, Grid.EMPTY);
-        else
+        } else {
             grid.setMapCell(row, column, editPanel.getCellTypeSelected());
+        }
 
         paintMapCell(row, column);
     }
@@ -144,24 +148,31 @@ public class GridPanel extends javax.swing.JPanel {
      * @param row
      * @param column
      */
-    public void paintMapCell(int row, int column){
+    public void paintMapCell(int row, int column) {
         Graphics2D g2d = (Graphics2D) this.getGraphics();
+        g2d.setFont(new Font("serif", Font.PLAIN, cellSize * 3 / 5));
         g2d.setColor(CellColors.getMapColor(grid.getMapCell(row, column)));
-        g2d.fillRect(xMargin+cellSize*column, yMargin+cellSize*row, cellSize, cellSize);
-        
-        if(drawLines){
+        g2d.fillRect(xMargin + cellSize * column, yMargin + cellSize * row, cellSize, cellSize);
+
+        if (drawNumbers && grid.getMapCell(row, column) > 0 && cellSize > 12) {
+                    g2d.setColor(Color.BLACK);
+                    g2d.drawString(Integer.toString(grid.getMapCell(row, column)),
+                            xMargin + cellSize * column + 2, yMargin + cellSize * row + cellSize - 3);
+                }
+
+        if (drawLines) {
             g2d.setColor(Color.GRAY);
-            g2d.drawLine(xMargin+cellSize*column, yMargin+cellSize*row,
-                    xMargin+cellSize*column + cellSize, yMargin+cellSize*row);
-            g2d.drawLine(xMargin+cellSize*column, yMargin+cellSize*row,
-                    xMargin+cellSize*column, yMargin+cellSize*row + cellSize);
+            g2d.drawLine(xMargin + cellSize * column, yMargin + cellSize * row,
+                    xMargin + cellSize * column + cellSize, yMargin + cellSize * row);
+            g2d.drawLine(xMargin + cellSize * column, yMargin + cellSize * row,
+                    xMargin + cellSize * column, yMargin + cellSize * row + cellSize);
         }
     }
 
     /**
      * Method repaints all visible grid.
      */
-    public void repaintGrid(){
+    public void repaintGrid() {
         this.repaint();
     }
 
@@ -170,16 +181,24 @@ public class GridPanel extends javax.swing.JPanel {
      * @param g2d
      * @param rect
      */
-    private void paintMap(Graphics2D g2d, Rectangle rect){
-        for(int i=0;i<grid.getRowsNumber();i++){
-            for(int j=0;j<grid.getColumnsNumber();j++){
-                int xView = xMargin+cellSize*j;
-                int yView = yMargin+cellSize*i;
-                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
-                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+    private void paintMap(Graphics2D g2d, Rectangle rect) {
+        g2d.setFont(new Font("serif", Font.PLAIN, cellSize * 3 / 5));
+        for (int i = 0; i < grid.getRowsNumber(); i++) {
+            for (int j = 0; j < grid.getColumnsNumber(); j++) {
+                int xView = xMargin + cellSize * j;
+                int yView = yMargin + cellSize * i;
+                if (xView + cellSize < rect.x || yView + cellSize < rect.y
+                        || xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+                {
                     continue;
+                }
                 g2d.setColor(CellColors.getMapColor(grid.getMapCell(i, j)));
-                g2d.fillRect( xView, yView, cellSize, cellSize);
+                g2d.fillRect(xView, yView, cellSize, cellSize);
+                if (drawNumbers && grid.getMapCell(i, j) > 0 && cellSize > 12) {
+                    g2d.setColor(Color.BLACK);
+                    g2d.drawString(Integer.toString(grid.getMapCell(i, j)),
+                            xView + 2, yView + cellSize - 3);
+                }
             }
         }
     }
@@ -189,32 +208,36 @@ public class GridPanel extends javax.swing.JPanel {
      * @param g2d
      * @param rect
      */
-    public void paintPotential(Graphics2D g2d, Rectangle rect){
-        g2d.setFont(new Font("serif",Font.PLAIN,cellSize*3/5));
-        for(int i=0;i<grid.getRowsNumber();i++){
-            for(int j=0;j<grid.getColumnsNumber();j++){
-                int xView = xMargin+cellSize*j;
-                int yView = yMargin+cellSize*i;
-                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
-                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+    public void paintPotential(Graphics2D g2d, Rectangle rect) {
+        g2d.setFont(new Font("serif", Font.PLAIN, cellSize * 3 / 5));
+        for (int i = 0; i < grid.getRowsNumber(); i++) {
+            for (int j = 0; j < grid.getColumnsNumber(); j++) {
+                int xView = xMargin + cellSize * j;
+                int yView = yMargin + cellSize * i;
+                if (xView + cellSize < rect.x || yView + cellSize < rect.y
+                        || xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+                {
                     continue;
-                if(grid.getMapCell(i, j) == Grid.WALL
-                        || grid.getMapCell(i, j) == Grid.OBSTACLE)
+                }
+                if (grid.getMapCell(i, j) == Grid.WALL
+                        || grid.getMapCell(i, j) == Grid.OBSTACLE) {
                     g2d.setColor(CellColors.getMapColor(grid.getMapCell(i, j)));
-                else
+                } else {
                     g2d.setColor(CellColors.getPotentialColor(
-                            grid.getPotential(i, j)[visibleExit],grid.getMaxPotential()));
-                g2d.fillRect( xView, yView, cellSize, cellSize);
-                if(drawNumbers && grid.getMapCell(i, j) != Grid.WALL
-                        && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize>12){
+                            grid.getPotential(i, j)[visibleExit], grid.getMaxPotential()));
+                }
+                g2d.fillRect(xView, yView, cellSize, cellSize);
+                if (drawNumbers && grid.getMapCell(i, j) != Grid.WALL
+                        && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize > 12) {
                     g2d.setColor(Color.BLACK);
                     int potNumber = grid.getPotential(i, j)[visibleExit];
                     String potential;
-                    if(potNumber == Integer.MAX_VALUE)
+                    if (potNumber == Integer.MAX_VALUE) {
                         potential = "∞";
-                    else
-                        potential =  Integer.toString(potNumber);
-                    g2d.drawString(potential, xView+2, yView+cellSize-3);
+                    } else {
+                        potential = Integer.toString(potNumber);
+                    }
+                    g2d.drawString(potential, xView + 2, yView + cellSize - 3);
                 }
             }
         }
@@ -225,27 +248,30 @@ public class GridPanel extends javax.swing.JPanel {
      * @param g2d
      * @param rect
      */
-    public void paintDensity(Graphics2D g2d, Rectangle rect){
-        g2d.setFont(new Font("serif",Font.PLAIN,cellSize*3/5));
-        for(int i=0;i<grid.getRowsNumber();i++){
-            for(int j=0;j<grid.getColumnsNumber();j++){
-                int xView = xMargin+cellSize*j;
-                int yView = yMargin+cellSize*i;
-                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
-                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+    public void paintDensity(Graphics2D g2d, Rectangle rect) {
+        g2d.setFont(new Font("serif", Font.PLAIN, cellSize * 3 / 5));
+        for (int i = 0; i < grid.getRowsNumber(); i++) {
+            for (int j = 0; j < grid.getColumnsNumber(); j++) {
+                int xView = xMargin + cellSize * j;
+                int yView = yMargin + cellSize * i;
+                if (xView + cellSize < rect.x || yView + cellSize < rect.y
+                        || xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+                {
                     continue;
-                if(grid.getMapCell(i, j) == Grid.WALL
-                        || grid.getMapCell(i, j) == Grid.OBSTACLE)
+                }
+                if (grid.getMapCell(i, j) == Grid.WALL
+                        || grid.getMapCell(i, j) == Grid.OBSTACLE) {
                     g2d.setColor(CellColors.getMapColor(grid.getMapCell(i, j)));
-                else
+                } else {
                     g2d.setColor(CellColors.getDensityColor(grid.getDensity(i, j)));
-                g2d.fillRect( xView, yView, cellSize, cellSize);
-                if(drawNumbers && grid.getMapCell(i, j) != Grid.WALL
-                        && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize>12){
+                }
+                g2d.fillRect(xView, yView, cellSize, cellSize);
+                if (drawNumbers && grid.getMapCell(i, j) != Grid.WALL
+                        && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize > 12) {
                     g2d.setColor(Color.BLACK);
-                    String density = Double.toString(grid.getDensity(i, j)*100);
+                    String density = Double.toString(grid.getDensity(i, j) * 100);
                     density = density.substring(0, density.indexOf('.'));
-                    g2d.drawString(density, xView+2, yView+cellSize-3);
+                    g2d.drawString(density, xView + 2, yView + cellSize - 3);
                 }
             }
         }
@@ -256,107 +282,121 @@ public class GridPanel extends javax.swing.JPanel {
      * @param g2d
      * @param rect
      */
-    public void paintBottleneck(Graphics2D g2d, Rectangle rect){
-        g2d.setFont(new Font("serif",Font.PLAIN,cellSize*3/5));
-        for(int i=0;i<grid.getRowsNumber();i++){
-            for(int j=0;j<grid.getColumnsNumber();j++){
-                int xView = xMargin+cellSize*j;
-                int yView = yMargin+cellSize*i;
-                if( xView + cellSize < rect.x || yView + cellSize < rect.y ||
-                        xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+    public void paintBottleneck(Graphics2D g2d, Rectangle rect) {
+        g2d.setFont(new Font("serif", Font.PLAIN, cellSize * 3 / 5));
+        for (int i = 0; i < grid.getRowsNumber(); i++) {
+            for (int j = 0; j < grid.getColumnsNumber(); j++) {
+                int xView = xMargin + cellSize * j;
+                int yView = yMargin + cellSize * i;
+                if (xView + cellSize < rect.x || yView + cellSize < rect.y
+                        || xView > rect.x + rect.width || yView > rect.y + rect.height) //rysuje tylko jeżeli widać element
+                {
                     continue;
-                if(grid.getMapCell(i, j) == Grid.WALL
-                        || grid.getMapCell(i, j) == Grid.OBSTACLE)
+                }
+                if (grid.getMapCell(i, j) == Grid.WALL
+                        || grid.getMapCell(i, j) == Grid.OBSTACLE) {
                     g2d.setColor(CellColors.getMapColor(grid.getMapCell(i, j)));
-                else
+                } else {
                     g2d.setColor(CellColors.getDensityColor(
                             grid.getBottleNeck(i, j)[visibleExit]));
-                g2d.fillRect( xView, yView, cellSize, cellSize);
-                if(drawNumbers && grid.getMapCell(i, j) != Grid.WALL
-                        && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize>12){
+                }
+                g2d.fillRect(xView, yView, cellSize, cellSize);
+                if (drawNumbers && grid.getMapCell(i, j) != Grid.WALL
+                        && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize > 12) {
                     g2d.setColor(Color.BLACK);
-                    String bottleNeck = Double.toString(grid.getBottleNeck(i, j)[visibleExit]*100);
+                    String bottleNeck = Double.toString(grid.getBottleNeck(i, j)[visibleExit] * 100);
                     bottleNeck = bottleNeck.substring(0, bottleNeck.indexOf('.'));
-                    g2d.drawString(bottleNeck, xView+2, yView+cellSize-3);
+                    g2d.drawString(bottleNeck, xView + 2, yView + cellSize - 3);
                 }
             }
         }
     }
 
     @Override
-    public void paint(Graphics g)
-    {
+    public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setBackground(Color.LIGHT_GRAY);
         g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
 
-        if(grid == null || grid.getColumnsNumber()==0 || grid.getRowsNumber() == 0)
+        if (grid == null || grid.getColumnsNumber() == 0 || grid.getRowsNumber() == 0) {
             return;
+        }
 
         Rectangle rect = scrollPane.getViewport().getViewRect(); //widoczny prostokat
 
         g2d.setColor(Color.BLACK);
-        g2d.drawRect(xMargin-1, yMargin-1, grid.getColumnsNumber()*cellSize+2,
-                grid.getRowsNumber()*cellSize+2);
-        g2d.drawRect(xMargin-2, yMargin-2, grid.getColumnsNumber()*cellSize+4,
-                grid.getRowsNumber()*cellSize+4);
+        g2d.drawRect(xMargin - 1, yMargin - 1, grid.getColumnsNumber() * cellSize + 2,
+                grid.getRowsNumber() * cellSize + 2);
+        g2d.drawRect(xMargin - 2, yMargin - 2, grid.getColumnsNumber() * cellSize + 4,
+                grid.getRowsNumber() * cellSize + 4);
 
-        switch(visibleGrid){
-            case GridPanel.VISIBLE_MAP: paintMap(g2d, rect); break;
-            case GridPanel.VISIBLE_POTENTIAL: paintPotential(g2d, rect); break;
-            case GridPanel.VISIBLE_DENSITY: paintDensity(g2d, rect); break;
-            case GridPanel.VISIBLE_BOTTLENECK: paintBottleneck(g2d, rect); break;
+        switch (visibleGrid) {
+            case GridPanel.VISIBLE_MAP:
+                paintMap(g2d, rect);
+                break;
+            case GridPanel.VISIBLE_POTENTIAL:
+                paintPotential(g2d, rect);
+                break;
+            case GridPanel.VISIBLE_DENSITY:
+                paintDensity(g2d, rect);
+                break;
+            case GridPanel.VISIBLE_BOTTLENECK:
+                paintBottleneck(g2d, rect);
+                break;
         }
 
-        if(drawLines){
+        if (drawLines) {
             g2d.setColor(Color.GRAY);
-            for(int i=0;i<grid.getRowsNumber()+1;i++){
-                if(yMargin+i*cellSize < rect.y || yMargin+i*cellSize > rect.y + rect.height)
+            for (int i = 0; i < grid.getRowsNumber() + 1; i++) {
+                if (yMargin + i * cellSize < rect.y || yMargin + i * cellSize > rect.y + rect.height) {
                     continue; // rysuje tylko widoczne
-                g2d.drawLine(xMargin, yMargin+i*cellSize,
-                        xMargin+grid.getColumnsNumber()*cellSize-1, yMargin+i*cellSize);
+                }
+                g2d.drawLine(xMargin, yMargin + i * cellSize,
+                        xMargin + grid.getColumnsNumber() * cellSize - 1, yMargin + i * cellSize);
             }
-            for(int i=0;i<grid.getColumnsNumber()+1;i++){
-                if(xMargin+i*cellSize < rect.x || xMargin+i*cellSize > rect.x + rect.width)
+            for (int i = 0; i < grid.getColumnsNumber() + 1; i++) {
+                if (xMargin + i * cellSize < rect.x || xMargin + i * cellSize > rect.x + rect.width) {
                     continue; // rysuje tylko widoczne
-                g2d.drawLine(xMargin+i*cellSize, yMargin,
-                        xMargin+i*cellSize, yMargin+grid.getRowsNumber()*cellSize-1);
+                }
+                g2d.drawLine(xMargin + i * cellSize, yMargin,
+                        xMargin + i * cellSize, yMargin + grid.getRowsNumber() * cellSize - 1);
             }
         }
 
         g2d.setColor(Color.GRAY);
-        g2d.drawRect(xMargin, yMargin, grid.getColumnsNumber()*cellSize,
-                grid.getRowsNumber()*cellSize);
-        this.setPreferredSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
-                grid.getRowsNumber()*cellSize+2*yMargin));
-        
+        g2d.drawRect(xMargin, yMargin, grid.getColumnsNumber() * cellSize,
+                grid.getRowsNumber() * cellSize);
+        this.setPreferredSize(new Dimension(grid.getColumnsNumber() * cellSize + 2 * xMargin,
+                grid.getRowsNumber() * cellSize + 2 * yMargin));
+
     }
 
     @Override
-    public void update( Graphics g )
-    {
+    public void update(Graphics g) {
         paint(g);
     }
 
     /**
      * Increase size of cell, grid is bigger.
      */
-    public void zoomPlus(){
-        if(cellSize<30)
-            cellSize+=2;
-        this.setSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
-                grid.getRowsNumber()*cellSize+2*yMargin));
+    public void zoomPlus() {
+        if (cellSize < 30) {
+            cellSize += 2;
+        }
+        this.setSize(new Dimension(grid.getColumnsNumber() * cellSize + 2 * xMargin,
+                grid.getRowsNumber() * cellSize + 2 * yMargin));
         this.repaint();
     }
 
     /**
      * Decrease size of cell, grid is smaller.
      */
-    public void zoomMinus(){
-        if(cellSize>4)
-            cellSize-=2;
-        this.setSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
-                grid.getRowsNumber()*cellSize+2*yMargin));
+    public void zoomMinus() {
+        if (cellSize > 4) {
+            cellSize -= 2;
+        }
+        this.setSize(new Dimension(grid.getColumnsNumber() * cellSize + 2 * xMargin,
+                grid.getRowsNumber() * cellSize + 2 * yMargin));
         this.repaint();
     }
 
@@ -364,12 +404,12 @@ public class GridPanel extends javax.swing.JPanel {
      *
      * @param aFlag True to make lines visible, false to hide them.
      */
-    public void setDrawingLines(boolean aFlag){
+    public void setDrawingLines(boolean aFlag) {
         drawLines = aFlag;
         this.repaint();
     }
 
-    public void setDrawingNumbers(boolean aFlag){
+    public void setDrawingNumbers(boolean aFlag) {
         drawNumbers = aFlag;
         this.repaint();
     }
@@ -380,10 +420,10 @@ public class GridPanel extends javax.swing.JPanel {
      * @param rows Number of rows.
      * @param columns Number of columns.
      */
-    public void setGridSize(int rows, int columns){
+    public void setGridSize(int rows, int columns) {
         grid.setSize(rows, columns);
-        this.setSize(new Dimension(grid.getColumnsNumber()*cellSize+2*xMargin,
-                grid.getRowsNumber()*cellSize+2*yMargin));
+        this.setSize(new Dimension(grid.getColumnsNumber() * cellSize + 2 * xMargin,
+                grid.getRowsNumber() * cellSize + 2 * yMargin));
         this.revalidate();
         this.repaint();
     }
@@ -392,7 +432,7 @@ public class GridPanel extends javax.swing.JPanel {
      * Setting editPanel, will not work without this.
      * @param panel
      */
-    public void setEditPanel(EditPanel panel){
+    public void setEditPanel(EditPanel panel) {
         editPanel = panel;
     }
 
@@ -400,7 +440,7 @@ public class GridPanel extends javax.swing.JPanel {
      * Setting editPanel, will not work correctly without this.
      * @param pane
      */
-    public void setScrollPane(JScrollPane pane){
+    public void setScrollPane(JScrollPane pane) {
         scrollPane = pane;
     }
 
@@ -408,7 +448,7 @@ public class GridPanel extends javax.swing.JPanel {
      *
      * @return Number of columns of grid.
      */
-    public int getGridColumnsNumber(){
+    public int getGridColumnsNumber() {
         return grid.getColumnsNumber();
     }
 
@@ -416,7 +456,7 @@ public class GridPanel extends javax.swing.JPanel {
      *
      * @return Number of rows of grid.
      */
-    public int getGridRowsNumber(){
+    public int getGridRowsNumber() {
         return grid.getRowsNumber();
     }
 
@@ -424,12 +464,12 @@ public class GridPanel extends javax.swing.JPanel {
      * Method sets which grid will be visible.
      * @param aFlag VISIBLE_MAP, VISIBLE_POTENTIAL or VISIBLE_DESTINY
      */
-    public void setVisibleGrid(int aFlag){
-        switch(aFlag){
+    public void setVisibleGrid(int aFlag) {
+        switch (aFlag) {
             case GridPanel.VISIBLE_POTENTIAL:
             case GridPanel.VISIBLE_MAP:
             case GridPanel.VISIBLE_DENSITY:
-            case GridPanel.VISIBLE_BOTTLENECK:{
+            case GridPanel.VISIBLE_BOTTLENECK: {
                 visibleGrid = aFlag;
                 break;
             }
@@ -440,17 +480,15 @@ public class GridPanel extends javax.swing.JPanel {
         this.repaintGrid();
     }
 
-
-    public void setVisibleExit(int exit){
-        if(grid.getColumnsNumber() != 0 && grid.getRowsNumber() != 0 &&
-                exit < grid.getPotential(0, 0).length)
+    public void setVisibleExit(int exit) {
+        if (grid.getColumnsNumber() != 0 && grid.getRowsNumber() != 0
+                && exit < grid.getPotential(0, 0).length) {
             visibleExit = exit;
+        }
         this.repaintGrid();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
     private final int xMargin = 8;
     private final int yMargin = 8;
     private int cellSize = 21;
@@ -459,7 +497,6 @@ public class GridPanel extends javax.swing.JPanel {
     private Grid grid = null;
     private int visibleGrid = this.VISIBLE_MAP;
     private int visibleExit = 0;
-
     EditPanel editPanel;
     JScrollPane scrollPane;
 }

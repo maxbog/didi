@@ -66,14 +66,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
-            <Component class="GUI.OptionsPanel" name="optionsPanel1">
+            <Component class="GUI.OptionsPanel" name="optionsPanel">
               <Properties>
-                <Property name="name" type="java.lang.String" value="optionsPanel1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="optionsPanel" noResource="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Symulacja">
-                    <Property name="tabTitle" type="java.lang.String" resourceKey="optionsPanel1.TabConstraints.tabTitle"/>
+                    <Property name="tabTitle" type="java.lang.String" resourceKey="optionsPanel.TabConstraints.tabTitle"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
