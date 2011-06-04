@@ -22,10 +22,6 @@ public class Grid {
     public static final int EXIT = -2;
     public static final int BLOCKED = -3;
     public static final int OBSTACLE = -4;
-    public static final int PERSON1 = 1;
-    public static final int PERSON2 = 2;
-    public static final int PERSON3 = 3;
-    public static final int PERSON4 = 4;
     public static final int FLOOD_RADIUS = 3;
     private int columnsNumber;
     private int rowsNumber;

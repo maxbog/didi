@@ -11,7 +11,9 @@
 package GUI;
 
 import Basic.Grid;
+import Basic.Simulation;
 import ewakuacja.EwakuacjaView;
+import java.util.Random;
 
 /**
  *
@@ -30,7 +32,7 @@ public class EditPanel extends javax.swing.JPanel {
         wallColorPanel.setBackground(CellColors.getMapColor(Grid.WALL));
         obstacleColorPanel.setBackground(CellColors.getMapColor(Grid.OBSTACLE));
         exitColorPanel.setBackground(CellColors.getMapColor(Grid.EXIT));
-        personColorPanel.setBackground(CellColors.getMapColor(Grid.PERSON1));
+        personColorPanel.setBackground(CellColors.getMapColor(1));
     }
 
     /** This method is called from within the constructor to
@@ -59,6 +61,9 @@ public class EditPanel extends javax.swing.JPanel {
         personColorPanel = new javax.swing.JPanel();
         obstacleCellButton = new javax.swing.JRadioButton();
         obstacleColorPanel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        panicSpinner = new javax.swing.JSpinner();
+        randPanicCheckBox = new javax.swing.JCheckBox();
         editingButton = new javax.swing.JCheckBox();
 
         setName("Form"); // NOI18N
@@ -102,8 +107,8 @@ public class EditPanel extends javax.swing.JPanel {
                     .addComponent(jLabel1))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rowsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                    .addComponent(columnsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
+                    .addComponent(rowsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                    .addComponent(columnsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -201,7 +206,9 @@ public class EditPanel extends javax.swing.JPanel {
             .addGap(0, 19, Short.MAX_VALUE)
         );
 
+        personColorPanel.setMinimumSize(new java.awt.Dimension(15, 19));
         personColorPanel.setName("personColorPanel"); // NOI18N
+        personColorPanel.setPreferredSize(new java.awt.Dimension(15, 19));
 
         javax.swing.GroupLayout personColorPanelLayout = new javax.swing.GroupLayout(personColorPanel);
         personColorPanel.setLayout(personColorPanelLayout);
@@ -211,7 +218,7 @@ public class EditPanel extends javax.swing.JPanel {
         );
         personColorPanelLayout.setVerticalGroup(
             personColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 23, Short.MAX_VALUE)
+            .addGap(0, 19, Short.MAX_VALUE)
         );
 
         cellTypeButtons.add(obstacleCellButton);
@@ -237,27 +244,50 @@ public class EditPanel extends javax.swing.JPanel {
             .addGap(0, 19, Short.MAX_VALUE)
         );
 
+        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+
+        panicSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+        panicSpinner.setEnabled(false);
+        panicSpinner.setName("panicSpinner"); // NOI18N
+        panicSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                panicSpinnerStateChanged(evt);
+            }
+        });
+
+        randPanicCheckBox.setText(resourceMap.getString("randPanicCheckBox.text")); // NOI18N
+        randPanicCheckBox.setEnabled(false);
+        randPanicCheckBox.setName("randPanicCheckBox"); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(wallColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(personColorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(emptyColorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(obstacleColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(wallColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(emptyColorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(obstacleColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(personColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(emptyCellButton)
                     .addComponent(wallCellButton)
                     .addComponent(obstacleCellButton)
                     .addComponent(exitCellButton)
-                    .addComponent(personCellButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(personCellButton)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(randPanicCheckBox)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(panicSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,15 +304,20 @@ public class EditPanel extends javax.swing.JPanel {
                     .addComponent(obstacleColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(obstacleCellButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(personColorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(exitCellButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(personCellButton))))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(exitCellButton)
+                    .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(personCellButton)
+                    .addComponent(personColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(panicSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(randPanicCheckBox)
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         editingButton.setText(resourceMap.getString("editingButton.text")); // NOI18N
@@ -300,7 +335,7 @@ public class EditPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(editingButton)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -312,8 +347,8 @@ public class EditPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -330,14 +365,14 @@ public class EditPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_exitCellButtonActionPerformed
 
     private void personCellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personCellButtonActionPerformed
-        cellTypeSelected = Grid.PERSON1;
+        cellTypeSelected = Integer.parseInt(panicSpinner.getValue().toString());
     }//GEN-LAST:event_personCellButtonActionPerformed
 
     private void editingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editingButtonActionPerformed
         boolean enable = editingButton.isSelected();
         if (enable) {
-            rowsSpinner.setValue(gridPanel.getGridRowsNumber());
-            columnsSpinner.setValue(gridPanel.getGridColumnsNumber());
+            rowsSpinner.setValue(simulation.getSimGrid().getRowsNumber());
+            columnsSpinner.setValue(simulation.getSimGrid().getColumnsNumber());
             mapGridChanged = true;
         }
 
@@ -351,13 +386,13 @@ public class EditPanel extends javax.swing.JPanel {
         obstacleCellButton.setEnabled(enable);
         exitCellButton.setEnabled(enable);
         personCellButton.setEnabled(enable);
+        panicSpinner.setEnabled(enable);
+        randPanicCheckBox.setEnabled(enable);
 
         if (mainWindow != null) {
             mainWindow.setEditMode(enable);
             if(!enable) {
-                gridPanel.getGrid().identifyExits();
-                gridPanel.getGrid().calculatePotentials();
-                gridPanel.getGrid().calculateBottleNecks();
+                simulation.getSimGrid().calculateAll();
             }
         }
 
@@ -365,21 +400,28 @@ public class EditPanel extends javax.swing.JPanel {
 
     private void rowsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rowsSpinnerStateChanged
         if (editingMode) {
-            gridPanel.setGridSize(Integer.parseInt(rowsSpinner.getValue().toString()),
+            simulation.getSimGrid().setSize(Integer.parseInt(rowsSpinner.getValue().toString()),
                     Integer.parseInt(columnsSpinner.getValue().toString()));
+            gridPanel.repaintGrid();
         }
     }//GEN-LAST:event_rowsSpinnerStateChanged
 
     private void columnsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_columnsSpinnerStateChanged
         if (editingMode) {
-            gridPanel.setGridSize(Integer.parseInt(rowsSpinner.getValue().toString()),
+            simulation.getSimGrid().setSize(Integer.parseInt(rowsSpinner.getValue().toString()),
                     Integer.parseInt(columnsSpinner.getValue().toString()));
+            gridPanel.repaintGrid();
         }
     }//GEN-LAST:event_columnsSpinnerStateChanged
 
     private void obstacleCellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_obstacleCellButtonActionPerformed
         cellTypeSelected = Grid.OBSTACLE;
     }//GEN-LAST:event_obstacleCellButtonActionPerformed
+
+    private void panicSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_panicSpinnerStateChanged
+        if(personCellButton.isSelected())
+            cellTypeSelected = Integer.parseInt(panicSpinner.getValue().toString());
+    }//GEN-LAST:event_panicSpinnerStateChanged
 
     /**
      * Setting gridPanel, will not work without this.
@@ -395,6 +437,14 @@ public class EditPanel extends javax.swing.JPanel {
      */
     public void setMainWindow(EwakuacjaView window) {
         mainWindow = window;
+    }
+
+    /**
+     * Setting simulation, will not work without this.
+     * @param sim
+     */
+    public void setSimulation(Simulation sim) {
+        simulation = sim;
     }
 
     /**
@@ -418,6 +468,11 @@ public class EditPanel extends javax.swing.JPanel {
      * @return selected cell type, according to values in Grid class.
      */
     public int getCellTypeSelected() {
+        if(cellTypeSelected > 0 && randPanicCheckBox.isSelected()){
+            int panic = cellTypeSelected;
+            setRandPanic();
+            return panic;
+        }
         return cellTypeSelected;
     }
 
@@ -437,6 +492,11 @@ public class EditPanel extends javax.swing.JPanel {
     public void setMapGridChanged(boolean aFlag) {
         mapGridChanged = aFlag;
     }
+
+    private void setRandPanic(){
+        panicSpinner.setValue(random.nextInt(99)+1);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup cellTypeButtons;
     private javax.swing.JSpinner columnsSpinner;
@@ -447,12 +507,15 @@ public class EditPanel extends javax.swing.JPanel {
     private javax.swing.JPanel exitColorPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton obstacleCellButton;
     private javax.swing.JPanel obstacleColorPanel;
+    private javax.swing.JSpinner panicSpinner;
     private javax.swing.JRadioButton personCellButton;
     private javax.swing.JPanel personColorPanel;
+    private javax.swing.JCheckBox randPanicCheckBox;
     private javax.swing.JSpinner rowsSpinner;
     private javax.swing.JRadioButton wallCellButton;
     private javax.swing.JPanel wallColorPanel;
@@ -462,4 +525,6 @@ public class EditPanel extends javax.swing.JPanel {
     EwakuacjaView mainWindow = null;
     private boolean editingMode = false;
     private boolean mapGridChanged = false;
+    private Random random = new Random();
+    private Simulation simulation;
 }

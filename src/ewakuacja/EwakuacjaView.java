@@ -95,7 +95,6 @@ public class EwakuacjaView extends FrameView {
         });
         progressBar.setVisible(true);
         simulation = new Simulation();
-        optionsPanel1.setSimulation(simulation);
 
         this.getFrame().setTitle("Symulacja ewakuacji");
         
@@ -145,10 +144,13 @@ public class EwakuacjaView extends FrameView {
      */
     private void setConnections(){
         editPanel.setGridPanel(gridPanel);
+        editPanel.setSimulation(simulation);
         editPanel.setMainWindow(this);
         gridPanel.setEditPanel(editPanel);
         gridPanel.setScrollPane(gridScrollPane);
         simulation.setGridPanel(gridPanel);
+        optionsPanel.setSimulation(simulation);
+        optionsPanel.setGridPanel(gridPanel);
     }
 
     @Action
@@ -172,7 +174,7 @@ public class EwakuacjaView extends FrameView {
 
         mainPanel = new javax.swing.JPanel();
         optionsTabs = new javax.swing.JTabbedPane();
-        optionsPanel1 = new GUI.OptionsPanel();
+        optionsPanel = new GUI.OptionsPanel();
         editPanel = new GUI.EditPanel();
         gridScrollPane = new javax.swing.JScrollPane();
         gridPanel = new GUI.GridPanel();
@@ -214,9 +216,9 @@ public class EwakuacjaView extends FrameView {
             }
         });
 
-        optionsPanel1.setName("optionsPanel1"); // NOI18N
+        optionsPanel.setName("optionsPanel"); // NOI18N
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(ewakuacja.EwakuacjaApp.class).getContext().getResourceMap(EwakuacjaView.class);
-        optionsTabs.addTab(resourceMap.getString("optionsPanel1.TabConstraints.tabTitle"), optionsPanel1); // NOI18N
+        optionsTabs.addTab(resourceMap.getString("optionsPanel.TabConstraints.tabTitle"), optionsPanel); // NOI18N
 
         editPanel.setName("editPanel"); // NOI18N
         optionsTabs.addTab(resourceMap.getString("editPanel.TabConstraints.tabTitle"), editPanel); // NOI18N
@@ -312,7 +314,7 @@ public class EwakuacjaView extends FrameView {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(optionsTabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                    .addComponent(optionsTabs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 303, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(mapRadioButton)
@@ -640,7 +642,7 @@ public class EwakuacjaView extends FrameView {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem newMenuButton;
     private javax.swing.JMenuItem openMenuButton;
-    private GUI.OptionsPanel optionsPanel1;
+    private GUI.OptionsPanel optionsPanel;
     private javax.swing.JTabbedPane optionsTabs;
     private javax.swing.JRadioButton potentialRadioButton;
     private javax.swing.JProgressBar progressBar;
