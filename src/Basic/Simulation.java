@@ -120,25 +120,33 @@ public class Simulation extends Thread {
      * @return nastepna pozycja, ktora zajmuje człowiek
      */
     public Position transitionRule3(int row, int column) {
-
-        int pot, tempPot, id = -1;
-        int exitId[] = new int[2];
-        for (int i = 0; i < 2; ++i) {
-            pot = Integer.MAX_VALUE;
-            for (int j = 1; j <= simGrid.getExitsCount(); ++j) {
-                tempPot = simGrid.getPotential(row, column)[j];
-                if (tempPot < pot && j != id) {
-                    pot = tempPot;
-                    exitId[i] = j;
-                    id = j;
+        
+        int id;
+        int pot, tempPot;
+        
+        if (simGrid.getExitsCount() >= 2) {
+            id = -1;
+            int exitId[] = new int[2];
+            for (int i = 0; i < 2; ++i) {
+                pot = Integer.MAX_VALUE;
+                for (int j = 1; j <= simGrid.getExitsCount(); ++j) {
+                    tempPot = simGrid.getPotential(row, column)[j];
+                    if (tempPot < pot && j != id) {
+                        pot = tempPot;
+                        exitId[i] = j;
+                        id = j;
+                    }
                 }
             }
-        }
 
-        if (simGrid.getAverageExitDens(exitId[0] - 1) <= simGrid.getAverageExitDens(exitId[1] - 1)) {
-            id = exitId[0];
+            if (simGrid.getAverageExitDens(exitId[0] - 1) <= simGrid.getAverageExitDens(exitId[1] - 1)) {
+                id = exitId[0];
+            } else {
+                id = exitId[1];
+            }
+
         } else {
-            id = exitId[1];
+            id = 0;
         }
 
         Position[] Positions = new Position[8];
