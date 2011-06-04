@@ -242,7 +242,7 @@ public class Simulation extends Thread {
             } else if (panic > 50) {
                 newPosition = transitionRule3(current.pos.row, current.pos.column);
             } else if (panic > 25) {
-                //newPosition = transitionRule2(current.pos.row, current.pos.column);
+                newPosition = transitionRule1(current.pos.row, current.pos.column);
             } else {
                 newPosition = transitionRule1(current.pos.row, current.pos.column);
             }
@@ -257,6 +257,7 @@ public class Simulation extends Thread {
             }
             ++time;
         }
+        simGrid.updatePanicLevels();
         gridPanel.repaintGrid();
     }
 
