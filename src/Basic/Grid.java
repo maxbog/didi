@@ -463,6 +463,7 @@ public class Grid {
         this.calculateDensities();
         this.identifyExits();
         this.calculatePotentials();
+        this.calculateBottleNecks();
     }
 
     /* Bottleneck functions */
@@ -488,9 +489,9 @@ public class Grid {
         Positions[7] = new Position(row - 1, column + 1); //rightBottom
 
         int[] treshold = this.getPotential(row, column);
-        double[] coefs = new double[this.getExitsCount()];
+        double[] coefs = new double[this.getExitsCount()+1];
 
-        for (int i = 0; i < this.getExitsCount(); i++) {
+        for (int i = 0; i < this.getExitsCount()+1; i++) {
             //System.out.println("Treshold: "+treshold[i]);
             int M = 0;
             int N = 0;

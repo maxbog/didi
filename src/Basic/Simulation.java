@@ -7,10 +7,12 @@ package Basic;
 import Basic.Grid.Position;
 import GUI.GridPanel;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +25,7 @@ public class Simulation extends Thread {
     private Grid startGrid;
     private Grid simGrid;
     private double transitionCoef = 1.0;  // wspolczynnik w z reguly1
+    private double globalBlockProbability = 1.0;
     private Queue<PersonPosition> peopleToProcess;
     private int time;
     private GridPanel gridPanel;
@@ -230,6 +233,7 @@ public class Simulation extends Thread {
 
     public void step() {
         peopleToProcess = new PriorityQueue<PersonPosition>();
+        Set<Position> blocked = new HashSet<Position>();
         for (Position pos : simGrid.identifyPeople()) {
             peopleToProcess.add(new PersonPosition(simGrid.getMapCell(pos.row, pos.column), pos, time));
         }
@@ -237,7 +241,7 @@ public class Simulation extends Thread {
             PersonPosition current = peopleToProcess.poll();
             Position newPosition = current.pos;
             int panic = getSimGrid().getMapCell(current.pos.row, current.pos.column);
-            if(panic > 76) {
+            if (panic > 76) {
                 newPosition = transitionRule4(current.pos.row, current.pos.column);
             } else if (panic > 50) {
                 newPosition = transitionRule3(current.pos.row, current.pos.column);
@@ -251,11 +255,22 @@ public class Simulation extends Thread {
                     simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
                 }
                 if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EMPTY) {
-                    simGrid.setMapCell(newPosition.row, newPosition.column, simGrid.getMapCell(current.pos.row, current.pos.column));
-                    simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
+                    double probability = simGrid.getDensity(newPosition.row, newPosition.column)
+                            * simGrid.getBottleNeck(newPosition.row, newPosition.column)[0]
+                            * globalBlockProbability;
+                    if (random.nextDouble() < probability) {
+                        simGrid.setMapCell(newPosition.row, newPosition.column, Grid.BLOCKED);
+                        blocked.add(newPosition);
+                    } else {
+                        simGrid.setMapCell(newPosition.row, newPosition.column, simGrid.getMapCell(current.pos.row, current.pos.column));
+                        simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
+                    }
                 }
             }
             ++time;
+        }
+        for (Position pos : blocked) {
+            simGrid.setMapCell(pos.row, pos.column, Grid.EMPTY);
         }
         simGrid.updatePanicLevels();
         gridPanel.repaintGrid();
