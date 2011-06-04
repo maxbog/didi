@@ -43,278 +43,266 @@ public class EditPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         cellTypeButtons = new javax.swing.ButtonGroup();
+        editingButton = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
         rowsSpinner = new javax.swing.JSpinner();
         columnsSpinner = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
-        emptyCellButton = new javax.swing.JRadioButton();
-        wallCellButton = new javax.swing.JRadioButton();
-        exitCellButton = new javax.swing.JRadioButton();
-        personCellButton = new javax.swing.JRadioButton();
+        jPanel3 = new javax.swing.JPanel();
         emptyColorPanel = new javax.swing.JPanel();
         wallColorPanel = new javax.swing.JPanel();
         exitColorPanel = new javax.swing.JPanel();
         personColorPanel = new javax.swing.JPanel();
-        obstacleCellButton = new javax.swing.JRadioButton();
         obstacleColorPanel = new javax.swing.JPanel();
-        editingButton = new javax.swing.JCheckBox();
+        jPanel4 = new javax.swing.JPanel();
+        emptyCellButton = new javax.swing.JRadioButton();
+        wallCellButton = new javax.swing.JRadioButton();
+        exitCellButton = new javax.swing.JRadioButton();
+        personCellButton = new javax.swing.JRadioButton();
+        obstacleCellButton = new javax.swing.JRadioButton();
 
         setName("Form"); // NOI18N
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(ewakuacja.EwakuacjaApp.class).getContext().getResourceMap(EditPanel.class);
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
-        jPanel1.setName("jPanel1"); // NOI18N
-
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-
-        rowsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
-        rowsSpinner.setEnabled(false);
-        rowsSpinner.setName("rowsSpinner"); // NOI18N
-        rowsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                rowsSpinnerStateChanged(evt);
-            }
-        });
-
-        columnsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
-        columnsSpinner.setEnabled(false);
-        columnsSpinner.setName("columnsSpinner"); // NOI18N
-        columnsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                columnsSpinnerStateChanged(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rowsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                    .addComponent(columnsSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rowsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(columnsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel2.border.title"))); // NOI18N
-        jPanel2.setName("jPanel2"); // NOI18N
-
-        cellTypeButtons.add(emptyCellButton);
-        emptyCellButton.setSelected(true);
-        emptyCellButton.setText(resourceMap.getString("emptyCellButton.text")); // NOI18N
-        emptyCellButton.setEnabled(false);
-        emptyCellButton.setName("emptyCellButton"); // NOI18N
-        emptyCellButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emptyCellButtonActionPerformed(evt);
-            }
-        });
-
-        cellTypeButtons.add(wallCellButton);
-        wallCellButton.setText(resourceMap.getString("wallCellButton.text")); // NOI18N
-        wallCellButton.setEnabled(false);
-        wallCellButton.setName("wallCellButton"); // NOI18N
-        wallCellButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wallCellButtonActionPerformed(evt);
-            }
-        });
-
-        cellTypeButtons.add(exitCellButton);
-        exitCellButton.setText(resourceMap.getString("exitCellButton.text")); // NOI18N
-        exitCellButton.setEnabled(false);
-        exitCellButton.setName("exitCellButton"); // NOI18N
-        exitCellButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitCellButtonActionPerformed(evt);
-            }
-        });
-
-        cellTypeButtons.add(personCellButton);
-        personCellButton.setText(resourceMap.getString("personCellButton.text")); // NOI18N
-        personCellButton.setEnabled(false);
-        personCellButton.setName("personCellButton"); // NOI18N
-        personCellButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                personCellButtonActionPerformed(evt);
-            }
-        });
-
-        emptyColorPanel.setName("emptyColorPanel"); // NOI18N
-
-        javax.swing.GroupLayout emptyColorPanelLayout = new javax.swing.GroupLayout(emptyColorPanel);
-        emptyColorPanel.setLayout(emptyColorPanelLayout);
-        emptyColorPanelLayout.setHorizontalGroup(
-            emptyColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
-        );
-        emptyColorPanelLayout.setVerticalGroup(
-            emptyColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 19, Short.MAX_VALUE)
-        );
-
-        wallColorPanel.setName("wallColorPanel"); // NOI18N
-
-        javax.swing.GroupLayout wallColorPanelLayout = new javax.swing.GroupLayout(wallColorPanel);
-        wallColorPanel.setLayout(wallColorPanelLayout);
-        wallColorPanelLayout.setHorizontalGroup(
-            wallColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
-        );
-        wallColorPanelLayout.setVerticalGroup(
-            wallColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 19, Short.MAX_VALUE)
-        );
-
-        exitColorPanel.setName("exitColorPanel"); // NOI18N
-
-        javax.swing.GroupLayout exitColorPanelLayout = new javax.swing.GroupLayout(exitColorPanel);
-        exitColorPanel.setLayout(exitColorPanelLayout);
-        exitColorPanelLayout.setHorizontalGroup(
-            exitColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
-        );
-        exitColorPanelLayout.setVerticalGroup(
-            exitColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 19, Short.MAX_VALUE)
-        );
-
-        personColorPanel.setName("personColorPanel"); // NOI18N
-
-        javax.swing.GroupLayout personColorPanelLayout = new javax.swing.GroupLayout(personColorPanel);
-        personColorPanel.setLayout(personColorPanelLayout);
-        personColorPanelLayout.setHorizontalGroup(
-            personColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
-        );
-        personColorPanelLayout.setVerticalGroup(
-            personColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 23, Short.MAX_VALUE)
-        );
-
-        cellTypeButtons.add(obstacleCellButton);
-        obstacleCellButton.setText(resourceMap.getString("obstacleCellButton.text")); // NOI18N
-        obstacleCellButton.setEnabled(false);
-        obstacleCellButton.setName("obstacleCellButton"); // NOI18N
-        obstacleCellButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                obstacleCellButtonActionPerformed(evt);
-            }
-        });
-
-        obstacleColorPanel.setName("obstacleColorPanel"); // NOI18N
-
-        javax.swing.GroupLayout obstacleColorPanelLayout = new javax.swing.GroupLayout(obstacleColorPanel);
-        obstacleColorPanel.setLayout(obstacleColorPanelLayout);
-        obstacleColorPanelLayout.setHorizontalGroup(
-            obstacleColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
-        );
-        obstacleColorPanelLayout.setVerticalGroup(
-            obstacleColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 19, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(wallColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(personColorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(emptyColorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(obstacleColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(emptyCellButton)
-                    .addComponent(wallCellButton)
-                    .addComponent(obstacleCellButton)
-                    .addComponent(exitCellButton)
-                    .addComponent(personCellButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(emptyCellButton)
-                    .addComponent(emptyColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(wallCellButton)
-                    .addComponent(wallColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(obstacleColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(obstacleCellButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(exitColorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(personColorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(exitCellButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(personCellButton))))
-        );
-
         editingButton.setText(resourceMap.getString("editingButton.text")); // NOI18N
+        editingButton.setAlignmentX(0.5F);
         editingButton.setName("editingButton"); // NOI18N
         editingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editingButtonActionPerformed(evt);
             }
         });
+        add(editingButton);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(editingButton)
-                .addContainerGap(69, Short.MAX_VALUE))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel1.border.title"))); // NOI18N
+        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.X_AXIS));
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 3, 1, 1));
+        jPanel5.setName("jPanel5"); // NOI18N
+        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.Y_AXIS));
+
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setMaximumSize(new java.awt.Dimension(68, 23));
+        jLabel1.setMinimumSize(new java.awt.Dimension(68, 23));
+        jLabel1.setName("jLabel1"); // NOI18N
+        jLabel1.setPreferredSize(new java.awt.Dimension(68, 23));
+        jPanel5.add(jLabel1);
+
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setMaximumSize(new java.awt.Dimension(65, 23));
+        jLabel2.setMinimumSize(new java.awt.Dimension(65, 23));
+        jLabel2.setName("jLabel2"); // NOI18N
+        jLabel2.setPreferredSize(new java.awt.Dimension(65, 23));
+        jPanel5.add(jLabel2);
+
+        jPanel1.add(jPanel5);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 3));
+        jPanel6.setName("jPanel6"); // NOI18N
+        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.Y_AXIS));
+
+        rowsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
+        rowsSpinner.setEnabled(false);
+        rowsSpinner.setMaximumSize(new java.awt.Dimension(32767, 23));
+        rowsSpinner.setMinimumSize(new java.awt.Dimension(63, 23));
+        rowsSpinner.setName("rowsSpinner"); // NOI18N
+        rowsSpinner.setPreferredSize(new java.awt.Dimension(63, 23));
+        rowsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rowsSpinnerStateChanged(evt);
+            }
+        });
+        jPanel6.add(rowsSpinner);
+
+        columnsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
+        columnsSpinner.setEnabled(false);
+        columnsSpinner.setMaximumSize(new java.awt.Dimension(32767, 23));
+        columnsSpinner.setMinimumSize(new java.awt.Dimension(63, 23));
+        columnsSpinner.setName("columnsSpinner"); // NOI18N
+        columnsSpinner.setPreferredSize(new java.awt.Dimension(63, 23));
+        columnsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                columnsSpinnerStateChanged(evt);
+            }
+        });
+        jPanel6.add(columnsSpinner);
+
+        jPanel1.add(jPanel6);
+
+        add(jPanel1);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("jPanel2.border.title"))); // NOI18N
+        jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.X_AXIS));
+
+        jPanel3.setName("jPanel3"); // NOI18N
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.Y_AXIS));
+
+        emptyColorPanel.setMaximumSize(new java.awt.Dimension(23, 23));
+        emptyColorPanel.setMinimumSize(new java.awt.Dimension(23, 23));
+        emptyColorPanel.setName("emptyColorPanel"); // NOI18N
+        emptyColorPanel.setPreferredSize(new java.awt.Dimension(23, 23));
+
+        javax.swing.GroupLayout emptyColorPanelLayout = new javax.swing.GroupLayout(emptyColorPanel);
+        emptyColorPanel.setLayout(emptyColorPanelLayout);
+        emptyColorPanelLayout.setHorizontalGroup(
+            emptyColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(editingButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+        emptyColorPanelLayout.setVerticalGroup(
+            emptyColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
         );
+
+        jPanel3.add(emptyColorPanel);
+
+        wallColorPanel.setMaximumSize(new java.awt.Dimension(23, 23));
+        wallColorPanel.setMinimumSize(new java.awt.Dimension(23, 23));
+        wallColorPanel.setName("wallColorPanel"); // NOI18N
+        wallColorPanel.setPreferredSize(new java.awt.Dimension(23, 23));
+
+        javax.swing.GroupLayout wallColorPanelLayout = new javax.swing.GroupLayout(wallColorPanel);
+        wallColorPanel.setLayout(wallColorPanelLayout);
+        wallColorPanelLayout.setHorizontalGroup(
+            wallColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+        wallColorPanelLayout.setVerticalGroup(
+            wallColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(wallColorPanel);
+
+        exitColorPanel.setMaximumSize(new java.awt.Dimension(23, 23));
+        exitColorPanel.setMinimumSize(new java.awt.Dimension(23, 23));
+        exitColorPanel.setName("exitColorPanel"); // NOI18N
+        exitColorPanel.setPreferredSize(new java.awt.Dimension(23, 23));
+
+        javax.swing.GroupLayout exitColorPanelLayout = new javax.swing.GroupLayout(exitColorPanel);
+        exitColorPanel.setLayout(exitColorPanelLayout);
+        exitColorPanelLayout.setHorizontalGroup(
+            exitColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+        exitColorPanelLayout.setVerticalGroup(
+            exitColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(exitColorPanel);
+
+        personColorPanel.setMaximumSize(new java.awt.Dimension(23, 23));
+        personColorPanel.setMinimumSize(new java.awt.Dimension(23, 23));
+        personColorPanel.setName("personColorPanel"); // NOI18N
+        personColorPanel.setPreferredSize(new java.awt.Dimension(23, 23));
+
+        javax.swing.GroupLayout personColorPanelLayout = new javax.swing.GroupLayout(personColorPanel);
+        personColorPanel.setLayout(personColorPanelLayout);
+        personColorPanelLayout.setHorizontalGroup(
+            personColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+        personColorPanelLayout.setVerticalGroup(
+            personColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(personColorPanel);
+
+        obstacleColorPanel.setMaximumSize(new java.awt.Dimension(23, 23));
+        obstacleColorPanel.setMinimumSize(new java.awt.Dimension(23, 23));
+        obstacleColorPanel.setName("obstacleColorPanel"); // NOI18N
+        obstacleColorPanel.setPreferredSize(new java.awt.Dimension(23, 23));
+
+        javax.swing.GroupLayout obstacleColorPanelLayout = new javax.swing.GroupLayout(obstacleColorPanel);
+        obstacleColorPanel.setLayout(obstacleColorPanelLayout);
+        obstacleColorPanelLayout.setHorizontalGroup(
+            obstacleColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+        obstacleColorPanelLayout.setVerticalGroup(
+            obstacleColorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(obstacleColorPanel);
+
+        jPanel2.add(jPanel3);
+
+        jPanel4.setName("jPanel4"); // NOI18N
+        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
+
+        cellTypeButtons.add(emptyCellButton);
+        emptyCellButton.setSelected(true);
+        emptyCellButton.setText(resourceMap.getString("emptyCellButton.text")); // NOI18N
+        emptyCellButton.setEnabled(false);
+        emptyCellButton.setMaximumSize(new java.awt.Dimension(32222, 23));
+        emptyCellButton.setName("emptyCellButton"); // NOI18N
+        emptyCellButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emptyCellButtonActionPerformed(evt);
+            }
+        });
+        jPanel4.add(emptyCellButton);
+
+        cellTypeButtons.add(wallCellButton);
+        wallCellButton.setText(resourceMap.getString("wallCellButton.text")); // NOI18N
+        wallCellButton.setEnabled(false);
+        wallCellButton.setMaximumSize(new java.awt.Dimension(32222, 23));
+        wallCellButton.setName("wallCellButton"); // NOI18N
+        wallCellButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wallCellButtonActionPerformed(evt);
+            }
+        });
+        jPanel4.add(wallCellButton);
+
+        cellTypeButtons.add(exitCellButton);
+        exitCellButton.setText(resourceMap.getString("exitCellButton.text")); // NOI18N
+        exitCellButton.setEnabled(false);
+        exitCellButton.setMaximumSize(new java.awt.Dimension(32222, 23));
+        exitCellButton.setName("exitCellButton"); // NOI18N
+        exitCellButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitCellButtonActionPerformed(evt);
+            }
+        });
+        jPanel4.add(exitCellButton);
+
+        cellTypeButtons.add(personCellButton);
+        personCellButton.setText(resourceMap.getString("personCellButton.text")); // NOI18N
+        personCellButton.setEnabled(false);
+        personCellButton.setMaximumSize(new java.awt.Dimension(32222, 23));
+        personCellButton.setName("personCellButton"); // NOI18N
+        personCellButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                personCellButtonActionPerformed(evt);
+            }
+        });
+        jPanel4.add(personCellButton);
+
+        cellTypeButtons.add(obstacleCellButton);
+        obstacleCellButton.setText(resourceMap.getString("obstacleCellButton.text")); // NOI18N
+        obstacleCellButton.setEnabled(false);
+        obstacleCellButton.setMaximumSize(new java.awt.Dimension(32222, 23));
+        obstacleCellButton.setName("obstacleCellButton"); // NOI18N
+        obstacleCellButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                obstacleCellButtonActionPerformed(evt);
+            }
+        });
+        jPanel4.add(obstacleCellButton);
+
+        jPanel2.add(jPanel4);
+
+        add(jPanel2);
     }// </editor-fold>//GEN-END:initComponents
 
     private void emptyCellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emptyCellButtonActionPerformed
@@ -449,6 +437,10 @@ public class EditPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JRadioButton obstacleCellButton;
     private javax.swing.JPanel obstacleColorPanel;
     private javax.swing.JRadioButton personCellButton;

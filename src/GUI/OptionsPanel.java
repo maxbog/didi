@@ -34,60 +34,167 @@ public class OptionsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
         radiusLabel = new javax.swing.JLabel();
-        pLabel = new javax.swing.JLabel();
-        wLabel = new javax.swing.JLabel();
         radiusField = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        pLabel = new javax.swing.JLabel();
         pField = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        wLabel = new javax.swing.JLabel();
         wField = new javax.swing.JTextField();
-        stepButton = new javax.swing.JButton();
-        startButton = new javax.swing.JButton();
-        pauseButton = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JSeparator();
-        restartButton = new javax.swing.JButton();
-        delayTimerSpinner = new javax.swing.JSpinner();
+        jPanel4 = new javax.swing.JPanel();
         delayTimerLabel = new javax.swing.JLabel();
+        delayTimerSpinner = new javax.swing.JSpinner();
+        jSeparator2 = new javax.swing.JSeparator();
+        jPanel5 = new javax.swing.JPanel();
+        startButton = new javax.swing.JButton();
+        stepButton = new javax.swing.JButton();
+        pauseButton = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        restartButton = new javax.swing.JButton();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(250, 300));
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel7.setMaximumSize(new java.awt.Dimension(32767, 23));
+        jPanel7.setMinimumSize(new java.awt.Dimension(0, 23));
+        jPanel7.setName("jPanel7"); // NOI18N
+        jPanel7.setPreferredSize(new java.awt.Dimension(294, 23));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(ewakuacja.EwakuacjaApp.class).getContext().getResourceMap(OptionsPanel.class);
         jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setAlignmentX(0.5F);
         jLabel1.setName("jLabel1"); // NOI18N
 
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 294, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGap(0, 86, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addGap(0, 86, Short.MAX_VALUE)))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGap(0, 4, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addGap(0, 4, Short.MAX_VALUE)))
+        );
+
+        add(jPanel7);
+
+        jSeparator1.setMaximumSize(new java.awt.Dimension(22222, 2));
+        jSeparator1.setMinimumSize(new java.awt.Dimension(0, 2));
         jSeparator1.setName("jSeparator1"); // NOI18N
+        add(jSeparator1);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 3, 1, 3));
+        jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 23));
+        jPanel1.setMinimumSize(new java.awt.Dimension(110, 23));
+        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.X_AXIS));
 
         radiusLabel.setText(resourceMap.getString("radiusLabel.text")); // NOI18N
+        radiusLabel.setAlignmentX(0.5F);
+        radiusLabel.setMaximumSize(new java.awt.Dimension(110, 14));
+        radiusLabel.setMinimumSize(new java.awt.Dimension(110, 14));
         radiusLabel.setName("radiusLabel"); // NOI18N
-
-        pLabel.setText(resourceMap.getString("pLabel.text")); // NOI18N
-        pLabel.setName("pLabel"); // NOI18N
-
-        wLabel.setText(resourceMap.getString("wLabel.text")); // NOI18N
-        wLabel.setName("wLabel"); // NOI18N
+        radiusLabel.setPreferredSize(new java.awt.Dimension(110, 14));
+        jPanel1.add(radiusLabel);
 
         radiusField.setText(resourceMap.getString("radiusField.text")); // NOI18N
+        radiusField.setMaximumSize(new java.awt.Dimension(2147483647, 23));
+        radiusField.setMinimumSize(new java.awt.Dimension(6, 23));
         radiusField.setName("radiusField"); // NOI18N
         radiusField.setPreferredSize(new java.awt.Dimension(60, 20));
+        jPanel1.add(radiusField);
+
+        add(jPanel1);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 3, 1, 3));
+        jPanel2.setName("jPanel2"); // NOI18N
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.X_AXIS));
+
+        pLabel.setText(resourceMap.getString("pLabel.text")); // NOI18N
+        pLabel.setMaximumSize(new java.awt.Dimension(110, 14));
+        pLabel.setMinimumSize(new java.awt.Dimension(110, 14));
+        pLabel.setName("pLabel"); // NOI18N
+        pLabel.setPreferredSize(new java.awt.Dimension(110, 14));
+        jPanel2.add(pLabel);
 
         pField.setText(resourceMap.getString("pField.text")); // NOI18N
+        pField.setMaximumSize(new java.awt.Dimension(2147483647, 23));
+        pField.setMinimumSize(new java.awt.Dimension(6, 23));
         pField.setName("pField"); // NOI18N
         pField.setPreferredSize(new java.awt.Dimension(60, 20));
+        jPanel2.add(pField);
+
+        add(jPanel2);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 3, 1, 3));
+        jPanel3.setName("jPanel3"); // NOI18N
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.X_AXIS));
+
+        wLabel.setText(resourceMap.getString("wLabel.text")); // NOI18N
+        wLabel.setMaximumSize(new java.awt.Dimension(110, 14));
+        wLabel.setMinimumSize(new java.awt.Dimension(110, 14));
+        wLabel.setName("wLabel"); // NOI18N
+        wLabel.setPreferredSize(new java.awt.Dimension(110, 14));
+        jPanel3.add(wLabel);
 
         wField.setText(resourceMap.getString("wField.text")); // NOI18N
+        wField.setMaximumSize(new java.awt.Dimension(2147483647, 23));
+        wField.setMinimumSize(new java.awt.Dimension(6, 23));
         wField.setName("wField"); // NOI18N
         wField.setPreferredSize(new java.awt.Dimension(60, 20));
+        jPanel3.add(wField);
 
-        stepButton.setText(resourceMap.getString("stepButton.text")); // NOI18N
-        stepButton.setName("stepButton"); // NOI18N
-        stepButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stepButtonActionPerformed(evt);
+        add(jPanel3);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 3, 1, 3));
+        jPanel4.setName("jPanel4"); // NOI18N
+        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.X_AXIS));
+
+        delayTimerLabel.setText(resourceMap.getString("delayTimerLabel.text")); // NOI18N
+        delayTimerLabel.setMaximumSize(new java.awt.Dimension(110, 14));
+        delayTimerLabel.setMinimumSize(new java.awt.Dimension(110, 14));
+        delayTimerLabel.setName("delayTimerLabel"); // NOI18N
+        delayTimerLabel.setPreferredSize(new java.awt.Dimension(110, 14));
+        jPanel4.add(delayTimerLabel);
+
+        delayTimerSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"}));
+        delayTimerSpinner.setMaximumSize(new java.awt.Dimension(32767, 23));
+        delayTimerSpinner.setMinimumSize(new java.awt.Dimension(39, 23));
+        delayTimerSpinner.setName("delayTimerSpinner"); // NOI18N
+        delayTimerSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                delayTimerSpinnerStateChanged(evt);
             }
         });
+        jPanel4.add(delayTimerSpinner);
+
+        add(jPanel4);
+
+        jSeparator2.setMaximumSize(new java.awt.Dimension(32767, 2));
+        jSeparator2.setName("jSeparator2"); // NOI18N
+        add(jSeparator2);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 3, 1, 3));
+        jPanel5.setMaximumSize(new java.awt.Dimension(100000, 23));
+        jPanel5.setName("jPanel5"); // NOI18N
+        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.X_AXIS));
 
         startButton.setText(resourceMap.getString("startButton.text")); // NOI18N
         startButton.setName("startButton"); // NOI18N
@@ -96,6 +203,17 @@ public class OptionsPanel extends javax.swing.JPanel {
                 startButtonActionPerformed(evt);
             }
         });
+        jPanel5.add(startButton);
+
+        stepButton.setText(resourceMap.getString("stepButton.text")); // NOI18N
+        stepButton.setName("stepButton"); // NOI18N
+        stepButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stepButtonActionPerformed(evt);
+            }
+        });
+        jPanel5.add(stepButton);
+        stepButton.getAccessibleContext().setAccessibleName(resourceMap.getString("stepButton.AccessibleContext.accessibleName")); // NOI18N
 
         pauseButton.setText(resourceMap.getString("pauseButton.text")); // NOI18N
         pauseButton.setName("pauseButton"); // NOI18N
@@ -104,105 +222,28 @@ public class OptionsPanel extends javax.swing.JPanel {
                 pauseButtonActionPerformed(evt);
             }
         });
+        jPanel5.add(pauseButton);
 
-        jSeparator2.setName("jSeparator2"); // NOI18N
+        add(jPanel5);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 3, 1, 3));
+        jPanel6.setMaximumSize(new java.awt.Dimension(32767, 23));
+        jPanel6.setMinimumSize(new java.awt.Dimension(0, 23));
+        jPanel6.setName("jPanel6"); // NOI18N
+        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.Y_AXIS));
 
         restartButton.setText(resourceMap.getString("restartButton.text")); // NOI18N
+        restartButton.setAlignmentX(1.0F);
+        restartButton.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         restartButton.setName("restartButton"); // NOI18N
         restartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 restartButtonActionPerformed(evt);
             }
         });
+        jPanel6.add(restartButton);
 
-        delayTimerSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"}));
-        delayTimerSpinner.setName("delayTimerSpinner"); // NOI18N
-        delayTimerSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                delayTimerSpinnerStateChanged(evt);
-            }
-        });
-
-        delayTimerLabel.setText(resourceMap.getString("delayTimerLabel.text")); // NOI18N
-        delayTimerLabel.setName("delayTimerLabel"); // NOI18N
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                        .addGap(50, 50, 50))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(radiusLabel)
-                        .addGap(31, 31, 31)
-                        .addComponent(radiusField, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(startButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(stepButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pauseButton))
-                            .addComponent(restartButton, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pLabel)
-                            .addComponent(wLabel)
-                            .addComponent(delayTimerLabel))
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(delayTimerSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                            .addComponent(pField, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                            .addComponent(wField, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
-                        .addContainerGap())))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radiusLabel)
-                    .addComponent(radiusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(wField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(wLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(delayTimerSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(delayTimerLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(startButton)
-                    .addComponent(stepButton)
-                    .addComponent(pauseButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(restartButton)
-                .addContainerGap(90, Short.MAX_VALUE))
-        );
-
-        stepButton.getAccessibleContext().setAccessibleName(resourceMap.getString("stepButton.AccessibleContext.accessibleName")); // NOI18N
+        add(jPanel6);
     }// </editor-fold>//GEN-END:initComponents
 
     private void stepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepButtonActionPerformed
@@ -234,6 +275,13 @@ public class OptionsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel delayTimerLabel;
     private javax.swing.JSpinner delayTimerSpinner;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField pField;
