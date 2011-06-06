@@ -224,15 +224,15 @@ public class GridPanel extends javax.swing.JPanel {
                     g2d.setColor(CellColors.getMapColor(grid.getMapCell(i, j)));
                 } else {
                     g2d.setColor(CellColors.getPotentialColor(
-                            grid.getPotential(i, j)[visibleExit], grid.getMaxPotential()));
+                            grid.getPotential(i, j)[visibleExit]));
                 }
                 g2d.fillRect(xView, yView, cellSize, cellSize);
                 if (drawNumbers && grid.getMapCell(i, j) != Grid.WALL
                         && grid.getMapCell(i, j) != Grid.OBSTACLE && cellSize > 12) {
                     g2d.setColor(Color.BLACK);
-                    int potNumber = grid.getPotential(i, j)[visibleExit];
+                    int potNumber = (int)Math.round(grid.getPotential(i, j)[visibleExit] * (double)grid.getMaxPotential());
                     String potential;
-                    if (potNumber == Integer.MAX_VALUE) {
+                    if (potNumber == -1) {
                         potential = "∞";
                     } else {
                         potential = Integer.toString(potNumber);

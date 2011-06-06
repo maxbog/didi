@@ -32,15 +32,11 @@ public class CellColors {
         }
     }
 
-    public static Color getPotentialColor(int number, int maxValue) {
-        float index = ((float) number) / ((float) maxValue);
-        if (index > 1f) {
-            index = 1f;
-        }
-            return Color.getHSBColor((1 - (float) index) * 2f / 3f, 0.9f, 1f);
+    public static Color getPotentialColor(double number) {
+        return Color.getHSBColor((1f - (float)number) * 2f / 3f, 0.9f, 1f);
     }
 
     public static Color getDensityColor(double number) {
-        return Color.getHSBColor((1 - (float) number) * 2f / 3f, 0.9f, 1f);
+        return Color.getHSBColor((1f - (float) number) * 2f / 3f, 0.9f, 1f);
     }
 }
