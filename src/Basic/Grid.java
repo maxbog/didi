@@ -26,7 +26,7 @@ public class Grid {
     private int columnsNumber;
     private int rowsNumber;
     private int[][] mapGrid;
-    private int[][][] potentialGrid;
+    private double[][][] potentialGrid;
     private double[][] densityGrid;
     private double[][][] bottleneckGrid;
     private List<Set<Position>> exits;
@@ -82,7 +82,7 @@ public class Grid {
      */
     public final void setSize(int rows, int columns) {
         int[][] temp = new int[rows][columns];
-        potentialGrid = new int[rows][columns][1];
+        potentialGrid = new double[rows][columns][1];
         densityGrid = new double[rows][columns];
         bottleneckGrid = new double[rows][columns][1];
         for (int i = 0; i < rows; i++) {
@@ -135,7 +135,9 @@ public class Grid {
         }
         for (int row = 0; row < getRowsNumber(); ++row) {
             for (int column = 0; column < getColumnsNumber(); ++column) {
+
                 for (int exit = 1; exit < exits.size() + 1; ++exit) {
+                    potentialGrid[row][column][exit] /= maxPotential;
                     if (potentialGrid[row][column][0] > potentialGrid[row][column][exit]) {
                         potentialGrid[row][column][0] = potentialGrid[row][column][exit];
                     }
@@ -151,7 +153,7 @@ public class Grid {
      * @param column
      * @return Array of potential of cell.
      */
-    public int[] getPotential(int row, int column) {
+    public double[] getPotential(int row, int column) {
         return potentialGrid[row][column];
     }
 
@@ -168,11 +170,11 @@ public class Grid {
                 }
             }
         }
-        potentialGrid = new int[getRowsNumber()][getColumnsNumber()][exits.size() + 1];
+        potentialGrid = new double[getRowsNumber()][getColumnsNumber()][exits.size() + 1];
         for (int row = 0; row < getRowsNumber(); ++row) {
             for (int column = 0; column < getColumnsNumber(); ++column) {
                 for (int exit = 0; exit < exits.size() + 1; ++exit) {
-                    potentialGrid[row][column][exit] = Integer.MAX_VALUE;
+                    potentialGrid[row][column][exit] = Double.MAX_VALUE;
                 }
             }
         }
@@ -488,7 +490,7 @@ public class Grid {
         Positions[6] = new Position(row - 1, column); //middleBottom
         Positions[7] = new Position(row - 1, column + 1); //rightBottom
 
-        int[] treshold = this.getPotential(row, column);
+        double[] treshold = this.getPotential(row, column);
         double[] coefs = new double[this.getExitsCount()+1];
 
         for (int i = 0; i < this.getExitsCount()+1; i++) {

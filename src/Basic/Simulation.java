@@ -122,7 +122,7 @@ public class Simulation extends Thread {
     public Position transitionRule3(int row, int column) {
         
         int id;
-        int pot, tempPot;
+        double pot, tempPot;
         
         if (simGrid.getExitsCount() >= 2) {
             id = -1;
@@ -159,8 +159,8 @@ public class Simulation extends Thread {
         Positions[6] = new Position(row - 1, column); //middleBottom
         Positions[7] = new Position(row - 1, column + 1); //rightBottom
 
-        int minPot = Integer.MAX_VALUE;
-        int minCellPot[] = new int[8];
+        double minPot = Double.MAX_VALUE;
+        double minCellPot[] = new double[8];
 
         for (int i = 0; i < 8; ++i) {
             if ((Positions[i].row >= 0 && Positions[i].row < simGrid.getRowsNumber())
@@ -175,12 +175,12 @@ public class Simulation extends Thread {
                     }
                     minCellPot[i] = tempPot;
                 } else {
-                    minCellPot[i] = Integer.MAX_VALUE;
+                    minCellPot[i] = Double.MAX_VALUE;
                 }
 
 
             } else {
-                minCellPot[i] = Integer.MAX_VALUE;
+                minCellPot[i] = Double.MAX_VALUE;
             }
         }
 
