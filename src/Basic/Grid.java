@@ -121,7 +121,7 @@ public class Grid {
      */
     public void setMapCell(int x, int y, int value) {
         mapGrid[x][y] = value;
-        calculateNeighbourDensities(x, y);
+        //calculateNeighbourDensities(x, y);
     }
 
     /***************PotentialGridFunctions***************/
@@ -574,6 +574,14 @@ public class Grid {
                 }
             }
             setMapCell(person.row, person.column, sum / count);
+        }
+    }
+
+    public void updateExits() {
+        for(Set<Position> exit : exits) {
+            for(Position pos : exit) {
+                setMapCell(pos.row,pos.column, Grid.EXIT);
+            }
         }
     }
 
