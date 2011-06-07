@@ -24,7 +24,7 @@ public class Simulation extends Thread {
 
     private Grid startGrid;
     private Grid simGrid;
-    private double transitionCoef = 1.0;  // wspolczynnik w z reguly1
+    private double transitionCoef = .8;  // wspolczynnik w z reguly1
     private double globalBlockProbability = 1.0;
     private Queue<PersonPosition> peopleToProcess;
     private int time;
