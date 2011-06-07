@@ -276,6 +276,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="ShowGridLines">
               <Properties>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" resourceKey="ShowGridLines.text"/>
               </Properties>
               <Events>

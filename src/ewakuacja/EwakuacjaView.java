@@ -377,6 +377,7 @@ public class EwakuacjaView extends FrameView {
         viewMenu.setMinimumSize(new java.awt.Dimension(43, 19));
         viewMenu.setName("viewMenu"); // NOI18N
 
+        ShowGridLines.setSelected(true);
         ShowGridLines.setText(resourceMap.getString("ShowGridLines.text")); // NOI18N
         ShowGridLines.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

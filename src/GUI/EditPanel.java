@@ -390,9 +390,15 @@ public class EditPanel extends javax.swing.JPanel {
         randPanicCheckBox.setEnabled(enable);
 
         if (mainWindow != null) {
-            mainWindow.setEditMode(enable);
+            //mainWindow.setEditMode(enable);
             if(!enable) {
-                simulation.getSimGrid().calculateAll();
+                if(simulation.isSimulating()){
+                    simulation.pauseSimulation();
+                    simulation.getSimGrid().calculateAll();
+                    simulation.startSimulation();
+                }
+                else
+                    simulation.getSimGrid().calculateAll();
             }
         }
 

@@ -371,4 +371,8 @@ public class Simulation extends Thread {
     public void setDelayTime(float time) {
         delayTime = (int) (1000f * time);
     }
+
+    public boolean isSimulating(){
+        return !pause;
+    }
 }
