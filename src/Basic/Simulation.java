@@ -138,13 +138,19 @@ public class Simulation extends Thread {
                     }
                 }
             }
-
-            if (simGrid.getAverageExitDens(exitId[0] - 1) <= simGrid.getAverageExitDens(exitId[1] - 1)) {
-                id = exitId[0];
+            
+            if (id == -1) {
+                id = 0;
             } else {
-                id = exitId[1];
-            }
 
+                if (simGrid.getAverageExitDens(exitId[0] - 1) <= simGrid.getAverageExitDens(exitId[1] - 1)) {
+                    id = exitId[0];
+                } else {
+                    id = exitId[1];
+                }
+
+
+            }
         } else {
             id = 0;
         }
