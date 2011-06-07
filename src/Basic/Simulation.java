@@ -31,7 +31,7 @@ public class Simulation extends Thread {
     private GridPanel gridPanel;
     private Random random = new Random();
     private boolean pause = true;
-    private int delayTime = 0;
+    private int delayTime = 100;
 
     public Simulation() {
         simGrid = new Grid(0, 0);
