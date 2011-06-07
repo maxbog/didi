@@ -24,8 +24,8 @@ public class Simulation extends Thread {
 
     private Grid startGrid;
     private Grid simGrid;
-    private double transitionCoef = .8;  // wspolczynnik w z reguly1
-    private double globalBlockProbability = 1.0;
+    private double transitionCoef = 0.8;  // wspolczynnik w z reguly1
+    private double globalBlockProbability = 0.2;
     private Queue<PersonPosition> peopleToProcess;
     private int time;
     private GridPanel gridPanel;
@@ -259,10 +259,10 @@ public class Simulation extends Thread {
                 newPosition = transitionRule1(current.pos.row, current.pos.column);
             }
             if (!newPosition.equals(current.pos)) {
-                if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT) {
-                    simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
-                }
-                if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EMPTY) {
+//                if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT) {
+//                    simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
+//                }
+                if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EMPTY ||simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT) {
                     double probability = simGrid.getDensity(newPosition.row, newPosition.column)
                             * simGrid.getBottleNeck(newPosition.row, newPosition.column)[0]
                             * globalBlockProbability;
@@ -280,6 +280,8 @@ public class Simulation extends Thread {
         for (Position pos : blocked) {
             simGrid.setMapCell(pos.row, pos.column, Grid.EMPTY);
         }
+        simGrid.calculateDensities();
+        simGrid.updateExits();
         simGrid.updatePanicLevels();
         gridPanel.repaintGrid();
     }
