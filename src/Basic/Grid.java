@@ -297,16 +297,16 @@ public class Grid {
                 toProcess.add(down);
             }
 
-            if (!(isWall(up.pos) && isWall(left.pos)) && shouldProcessPotential(upleft, exit)) {
+            if (shouldProcessPotential(upleft, exit)) {
                 toProcess.add(upleft);
             }
-            if (!(isWall(up.pos) && isWall(right.pos)) && shouldProcessPotential(upright, exit)) {
+            if (shouldProcessPotential(upright, exit)) {
                 toProcess.add(upright);
             }
-            if (!(isWall(down.pos) && isWall(left.pos)) && shouldProcessPotential(downleft, exit)) {
+            if (shouldProcessPotential(downleft, exit)) {
                 toProcess.add(downleft);
             }
-            if (!(isWall(down.pos) && isWall(right.pos)) && shouldProcessPotential(downright, exit)) {
+            if (shouldProcessPotential(downright, exit)) {
                 toProcess.add(downright);
             }
         }
