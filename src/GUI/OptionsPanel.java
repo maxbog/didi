@@ -8,11 +8,10 @@
  *
  * Created on 2011-05-28, 14:22:05
  */
-
 package GUI;
 
 import Basic.Simulation;
-
+import java.awt.Color;
 
 /**
  *
@@ -72,17 +71,35 @@ public class OptionsPanel extends javax.swing.JPanel {
         wLabel.setText(resourceMap.getString("wLabel.text")); // NOI18N
         wLabel.setName("wLabel"); // NOI18N
 
+        radiusField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         radiusField.setText(resourceMap.getString("radiusField.text")); // NOI18N
         radiusField.setName("radiusField"); // NOI18N
         radiusField.setPreferredSize(new java.awt.Dimension(60, 20));
+        radiusField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiusFieldActionPerformed(evt);
+            }
+        });
 
+        pField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         pField.setText(resourceMap.getString("pField.text")); // NOI18N
         pField.setName("pField"); // NOI18N
         pField.setPreferredSize(new java.awt.Dimension(60, 20));
+        pField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pFieldActionPerformed(evt);
+            }
+        });
 
+        wField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         wField.setText(resourceMap.getString("wField.text")); // NOI18N
         wField.setName("wField"); // NOI18N
         wField.setPreferredSize(new java.awt.Dimension(60, 20));
+        wField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wFieldActionPerformed(evt);
+            }
+        });
 
         stepButton.setText(resourceMap.getString("stepButton.text")); // NOI18N
         stepButton.setName("stepButton"); // NOI18N
@@ -269,14 +286,58 @@ public class OptionsPanel extends javax.swing.JPanel {
         simulation.setGrid(simulation.getSimGrid());
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void radiusFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiusFieldActionPerformed
+        int rad = 0;
+        try {
+            rad = Integer.parseInt(radiusField.getText());
+        } catch (Exception exception) {
+            rad = 0;
+        }
+        if (rad <= 0) {
+            radiusField.setForeground(Color.red);
+            return;
+        }
+        radiusField.setForeground(Color.black);
+        simulation.setFloodRadius(rad);
+    }//GEN-LAST:event_radiusFieldActionPerformed
+
+    private void pFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pFieldActionPerformed
+        double p = -1;
+        try {
+            p = Double.parseDouble(pField.getText());
+        } catch (Exception exception) {
+            p = -1;
+        }
+        if (p < 0 || p > 1) {
+            pField.setForeground(Color.red);
+            return;
+        }
+        pField.setForeground(Color.black);
+        simulation.setGlobalBlockProbability(p);
+    }//GEN-LAST:event_pFieldActionPerformed
+
+    private void wFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wFieldActionPerformed
+        double w = -1;
+        try {
+            w = Double.parseDouble(wField.getText());
+        } catch (Exception exception) {
+            w = -1;
+        }
+        if (w < 0 || w > 1) {
+            wField.setForeground(Color.red);
+            return;
+        }
+        wField.setForeground(Color.black);
+        simulation.setTransitionCoef(w);
+    }//GEN-LAST:event_wFieldActionPerformed
+
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
     }
 
-    public void setGridPanel(GridPanel panel){
+    public void setGridPanel(GridPanel panel) {
         gridPanel = panel;
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel delayTimerLabel;
     private javax.swing.JSpinner delayTimerSpinner;
@@ -297,7 +358,6 @@ public class OptionsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField wField;
     private javax.swing.JLabel wLabel;
     // End of variables declaration//GEN-END:variables
-
     private Simulation simulation;
     private GridPanel gridPanel;
 }

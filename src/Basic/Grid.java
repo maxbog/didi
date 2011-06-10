@@ -22,7 +22,7 @@ public class Grid {
     public static final int EXIT = -2;
     public static final int BLOCKED = -3;
     public static final int OBSTACLE = -4;
-    public static final int FLOOD_RADIUS = 3;
+    public static int FLOOD_RADIUS = 3;
     private int columnsNumber;
     private int rowsNumber;
     private int[][] mapGrid;

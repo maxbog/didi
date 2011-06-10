@@ -375,4 +375,17 @@ public class Simulation extends Thread {
     public boolean isSimulating(){
         return !pause;
     }
+
+    public void setTransitionCoef(double coef)
+    {
+        transitionCoef = coef;
+    }
+
+    public void setGlobalBlockProbability (double probab){
+        globalBlockProbability = probab;
+    }
+
+    public void setFloodRadius (int rad){
+        simGrid.FLOOD_RADIUS = rad;
+    }
 }
