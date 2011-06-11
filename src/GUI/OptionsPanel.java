@@ -51,6 +51,10 @@ public class OptionsPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        stepsLabel = new javax.swing.JLabel();
+        zeroStepsButton = new javax.swing.JButton();
+        peopleNumberLabel = new javax.swing.JLabel();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(250, 300));
@@ -158,26 +162,70 @@ public class OptionsPanel extends javax.swing.JPanel {
 
         jSeparator4.setName("jSeparator4"); // NOI18N
 
+        jSeparator5.setName("jSeparator5"); // NOI18N
+
+        stepsLabel.setFont(resourceMap.getFont("stepsLabel.font")); // NOI18N
+        stepsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stepsLabel.setText(resourceMap.getString("stepsLabel.text")); // NOI18N
+        stepsLabel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("stepsLabel.border.title"))); // NOI18N
+        stepsLabel.setName("stepsLabel"); // NOI18N
+
+        zeroStepsButton.setText(resourceMap.getString("zeroStepsButton.text")); // NOI18N
+        zeroStepsButton.setName("zeroStepsButton"); // NOI18N
+        zeroStepsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zeroStepsButtonActionPerformed(evt);
+            }
+        });
+
+        peopleNumberLabel.setFont(resourceMap.getFont("peopleNumberLabel.font")); // NOI18N
+        peopleNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        peopleNumberLabel.setText(resourceMap.getString("peopleNumberLabel.text")); // NOI18N
+        peopleNumberLabel.setBorder(javax.swing.BorderFactory.createTitledBorder(resourceMap.getString("peopleNumberLabel.border.title"))); // NOI18N
+        peopleNumberLabel.setName("peopleNumberLabel"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator5, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(restartButton)
+                .addContainerGap(60, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator4, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pLabel)
-                    .addComponent(wLabel)
-                    .addComponent(delayTimerLabel))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addGap(50, 50, 50))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(delayTimerSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                    .addComponent(pField, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                    .addComponent(wField, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
+                .addComponent(radiusLabel)
+                .addGap(31, 31, 31)
+                .addComponent(radiusField, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(startButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -187,34 +235,23 @@ public class OptionsPanel extends javax.swing.JPanel {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(radiusLabel)
-                .addGap(31, 31, 31)
-                .addComponent(radiusField, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pLabel)
+                    .addComponent(wLabel)
+                    .addComponent(delayTimerLabel))
                 .addGap(10, 10, 10)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                .addGap(50, 50, 50))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(delayTimerSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                    .addComponent(pField, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                    .addComponent(wField, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSeparator4, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(zeroStepsButton, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(stepsLabel, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(peopleNumberLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(restartButton)
-                .addContainerGap(107, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +291,15 @@ public class OptionsPanel extends javax.swing.JPanel {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(peopleNumberLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stepsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zeroStepsButton)
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         stepButton.getAccessibleContext().setAccessibleName(resourceMap.getString("stepButton.AccessibleContext.accessibleName")); // NOI18N
@@ -268,6 +313,8 @@ public class OptionsPanel extends javax.swing.JPanel {
         simulation.pauseSimulation();
         simulation.resetMap();
         gridPanel.repaintGrid();
+        simulation.setZeroSteps();
+        peopleNumberLabel.setText(Integer.toString(simulation.getSimGrid().getPeopleCount()));
     }//GEN-LAST:event_restartButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
@@ -331,12 +378,32 @@ public class OptionsPanel extends javax.swing.JPanel {
         simulation.setTransitionCoef(w);
     }//GEN-LAST:event_wFieldActionPerformed
 
+    private void zeroStepsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroStepsButtonActionPerformed
+        simulation.setZeroSteps();
+    }//GEN-LAST:event_zeroStepsButtonActionPerformed
+
     public void setSimulation(Simulation simulation) {
         this.simulation = simulation;
     }
 
     public void setGridPanel(GridPanel panel) {
         gridPanel = panel;
+    }
+
+    public void setStepsNumber(int number) {
+        stepsLabel.setText(Integer.toString(number));
+    }
+
+    public void setPeolpeNumber(int number) {
+        peopleNumberLabel.setText(Integer.toString(number));
+    }
+
+    public void setPeolpeNumber() {
+        if (simulation == null) {
+            return;
+        }
+        int number = simulation.getSimGrid().getPeopleCount();
+        peopleNumberLabel.setText(Integer.toString(number));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel delayTimerLabel;
@@ -347,16 +414,20 @@ public class OptionsPanel extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTextField pField;
     private javax.swing.JLabel pLabel;
     private javax.swing.JButton pauseButton;
+    private javax.swing.JLabel peopleNumberLabel;
     private javax.swing.JTextField radiusField;
     private javax.swing.JLabel radiusLabel;
     private javax.swing.JButton restartButton;
     private javax.swing.JButton startButton;
     private javax.swing.JButton stepButton;
+    private javax.swing.JLabel stepsLabel;
     private javax.swing.JTextField wField;
     private javax.swing.JLabel wLabel;
+    private javax.swing.JButton zeroStepsButton;
     // End of variables declaration//GEN-END:variables
     private Simulation simulation;
     private GridPanel gridPanel;

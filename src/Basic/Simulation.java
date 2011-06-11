@@ -6,6 +6,7 @@ package Basic;
 
 import Basic.Grid.Position;
 import GUI.GridPanel;
+import GUI.OptionsPanel;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -29,9 +30,11 @@ public class Simulation extends Thread {
     private Queue<PersonPosition> peopleToProcess;
     private int time;
     private GridPanel gridPanel;
+    private OptionsPanel optionsPanel;
     private Random random = new Random();
     private boolean pause = true;
     private int delayTime = 100;
+    private int steps = 0;
 
     public Simulation() {
         simGrid = new Grid(0, 0);
@@ -120,10 +123,10 @@ public class Simulation extends Thread {
      * @return nastepna pozycja, ktora zajmuje człowiek
      */
     public Position transitionRule3(int row, int column) {
-        
+
         int id;
         double pot, tempPot;
-        
+
         if (simGrid.getExitsCount() >= 2) {
             id = -1;
             int exitId[] = new int[2];
@@ -138,7 +141,7 @@ public class Simulation extends Thread {
                     }
                 }
             }
-            
+
             if (id == -1) {
                 id = 0;
             } else {
@@ -268,7 +271,7 @@ public class Simulation extends Thread {
 //                if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT) {
 //                    simGrid.setMapCell(current.pos.row, current.pos.column, Grid.EMPTY);
 //                }
-                if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EMPTY ||simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT) {
+                if (simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EMPTY || simGrid.getMapCell(newPosition.row, newPosition.column) == Grid.EXIT) {
                     double probability = simGrid.getDensity(newPosition.row, newPosition.column)
                             * simGrid.getBottleNeck(newPosition.row, newPosition.column)[0]
                             * globalBlockProbability;
@@ -289,6 +292,8 @@ public class Simulation extends Thread {
         simGrid.calculateDensities();
         simGrid.updateExits();
         simGrid.updatePanicLevels();
+        steps++;
+        optionsPanel.setStepsNumber(steps);
         gridPanel.repaintGrid();
     }
 
@@ -328,6 +333,10 @@ public class Simulation extends Thread {
         gridPanel = panel;
     }
 
+    public void setOptionsPanel(OptionsPanel panel) {
+        optionsPanel = panel;
+    }
+
     public void resetMap() {
         simGrid = new Grid(startGrid);
         gridPanel.setGrid(simGrid);
@@ -350,6 +359,7 @@ public class Simulation extends Thread {
             if (simGrid.getPeopleCount() == 0) {
                 pause = true;
             }
+            optionsPanel.setPeolpeNumber(simGrid.getPeopleCount());
             while (Calendar.getInstance().getTimeInMillis() < timer + delayTime) {
                 try {
                     sleep(5);
@@ -372,20 +382,24 @@ public class Simulation extends Thread {
         delayTime = (int) (1000f * time);
     }
 
-    public boolean isSimulating(){
+    public boolean isSimulating() {
         return !pause;
     }
 
-    public void setTransitionCoef(double coef)
-    {
+    public void setTransitionCoef(double coef) {
         transitionCoef = coef;
     }
 
-    public void setGlobalBlockProbability (double probab){
+    public void setGlobalBlockProbability(double probab) {
         globalBlockProbability = probab;
     }
 
-    public void setFloodRadius (int rad){
+    public void setFloodRadius(int rad) {
         simGrid.FLOOD_RADIUS = rad;
+    }
+
+    public void setZeroSteps() {
+        steps = 0;
+        optionsPanel.setStepsNumber(0);
     }
 }

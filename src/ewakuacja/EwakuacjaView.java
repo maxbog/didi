@@ -149,6 +149,7 @@ public class EwakuacjaView extends FrameView {
         gridPanel.setEditPanel(editPanel);
         gridPanel.setScrollPane(gridScrollPane);
         simulation.setGridPanel(gridPanel);
+        simulation.setOptionsPanel(optionsPanel);
         optionsPanel.setSimulation(simulation);
         optionsPanel.setGridPanel(gridPanel);
     }
@@ -534,6 +535,7 @@ public class EwakuacjaView extends FrameView {
     private void optionsTabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_optionsTabsStateChanged
         if(optionsTabs.getSelectedComponent() != editPanel){
             editPanel.stopEditing();
+            optionsPanel.setPeolpeNumber();
         }
 }//GEN-LAST:event_optionsTabsStateChanged
 
@@ -562,6 +564,8 @@ public class EwakuacjaView extends FrameView {
             File file = fileChooser.getSelectedFile();
             simulation.setGrid(FilesStuff.openGrid(file));
             editPanel.setMapGridChanged(false);
+            simulation.setZeroSteps();
+            optionsPanel.setPeolpeNumber();
         }
     }//GEN-LAST:event_openMenuButtonActionPerformed
 
@@ -595,6 +599,8 @@ public class EwakuacjaView extends FrameView {
             }
         }
         simulation.setGrid(new Grid(0,0));
+        simulation.setZeroSteps();
+        optionsPanel.setPeolpeNumber();
     }//GEN-LAST:event_newMenuButtonActionPerformed
 
     private void exitComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitComboBoxActionPerformed
